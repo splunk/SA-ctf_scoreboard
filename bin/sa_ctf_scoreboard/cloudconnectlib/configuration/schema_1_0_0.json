@@ -1,0 +1,344 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "Authentication": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "digest",
+                        "basic_auth"
+                    ]
+                },
+                "options": {
+                    "type": "object"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "Checkpoint": {
+            "type": "object",
+            "properties": {
+                "namespace": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "content": {
+                    "type": "object"
+                }
+            },
+            "required": [
+                "content"
+            ],
+            "additionalProperties": false
+        },
+        "GlobalSettings": {
+            "type": "object",
+            "properties": {
+                "proxy": {
+                    "$ref": "#/definitions/Proxy"
+                },
+                "logging": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "IterationMode": {
+            "type": "object",
+            "properties": {
+                "iteration_count": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "pattern": "^[+-]?[1-9]\\d*|0$"
+                        },
+                        {
+                            "type": "integer"
+                        }
+                    ]
+                },
+                "stop_conditions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "input": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "method": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "input",
+                            "method"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "Meta": {
+            "type": "object",
+            "properties": {
+                "apiVersion": {
+                    "type": "string",
+                    "pattern": "(?:\\d{1,3}\\.){2}[\\w\\-]{1,15}"
+                }
+            },
+            "required": [
+                "apiVersion"
+            ],
+            "additionalProperties": false
+        },
+        "Proxy": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "default": false,
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "integer"
+                        }
+                    ]
+                },
+                "host": {
+                    "type": "string"
+                },
+                "port": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "integer",
+                            "minimum": 1,
+                            "exclusiveMinimum": true,
+                            "maximum": 65535,
+                            "exclusiveMaximum": true
+                        }
+                    ]
+                },
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "rdns": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "host",
+                "port"
+            ],
+            "additionalProperties": false
+        },
+        "Request": {
+            "type": "object",
+            "properties": {
+                "request": {
+                    "type": "object",
+                    "properties": {
+                        "url": {
+                            "type": "string"
+                        },
+                        "method": {
+                            "type": "string",
+                            "enum": [
+                                "GET",
+                                "POST"
+                            ],
+                            "default": "GET"
+                        },
+                        "headers": {
+                            "type": "object"
+                        },
+                        "auth": {
+                            "$ref": "#/definitions/Authentication"
+                        },
+                        "body": {
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "url"
+                    ],
+                    "additionalProperties": false
+                },
+                "pre_process": {
+                    "type": "object",
+                    "properties": {
+                        "skip_conditions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "input": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "method": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "input",
+                                    "method"
+                                ],
+                                "additionalProperties": false
+                            }
+                        },
+                        "pipeline": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "input": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "method": {
+                                        "type": "string"
+                                    },
+                                    "output": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "input",
+                                    "method"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "post_process": {
+                    "type": "object",
+                    "properties": {
+                        "skip_conditions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "input": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "method": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "input",
+                                    "method"
+                                ],
+                                "additionalProperties": false
+                            }
+                        },
+                        "pipeline": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "input": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "method": {
+                                        "type": "string"
+                                    },
+                                    "output": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "input",
+                                    "method"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "iteration_mode": {
+                    "$ref": "#/definitions/IterationMode"
+                },
+                "checkpoint": {
+                    "$ref": "#/definitions/Checkpoint"
+                }
+            },
+            "required": [
+                "request",
+                "post_process",
+                "iteration_mode"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "meta": {
+            "$ref": "#/definitions/Meta"
+        },
+        "tokens": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "global_settings": {
+            "$ref": "#/definitions/GlobalSettings"
+        },
+        "requests": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Request"
+            },
+            "minItems": 1
+        }
+    },
+    "required": [
+        "meta",
+        "tokens",
+        "requests"
+    ],
+    "additionalProperties": false
+}

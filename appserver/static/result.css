@@ -1,0 +1,41 @@
+.BonusInfo {
+    font-size: 18px;
+}
+
+.Correct {
+    font-size: 24px;
+    font-weight: bold;
+    color: green;
+}
+
+.Incorrect {
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
+}
+
+.Bonus {
+    font-size: 18px;
+    font-weight: bold;
+    color: blue;
+}
+
+.ResultTable table{
+    border: 1px solid black;
+    border-collapse: collapse;
+
+}
+
+.ResultTable tr{
+    border: 1px solid black;
+}
+
+.ResultTable td{
+    border: 1px solid black;
+    padding: 5px;
+
+}
+
+.AdditionalNotes {
+    font-style: italic; ;
+}

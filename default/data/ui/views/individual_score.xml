@@ -1,0 +1,34 @@
+<dashboard hideTitle="True" refresh="30">
+  <label>Top Individual Scores</label>
+  <row>
+    <panel>
+      <title>Top Individual Scores</title>
+      <table>
+        <search>
+          <query>index=scoreboard user!=admin `get_user_info` `validateevents`
+| stats max(BasePointsAwarded) as BasePoints max(SpeedBonusAwarded) as BonusPoints max(AdditionalBonusAwarded) as AdditionalBonusPoints sum(Penalty) as Penalty by DisplayUsername, Number 
+| eval BasePoints = coalesce(BasePoints,0)
+| eval BonusPoints = coalesce(BonusPoints,0)
+| eval AdditionalBonusPoints = coalesce(AdditionalBonusPoints,0)
+| eval Penalty = coalesce(Penalty,0)
+| eval Score = BasePoints + BonusPoints + AdditionalBonusPoints - Penalty 
+| stats sum(BasePoints) as BasePoints sum(BonusPoints) as BonusPoints sum(AdditionalBonusPoints) as AdditionalBonusPoints sum(Penalty) as Penalty sum(Score) as Score by DisplayUsername 
+| sort - Score 
+| eventstats count as totalcount 
+| streamstats current=f count as currentcount 
+| eval Rank=currentcount+1 | table DisplayUsername Rank Score BasePoints BonusPoints AdditionalBonusPoints Penalty
+
+</query>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

@@ -1,0 +1,9 @@
+scoreboard_controller.config
+*.pyc
+*.pyo
+lookups/*staged*
+appserver/static/event/*
+local/data/ui/views/bot*
+local/data/ui/html/bot*
+local/data/ui/nav/default.html
+.DS_Store

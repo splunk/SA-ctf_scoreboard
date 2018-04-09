@@ -1,0 +1,28 @@
+<dashboard hideEdit="true" hideTitle="true">
+  <label>Rules</label>
+  <row>
+    <panel>
+      <html>
+
+<table>
+  <tr>
+    <td>
+      <h1> Rules </h1>
+<ol>
+	<li>	Each question will have a base score. The harder the question, the higher the base score. If you answer the question correctly, you will receive the base score for that question. Additionally, for questions answered correctly, a speed bonus will also be awarded based on how much time is left in the competition.</li>
+	<li>	The speed bonus ranges from 0 to the base score of the question. Correct answers submitted earlier in the competition will receive a higher speed bonus than those submitted later.</li>
+  <li>	You will be notified immediately upon submission of an answer whether you responded correctly. <b>You may answer as many times as you wish however each incorrect answer submitted will result in a 10-point deduction from the total potential score for that question.</b></li>
+	<li>	Don’t be evil. .</li>
+  </ol>
+    </td>
+    <td valign="top">
+		<img height="970" width="202" src="/static/app/SA-ctf_scoreboard/ctflogo.png"></img>
+    </td>
+  </tr>
+  </table> 
+
+     
+      </html>
+    </panel>
+  </row>
+</dashboard>

@@ -1,0 +1,74 @@
+<dashboard script="table_icons_inline.js, custom_table_row_expansion.js" stylesheet="table_decorations.css" hideEdit="True">
+  <label>Questions</label>
+  <row>
+    <panel>
+      <single>
+        <search>
+          <query>| rest /services/authentication/current-context 
+| rename username as user `get_user_info`
+| fields Team</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="useColors">0</option>
+         <option name="height">75</option>
+        <option name="useThousandSeparators">0</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h2><b>Click ">" below to see your team's entire submission history for this question.</b></h2>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table id="table1">
+        <search>
+          <query>index=scoreboard AND (Result="Incorrect" OR Result="Correct" OR Result=Hint OR Result=Bonus) `get_user_info` `validateevents`
+| search 
+    [ rest /services/authentication/current-context 
+    | rename username as user `get_user_info`
+    | fields + Team] 
+| stats count as Attempts, max(BasePointsAwarded) as BasePointsEarned, max(SpeedBonusAwarded) as BonusPointsEarned, sum(Penalty) as PenaltyPoints, max(AdditionalBonusAwarded) as AdditionalBonus, count(eval(Result=="Incorrect")) as IncorrectAttempts, count(eval(Result=="Correct")) as CorrectAttempts by Number 
+| append 
+    [ inputlookup ctf_questions 
+    | eval Attempts = 0 
+    | eval IncorrectAttempts = 0 
+    | eval CorrectAttempts = 0 
+    | fields Number Question BasePoints Attempts CorrectAttempts IncorrectAttempts] 
+| gethints
+| stats last(Question) as Question, last(BasePoints) as BasePointsAvailable, last(BasePointsEarned) as BasePointsEarned, last(BonusPointsEarned) as BonusPointsEarned, max(AdditionalBonus) as AdditionalBonus, sum(PenaltyPoints) as PenaltyPoints, sum(Attempts) as Attempts, sum(IncorrectAttempts) as IncorrectAttempts, sum(CorrectAttempts) as CorrectAttempts, last(HintsAvailable) as HintsAvailable, last(HintsReceived) as HintsReceived by Number 
+| eval Status = if(Attempts = 0,"Unanswered", Status) 
+| eval Status = if(IncorrectAttempts &gt; 0, "Incorrect", Status) 
+| eval Status = if(CorrectAttempts &gt; 0, "Correct", Status) 
+| fillnull value=0 BasePointsEarned 
+| fillnull value=0 BonusPointsEarned 
+| fillnull value=0 PenaltyPoints
+| fillnull value=0 AdditionalBonus
+| fields Number Question Status BasePointsAvailable BasePointsEarned BonusPointsEarned AdditionalBonus PenaltyPoints HintsAvailable HintsReceived
+| rename BasePointsAvailable as "Base Points Avail." 
+| rename BasePointsEarned as "Base Points Earned" 
+| rename BonusPointsEarned as "Speed Bonus Earned" 
+| rename PenaltyPoints as "Penalty" 
+| rename HintsAvailable as "Hints Available"
+| rename HintsReceived as "Hints Received" 
+| rename AdditionalBonus as "Additional Bonus"
+
+| sort Number</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">row</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link>question2?Number=$row.Number$&amp;Question=$row.Question$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

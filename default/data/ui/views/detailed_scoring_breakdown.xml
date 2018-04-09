@@ -1,0 +1,44 @@
+<dashboard hideEdit="True" >
+  <label>Scoring Detail</label>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            
+earliest=0 index=scoreboard `get_user_info` `validateevents`
+| search 
+    [| rest /services/authentication/current-context splunk_server=local 
+    | fields username 
+    | rename username as user `get_user_info` 
+    | fields Team] 
+| eventstats min(eval(if(BasePointsAwarded>0,_time,null))) as FC by Team, Number 
+| eventstats min(eval(if(AdditionalBonusAwarded>0,_time,null))) as FAB by Team, Number 
+| eval BP = if(_time=FC,BasePointsAwarded,0) 
+| eval SB = if(_time=FC,SpeedBonusAwarded,0) 
+| eval AB = if(_time=FAB,AdditionalBonusAwarded,0) 
+| eval BP = coalesce(BP,0) 
+| eval SB = coalesce(SB,0) 
+| eval AB = coalesce(AB,0) 
+| eval Penalty = coalesce(Penalty,0) 
+| eval Score = BP + SB + AB - Penalty 
+| reverse 
+| streamstats sum(Score) as CumulativeScore sum(BP) as CumulativeBasePoints sum(SB) as CumulativeSpeedBonus sum(AB) as CumulativeAdditionalBonus sum(Penalty) as CumulativePenalty by Team 
+| eval time_epoch=_time 
+| table _time user Team Number Result BasePointsAwarded SpeedBonusAwarded AdditionalBonusAwarded Penalty Score CumulativeBasePoints CumulativeSpeedBonus CumulativeAdditionalBonus CumulativePenalty CumulativeScore time_epoch FC FAB BP SB AB
+
+</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

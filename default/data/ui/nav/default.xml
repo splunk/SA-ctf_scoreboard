@@ -1,0 +1,29 @@
+<nav search_view="search" color="#000000">
+  <view name="welcome" default="true"/>
+  <view name="questions" />
+  <collection label="Scoring">
+    <view name="top_10_teams" />
+    <view name="AllScores" />
+    <view name="event_activity" />
+    <view name="score_timeline" />
+    <view name="question_timeanswer_densities"/>
+    <view name="individual_score" />
+    <view name="all_ebadges" />
+    <view name="ebadge_recipients" />
+    <view name="ebadges_by_team" />
+    <view name="detailed_scoring_breakdown" />
+  </collection>
+  <view name="rules" />
+  <collection label="Help">
+    <a href="https://www.splunk.com/content/dam/splunk2/pdfs/solution-guides/splunk-quick-reference-guide.pdf" target="_blank">Splunk Quick Reference Guide</a>
+    <view name="fbi_flash_warning" />
+    <view name="scenarioday1" />
+      <view name="scenarioday2" />
+      <view name="scenario_3ransomware" />
+      <view name="scenario_4apt" />
+      <view name="scenario_5fraud_5xx" />
+  </collection>
+  <view name="Credits" />
+  <view name="dashboards" />
+  <view name="search" />
+</nav>

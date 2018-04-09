@@ -1,0 +1,252 @@
+<dashboard hideTitle="True" refresh="30">
+  <label>All Teams Scores</label>
+  <search id="base" ref="Score-Base"></search>
+  <search base="base" id="secondary">
+    <query>eval panel = floor((currentcount / totalcount) * 12)
+| fields Rank Team Score panel</query>
+  </search>
+  <row>
+    <panel>
+      <html>
+      
+        <title>All Team Scores</title>
+        
+        <img src="/static/app/SA-ctf_scoreboard/ctflogo.png" width="200" align="left" hspace="20"/>
+      
+        <h1 style="font-size:50pt;text-align:center;position:absolute;top:50%;left:50%;transform:translateX(-50%)translateY(-50%);">
+          All Team Scores
+        </h1>
+        <br/>
+
+ 
+
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=0 
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=1
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=2
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  
+    <row>
+    <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=3
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=4
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=5
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  
+      <row>
+    <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=6
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=7
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=8
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+      <row>
+    <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=9
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=10
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <table>
+        <search base="secondary">
+          <query>
+          
+| fields Rank Team Score panel | where panel=11
+| eval RankText="# " . Rank . ": " 
+| eval RankbyTeam=RankText . Team 
+| table RankbyTeam Score 
+| rename RankbyTeam AS "Rank: Team"</query>
+        </search>
+        <option name="count">30</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

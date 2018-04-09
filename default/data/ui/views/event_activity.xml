@@ -1,0 +1,111 @@
+<dashboard refresh="30" hideTitle="true">
+  <label>Event Activity</label>
+  <row>
+    <panel>
+      <html>
+      
+        <title>Event Activity</title>
+        
+        <img src="/static/app/SA-ctf_scoreboard/ctflogo.png" width="200" align="left" hspace="20"/>
+
+        <h1 style="font-size:40pt;text-align:center;position:absolute;top:50%;left:50%;transform:translateX(-50%)translateY(-50%);">
+		Event Activity
+        </h1>
+ 
+
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <search>
+          <query>index=scoreboard Result=* user!=admin `get_user_info` `validateevents` | top limit=1 Team</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="numberPrecision">0</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6","0xf7bc38","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="underLabel">Most active team overall</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <search>
+          <query>
+index=scoreboard Result=* user!=admin `get_user_info` `validateevents`
+| append [ | stats count | fields - count | eval Team="No recent activity." ] | top limit=1 Team</query>
+          <earliest>-60m</earliest>
+          <latest></latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="numberPrecision">0</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6","0xf7bc38","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="underLabel">Most active team last 60 minutes</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Most Recent Activity</title>
+        <search>
+          <query>index=scoreboard Result=* user!=admin `get_user_info` `validateevents`
+| rename BasePointsAwarded as Points 
+| rename SpeedBonusAwarded as Bonus 
+| eval "Additional Bonus" = AdditionalBonusAwarded 
+| rename DisplayUsername as User 
+| lookup ctf_badges BadgeNumber as BadgeNumber 
+| eval Type = case(
+    Result=="Correct" OR Result=="Incorrect", "Answer Submitted", 
+    Result=="Hint", "Hint Purchased", 
+    Result=="Badge", "Badge Received", 
+    Result="Bonus", "Additional Bonus") 
+| eval "Question/Badge" = case(
+    Result=="Correct" OR Result=="Incorrect", QuestionOfficial, 
+    Result=="Hint", "We can't put that here, silly!", 
+    Result=="Badge", BadgeDescription, 
+    Result="Bonus", "Wouldn't you like to know?")     
+| sort - _time 
+| convert timeformat="%a %H:%M" ctime(_time) 
+| rename _time as "Date/Time" 
+| rename QuestionOfficial as Question 
+| eval Points = coalesce(Points, 0)
+| eval Bonus = coalesce(Bonus, 0)
+| eval "Additional Bonus" = coalesce(AdditionalBonusAwarded, 0)
+| eval Penalty = coalesce(Penalty, 0)
+
+
+| table "Date/Time" User Team Type Number BadgeNumber "Question/Badge" Result Points Bonus "Additional Bonus" Penalty</query>
+          <earliest>0</earliest>
+        </search>
+        <option name="count">15</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

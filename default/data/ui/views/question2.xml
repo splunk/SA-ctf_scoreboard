@@ -1,0 +1,160 @@
+<dashboard hideEdit="False" hideTitle="True" script="table_icons_inline.js, custom_table_row_expansion.js" stylesheet="table_decorations.css">
+  <label>question2</label>
+  <row>
+    <panel>
+      <html>
+      <table>
+        <tr>
+          <td width="20%">
+             <img height="485" width="101" src="/static/app/SA-ctf_scoreboard/ctflogo.png"/>
+          </td>
+          <td>
+      		<h1>Submit an Answer to Question $Number$</h1>
+          </td>
+        </tr>
+        </table>
+     	 <p/>
+      	<div style="padding:10px;border:1px dotted black;">
+          <p/>
+      			<h3>$Question$ </h3>
+          <p/>
+		</div>
+     	 <p/>
+      <form action="/en-US/custom/SA-ctf_scoreboard/scoreboard_controller/submit_question" method="get">
+        <input type="hidden" id="Number" name="Number" value="$Number$"/>
+      <input type="hidden" id="Question" name="Question" value="$Question$"/>
+        <b>Answer: </b>
+          <input type="text" id="Answer" name="Answer"/> 
+        <input type="submit" value="Submit"/>
+      </form>
+      <p/>
+      <h2>Tips and Tricks</h2>
+      <ul>
+        <li>Answers are case <b>in</b>sensitive! e.g. "Elite Hacker" == "eLite haCKer"</li>
+        <li>Leading and trailing whitespace in your answer is stripped away.</li>
+        <li>We strive to make the answers be short, concise, and easy to enter. If you find youself entering very log answers with complex spacing and punctuation, you are probably <b>not</b> on the right track.</li>
+        <li>Some questions contain free hints about the formatting of the answer. Use them!</li>
+      </ul>
+    </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>      	
+        <div style="padding:10px;border:1px dotted black;">
+          <h3>Submission History</h3>
+                          <h4>Click ">" below to see your team's entire submission history for this question.</h4>
+
+        </div>
+
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table id="table1">
+        <search>
+          <query>index=scoreboard 
+| lookup ctf_users Username as user 
+| eval Team=if(Team != "", Team, DisplayUsername) 
+| eval Team=if(Team != "", Team, Username) 
+| eval Team=if(Team != "", Team, user) 
+| search 
+    [ rest /services/authentication/current-context 
+    | rename username as user 
+    | lookup ctf_users Username as user 
+    | eval Team=if(Team != "", Team, DisplayUsername) 
+    | eval Team=if(Team != "", Team, Username) 
+    | eval Team=if(Team != "", Team, user) 
+    | fields + Team] 
+| stats count as Attempts, max(BasePointsAwarded) as BasePointsEarned, max(SpeedBonusAwarded) as BonusPointsEarned, sum(Penalty) as PenaltyPoints count(eval(Result=="Incorrect")) as IncorrectAttempts, count(eval(Result=="Correct")) as CorrectAttempts by Number 
+| append 
+    [ inputlookup ctf_questions 
+    | eval Attempts = 0 
+    | eval IncorrectAttempts = 0 
+    | eval CorrectAttempts = 0 
+    | fields Number Question BasePoints Attempts CorrectAttempts IncorrectAttempts] 
+| gethints
+| stats last(BasePoints) as BasePointsAvailable, last(BasePointsEarned) as BasePointsEarned, last(BonusPointsEarned) as BonusPointsEarned, sum(PenaltyPoints) as PenaltyPoints, sum(Attempts) as Attempts, sum(IncorrectAttempts) as IncorrectAttempts, sum(CorrectAttempts) as CorrectAttempts last(HintsAvailable) as HintsAvailable, last(HintsReceived) as HintsReceived by Number 
+| eval Status = if(Attempts = 0,"Unanswered", Status) 
+| eval Status = if(IncorrectAttempts &gt; 0, "Incorrect", Status) 
+| eval Status = if(CorrectAttempts &gt; 0, "Correct", Status) 
+| fillnull value=0 BasePointsEarned 
+| fillnull value=0 BonusPointsEarned 
+| fillnull value=0 PenaltyPoints 
+| fields Number Status BasePointsAvailable BasePointsEarned BonusPointsEarned PenaltyPoints HintsAvailable HintsReceived
+| rename BasePointsAvailable as "Base Points Avail." 
+| rename BasePointsEarned as "Base Points Earned" 
+| rename BonusPointsEarned as "Bonus Points Earned" 
+| rename PenaltyPoints as "Penalty Points" 
+| rename HintsAvailable as "Hints Available"
+| rename HintsReceived as "Hints Received"
+| search Number=$Number$</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+        <option name="count">50</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">row</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link>question2?Number=$row.Number$&amp;Question=$row.Question$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <div style="padding:10px;border:1px dotted black;">
+          <h3>Hints</h3> 
+          <ul>
+            <li>See the hints your team has purchased below. If you see <b>Your team has not purchased this hint yet!</b> you can click the hint to purchase it.</li>
+            <li>If you see <b>'No results found.' below</b> it means there are simply no hints for this question. Good luck!</li>
+          </ul>
+        </div>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index=scoreboard 
+| lookup ctf_users Username as user 
+| eval Team=if(Team != "", Team, DisplayUsername) 
+| eval Team=if(Team != "", Team, Username) 
+| eval Team=if(Team != "", Team, user) 
+| search 
+    [ rest /services/authentication/current-context 
+    | rename username as user 
+    | lookup ctf_users Username as user 
+    | eval Team=if(Team != "", Team, DisplayUsername) 
+    | eval Team=if(Team != "", Team, Username) 
+    | eval Team=if(Team != "", Team, user) 
+    | fields + Team] 
+| stats count as Attempts, max(BasePointsAwarded) as BasePointsEarned, max(SpeedBonusAwarded) as BonusPointsEarned, sum(Penalty) as PenaltyPoints count(eval(Result=="Incorrect")) as IncorrectAttempts, count(eval(Result=="Correct")) as CorrectAttempts by Number 
+| append 
+    [ inputlookup ctf_questions 
+    | eval Attempts = 0 
+    | eval IncorrectAttempts = 0 
+    | eval CorrectAttempts = 0 
+    | fields Number Question BasePoints Attempts CorrectAttempts IncorrectAttempts] 
+| gethints 
+| stats values(Hints) as Hints by Number
+| mvexpand Hints 
+| spath input=Hints 
+| eval Number=mvdedup(Number) 
+| fields Number HintNumber HintCost Hint 
+| sort Number HintNumber 
+| rename HintCost as "Hint Cost"
+| search Number=$Number$ Hint=*</query>
+        </search>
+        <option name="drilldown">row</option>
+        <drilldown>
+          <link>/custom/SA-ctf_scoreboard/scoreboard_controller/purchase_hint?Number=$row.Number$&amp;HintNumber=$row.HintNumber$&amp;Question=$Question$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

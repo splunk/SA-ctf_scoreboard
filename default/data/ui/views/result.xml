@@ -1,0 +1,89 @@
+<dashboard script="result.js" stylesheet="result.css" hideEdit="False" hideTitle="True">
+  <label>result</label>
+  <row>
+    <panel>
+      <html>
+        <table>
+          <tr>
+            <td width="20%">
+             <img height="485" width="101" src="/static/app/SA-ctf_scoreboard/ctflogo.png"/>
+            </td>
+            <td>
+      		  <h1> Results for Question $Number$</h1>
+            </td>
+          </tr>
+        </table>
+        <p/>
+      	<div style="padding:10px;border:1px dotted black;">
+          <p/>
+          <div id="Result" class="Result">
+            <div id="Result1"> Your answer was $Result$. </div><br/>
+            <div id="Result2">
+              <table id="ResultTable" class="ResultTable">
+              </table>  </div><br/>
+            <div id="AdditionalNotes" class="AdditionalNotes"></div><br/>
+          </div>
+            
+            <div id="BonusInfo" class="BonusInfo">
+            <form action="/en-US/custom/SA-ctf_scoreboard/scoreboard_controller/submit_bonus_info" method="get">
+              <input type="hidden" id="Number" name="Number" value="$Number$"/>
+              <input type="hidden" id="Question" name="Question" value="$Question$"/>
+
+              <b>$SolicitBonusInstructions$ </b>
+              <input type="text" id="BonusInfo" name="BonusInfo"/> 
+              <input type="submit" value="Submit"/>
+            </form>
+          </div>
+          </div>
+            
+            <p/>
+          <p/>
+          <a href="questions"> Return to Question List </a><br/>
+          <a id="ViewDetails"> View Response Details</a>
+            </html>
+    </panel>
+  </row>
+  <row>
+    <panel depends="$ViewDetails$">
+      <html>
+            
+            
+     	<p/>
+        <h3> Response Details </h3>
+        Question: $QuestionOfficial$<br/>
+        Number: $Number$<br/>
+		User: $user$<br/>
+		Base points available: $BasePointsAvailable$<br/>
+		Start time (epoch): $StartTime$<br/>
+		End time (epoch): $EndTime$<br/>
+		Results: $Result$<br/>
+		Penalty: $Penalty$<br/>
+		Base points awarded: $BasePointsAwarded$<br/>
+		Speed bonus points awarded: $SpeedBonusAwarded$<br/>
+		Additional bonus points awarded: $AdditionalBonusAwarded$<br/>
+        <p/>
+        
+        <h3>What does this mean?</h3>
+        <ul>
+          <li>A full description of scoring is available on the <a href="rules">rules page</a>
+          </li>
+          <li>If you answer a question correctly (and between the start and end times for that question), your team will be awarded full base points. </li>
+          <li>Correct answers also earn a speed bonus which is larger for earlier entries, and smaller for later entries. Speed counts! </li>
+          <li>If your result is correct, but you were not awarded base or bonus points, you likely submitted your answer before or after the question was 
+              active. This is usually not something you need to worry about as the organizers will have set the times appropriately for the competition. </li>
+          <li>You may answer a question correctly more than once, but it won't do you any good. Multiple correct 
+              submissions do not result in a penalty, but we only count one correct submission (the one that resulted in 
+              the most points) per question. Regardless of what you think you see above, <b> It does not 
+              pay to resubmit correct answers for the same question multiple times. </b>
+          </li>
+          <li>An educated guess is not a bad thing. On the other hand, we can't have you brute-forcing our answer system. Incorrect answers
+              result in a penalty. Penalties are cumulative, so after a certain number of incorrect responses you will have exhausted the 
+              base and bonus points available for that question. </li>
+          <li>If you are working as a team, you need <b>not</b> submit answers from multiple users. In fact there is no benefit to doing so. 
+              Be careful with incorrect attempts though, as a penalty against one team member is a penalty against all. We recommend 
+              staying in close contact with your team during the competition. </li>
+        </ul>
+      </html>
+    </panel>
+  </row>
+</dashboard>

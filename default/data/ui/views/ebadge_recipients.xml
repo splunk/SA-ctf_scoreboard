@@ -1,0 +1,27 @@
+<dashboard script="all_ebadges.js" stylesheet="all_ebadges.css" hideEdit="True" refresh="30">
+  <label>eBadge Recipients</label>
+  <row>
+    <panel>
+      <table id="badge_table">
+        <search>
+          <query>| inputlookup ctf_badges 
+| lookup ctf_badge_entitlements BadgeNumber 
+| search `get_user_info` 
+| stats dc(Team) as "Team Count" values(Team) as Teams dc(DisplayUsername) as "User Count" values(DisplayUsername) as Users by BadgeNumber BadgeURL BadgeName BadgeDescription 
+| eval BadgeURL=mvjoin(BadgeURL, ",") 
+| sort BadgeNumber | rename BadgeNumber as "No." | eval Teams=mvindex(Teams, 0, 10) | eval Users=mvindex(Users, 0, 10)</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

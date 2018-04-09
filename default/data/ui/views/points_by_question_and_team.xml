@@ -1,0 +1,80 @@
+<form hideEdit="True" refresh="30">
+  <label>Points by Question and Team</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="multiselect" token="team" searchWhenChanged="true">
+      <label>Teams</label>
+      <search>
+        <query>`get_user_info` | dedup Team</query>
+        <earliest>0</earliest>
+      </search>
+      <fieldForLabel>Team</fieldForLabel>
+      <fieldForValue>Team</fieldForValue>
+      <valuePrefix>Team=</valuePrefix>
+      <delimiter> OR </delimiter>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="checkbox" token="display" searchWhenChanged="true">
+      <label>Display Options</label>
+      <choice value="- *Base*">Hide Base</choice>
+      <choice value="- *Bonus*">Hide Bonus</choice>
+      <choice value="- *Penalty*">Hide Penalty</choice>
+      <delimiter> </delimiter>
+      <prefix>| fields - nofield</prefix>
+      <default></default>
+      <initialValue></initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+        Note this visualization will only display a maximum of 10 teams. Use the "Teams" selector above to remove "All" and narrow your search.
+      </html>
+    </panel>
+    </row><row>
+    <panel>
+      <chart>
+        <search>
+          <query>earliest=0 index=scoreboard user!=admin 
+            | append 
+             [| inputlookup ctf_questions 
+              | eval user=" " 
+              | eval BasePointsAwarded=0 
+              | eval SpeedBonusAwarded=0 
+              | eval Penalty=0] 
+            | eval Penalty = 0 - Penalty 
+            | lookup ctf_users Username AS user 
+            | eval Team=case(Team != "", Team, DisplayUsername != "", DisplayUsername, user != "", user) | search $team$
+            | chart limit=10 useother=false max(BasePointsAwarded) as BasePoints max(SpeedBonusAwarded) as BonusPoints sum(Penalty) as Penalty by Number, Team 
+            | fields - $display$
+            </query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="height">600</option>
+      </chart>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,68 @@
+/* Custom Icons */
+td.icon {
+    text-align: center;
+}
+td.icon i {
+    font-size: 25px;
+    text-shadow: 1px 1px #aaa;
+}
+td.icon .severe {
+    color: red;
+}
+td.icon .elevated {
+    color: orangered;
+}
+td.icon .low {
+    color: #006400;
+}
+/* Row Coloring */
+#highlight tr td {
+    background-color: #c1ffc3 !important;
+}
+#highlight tr.range-elevated td {
+    background-color: #ffc57a !important;
+}
+#highlight tr.range-severe td {
+    background-color: #d59392 !important;
+}
+#highlight .table td {
+    border-top: 1px solid #fff;
+}
+#highlight td.range-severe, td.range-elevated {
+    font-weight: bold;
+}
+.icon-inline i {
+    font-size: 18px;
+    margin-left: 5px;
+}
+.icon-inline i.icon-alert-circle {
+    color: #ef392c;
+}
+.icon-inline i.icon-alert {
+    color: #ff9c1a;
+}
+.icon-inline i.icon-check {
+    color: #5fff5e;
+}
+
+
+td.string {
+	font-size: 12px;
+}
+
+td.numeric {
+	font-size: 12px;
+}
+
+th.sorts {
+	font-size: 12px;
+}
+
+th.sorts.numeric {
+	font-size: 12px;
+}
+
+.axis-labels.highcharts-xaxis-labels {
+	font-size: 12px;
+}
+

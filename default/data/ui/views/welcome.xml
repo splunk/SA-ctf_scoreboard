@@ -1,0 +1,85 @@
+<dashboard hideEdit="true" hideTitle="true">
+  <label>Welcome</label>
+  <row>
+    <panel depends="$a_token_never_seen$">
+      <table>
+        <search>
+          <query>
+          | rest /services/authentication/current-context splunk_server=local 
+          | fields username 
+          | rename username as user `get_user_info` 
+          </query>
+          <earliest>0</earliest>
+          <finalized>
+          <condition match=" 'job.resultCount' = 1">
+            <set token="ctf_user">$result.user$</set>
+            <set token="ctf_DisplayUsername">$result.DisplayUsername$</set>
+            <set token="ctf_Team">$result.Team$</set>            
+            <set token="ctf_SearchUrl">$result.SearchUrl$</set>
+
+          </condition>
+          <condition>
+          </condition>
+          </finalized>
+        </search>
+      </table>
+    </panel>
+    <panel id="welcome_top_panel">
+      <html>
+		<table>
+  <tr>
+    <td>
+      <b><h1> Welcome to the Competition</h1></b>
+              <p>In this competition, you are presented with various questions about multiple scenarios. Some are easy. Some are hard. You will use <br/>
+              the resources linked below, background information and external sources to answer the questions as quickly and accurately as you can.</p>
+              <h1>Your Event Details</h1><p/>
+              <table border="1">
+                <tr>
+                  <td style="font-size: 12px; padding: 10px;">Scoring App User</td>
+                  <td style="font-size: 18px; font-weight: bold; padding: 10px;">$ctf_user$</td>
+                </tr>
+                <tr>
+                  <td style="font-size: 12px; padding: 10px;">Display Username</td>
+                  <td style="font-size: 18px; font-weight: bold; padding: 10px;">$ctf_DisplayUsername$</td>
+                </tr>
+                <tr>
+                  <td style="font-size: 12px; padding: 10px;">Team</td>
+                  <td style="font-size: 18px; font-weight: bold; padding: 10px;">$ctf_Team$ </td>
+                </tr>
+                <tr>
+                  <td style="font-size: 12px; padding: 10px;">Search Server URL</td>
+ <td style="font-size: 18px; font-weight: bold; padding: 10px;"><a target="_blank" href="$ctf_SearchUrl$">$ctf_SearchUrl$</a></td>                </tr>
+              </table>
+              <p/>
+      <b><h1>Important resources</h1></b>
+      <ul>
+        <li> <a href="questions">Questions</a>: This is where the magic happens. Submit answers and review your team's previous guesses.
+        </li>
+        <li> <a href="top_10_teams">Top 10 Teams</a>: This leaderboard shows the current top ten teams.
+		</li>
+        <li> <a href="AllScores">All Teams' Scores</a>: All scores including every team in the competition.
+        </li>
+        <li> <a href="event_activity">Event Activity</a>: You can view current activity like most active teams, and who's buying hints.
+        </li>        
+        <li> <a href="rules">Rules</a>: Take a quick look at the event rules if you haven’t already. TL;DR be a good person.
+        </li>
+	    <li> Help Menu: Scenarios and other resources that will help you throughout the competition.
+        </li>
+      </ul>
+        
+        <b>* If you need assistance: </b>  
+      <ul>
+        <li> Ask any on-site personnel
+        </li>
+      </ul>  
+    </td>
+    <td valign="center">
+		<img alt="Capture the Flag Logo" style="height:350px" src="/static/app/SA-ctf_scoreboard/ctflogo.png"></img>
+    </td>
+  </tr>
+  </table> 
+      </html>
+    </panel>
+
+  </row>
+</dashboard>

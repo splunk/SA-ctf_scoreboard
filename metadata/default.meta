@@ -1,0 +1,418 @@
+[]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+version = 6.4.3
+modtime = 1473816425.666086000
+
+[views/welcome]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1506784471.924952000
+
+[app/ui]
+version = 6.4.0
+modtime = 1469050016.061128000
+
+[app/launcher]
+version = 6.4.0
+modtime = 1469050016.063373000
+
+[myappsetup/setupentity]
+version = 6.4.0
+modtime = 1469051614.977248000
+
+[app/install/is_configured]
+version = 6.4.0
+modtime = 1469051615.558043000
+
+[nav/default]
+version = 6.6.3
+modtime = 1505619708.205149000
+
+[collections/ctf_questions]
+access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+owner = admin
+version = 6.4.0
+modtime = 1469214711.818757000
+
+[transforms/ctf_questions]
+access = read : [ admin, ctf_admin, ctf_answers_service, ctf_competitor ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 6.6.3
+modtime = 1506384680.674894000
+
+[transforms/ctf_users]
+access = read : [ admin, ctf_admin, ctf_answers_service, ctf_competitor ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 6.5.2
+modtime = 1488755043.773197000
+
+[indexes/scoreboard]
+owner = admin
+version = 6.4.0
+modtime = 1471978321.487971000
+
+[props/scoreboard]
+owner = admin
+version = 6.4.0
+modtime = 1471980362.841406000
+
+[views/question2]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.2
+modtime = 1502627633.702632000
+
+[views/standings]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.4.3
+modtime = 1474035587.323872000
+
+[views/questions]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1507313917.386886000
+
+[views/result]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1504543929.904501000
+
+[views/scoreboard_error]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = nobody
+version = 6.4.3
+modtime = 1473964093.198482000
+
+[views/rules]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.0
+modtime = 1479151883.541193000
+
+[views/scenarioday1]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1505827515.719344000
+
+[views/scenarioday2]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1505827543.165589000
+
+[savedsearches/Score-Base]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 6.6.3
+modtime = 1507310917.769291000
+
+[savedsearches/Submission%20Activity%20for%20all%20Teams%20Over%20Time]
+access = read : [ admin ], write : [ admin ]
+export = none
+owner = admin
+version = 6.4.3
+modtime = 1474069785.475229000
+
+[savedsearches/Base%20Bonus%20%28Negative%29%20Penalty%20by%20User%20per%20Number]
+access = read : [ admin ], write : [ admin ]
+export = none
+owner = admin
+version = 6.5.0
+modtime = 1481129429.466466000
+
+[views/points_by_question_and_team]
+owner = admin
+version = 6.6.3
+modtime = 1505956487.424248000
+
+[views/GCPD-PoisonIvy-Memo]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.4.3
+modtime = 1474397024.341742000
+
+[views/GCPD-CERBER-Memo]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.4.3
+modtime = 1474404059.522793000
+
+[views/Alice-Journal]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1505913389.503034000
+
+[views/mission_document]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.4.3
+modtime = 1474672245.631513000
+
+[html/mission_document]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.0
+modtime = 1478995563.176017000
+
+[savedsearches/Scores]
+owner = admin
+version = 6.4.3
+modtime = 1474911142.674413000
+
+[html/Credits]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.4.3
+modtime = 1475050812.976268000
+
+[views/top_10_teams_with_chrome]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.1
+modtime = 1482030837.651402000
+
+[views/welcome_without_chrome]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.4.3
+modtime = 1474997063.844889000
+
+[views/top_10_teams_by_day]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.4.3
+modtime = 1475070596.484111000
+
+[views/poison_ivy_defacement_image]
+owner = admin
+version = 6.5.0
+modtime = 1481132987.253621000
+
+[views/dec15points_by_question_and_team]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.0
+modtime = 1481827069.907649000
+
+[savedsearches/Points%20by%20Question%20and%20Team]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.1
+modtime = 1482423537.152325000
+
+[views/top_10_teams]
+version = 6.6.3
+modtime = 1505956767.727110000
+
+[views/test]
+owner = admin
+version = 6.5.1
+modtime = 1482550244.884653000
+
+[commands/getanswer]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = system
+owner = nobody
+version = 6.5.0
+modtime = 1484085626.356929000
+
+[commands/validateevents]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = system
+owner = nobody
+
+[macros/scoreboard]
+access = read : [ * ], write : [ admin ]
+export = system
+owner = admin
+version = 6.5.2
+modtime = 1490116725.255837000
+
+[views/countdown]
+owner = admin
+version = 6.5.2
+modtime = 1493217968.420155000
+
+[views/countdown2]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.2
+modtime = 1490134515.556682000
+
+[transforms/ctf_hint_entitlements]
+access = read : [ * ], write : [ admin, ctf_admin, ctf_answers_service ]
+export = system
+owner = admin
+version = 6.5.2
+modtime = 1491925808.119818000
+
+[collections/ctf_hint_entitlements]
+access = read : [ * ], write : [ admin, ctf_admin, ctf_answers_service ]
+export = system
+owner = admin
+version = 6.5.2
+modtime = 1491925808.119818000
+
+[collections/ctf_badges]
+access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+owner = admin
+version = 6.4.0
+modtime = 1469214711.818757000
+
+[collections/ctf_badge_entitlements]
+access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+owner = admin
+version = 6.4.0
+modtime = 1469214711.818757000
+
+[transforms/ctf_badges]
+access = read : [ * ], write : [ admin, ctf_admin, ctf_answers_service ]
+export = system
+owner = admin
+version = 6.5.2
+modtime = 1491925808.119818000
+
+[transforms/ctf_badge_entitlements]
+access = read : [ * ], write : [ admin, ctf_admin, ctf_answers_service ]
+export = system
+owner = admin
+version = 6.5.2
+modtime = 1491925808.119818000
+
+[alert_actions/award_ebadge]
+access = read : [ ctf_admin ], write : [ admin, ctf_admin ]
+export = system
+owner = nobody
+version = 6.6.2
+modtime = 1503460362.395271000
+
+[views/all_ebadges]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = nobody
+version = 6.6.3
+modtime = 1505956379.922787000
+
+[views/ebadge_recipients]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = nobody
+version = 6.6.3
+modtime = 1505956434.620593000
+
+[views/ebadges_by_team]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = nobody
+version = 6.6.3
+modtime = 1505956456.447423000
+
+[macros/get_user_info]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 6.6.3
+modtime = 1503601737.035914000
+
+[views/event_activity]
+version = 6.6.3
+modtime = 1507314167.201912000
+
+[macros/Teams_Scores]
+version = 6.6.3
+modtime = 1507262751.414013000
+
+[views/individual_score]
+version = 6.6.3
+modtime = 1507314463.022373000
+
+[views/scenario_3ransomware]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1505658749.370019000
+
+[views/scenario_4apt]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1505827465.379305000
+
+[views/scenario_5fraud_5xx]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1505827583.152549000
+
+[views/fbi_flash_warning]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1505827406.924881000
+
+[views/detailed_scoring_breakdown]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1507314524.391514000
+
+[views/question_timeanswer_densities]
+version = 6.6.3
+modtime = 1507314369.921548000
+
+[views/AllScores]
+version = 6.6.3
+modtime = 1505950909.183812000
+
+[views/score_timeline]
+version = 6.6.3
+modtime = 1507314325.798134000
+
+[views/podium]
+owner = admin
+version = 6.6.3
+modtime = 1506693974.637379000
+
+[macros/validateevents]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 6.6.3
+modtime = 1507311034.641885000
+
