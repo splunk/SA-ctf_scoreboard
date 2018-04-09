@@ -12,7 +12,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 
 ## Installation
 1.	Install Splunk Enterprise 
-    1.1.	Set a strong admin password
-  	1.2.	Set the splunk timezone for the admin user
-  	1.3.	Enable TLS on SplunkWeb
-  	1.4.	Note: Tested with Splunk Enterprise version 7.0.x
+    * Set a strong admin password
+    * Set the splunk timezone for the admin user
+    * Enable TLS on SplunkWeb
+    * Note: Tested with Splunk Enterprise version 7.0.x
