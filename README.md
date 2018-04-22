@@ -102,6 +102,15 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badges
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badge entitlements
 
+14. Set the start / end time of the questions in the competition
+  * Though not required, it is easiest if you set both your computer time zone, AND the Splunk time zone for the user you are logged in as to the main time zone of the event
+  * In the CTF Admin app Go to Edit->Time Setup
+  * Follow the instructions embedded in the dashboard. In Step 0, first ensure you have the proper question set loaded, and make sure the start and end times need adjusting. This is accomplished by visually inspecting the bottom panel.
+  * Assuming the questions look right, and the times need adjusting
+  * Populate the start and end dates/times. If you set your computer and Splunk TZ as suggested in an earlier step, you will likely not have to worry about the TZ setting in the pull-down.
+  * Click green “Submit Changes” button.
+  * Check that “Question Summary” panel at the bottom for sanity.
+  * Verify the start/end times by visiting View -> Q&A and inspecting the NiceStarttime and NiceEndTime columns.
 
 
 
