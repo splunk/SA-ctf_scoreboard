@@ -22,7 +22,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
    
  2. Set the $SPLUNK_HOME environment variable
     * The default location for Splunk is "/opt/splunk" but yours *may* be different
-    * Assuming the default, this command will se the environment variable approprioately.
+    * Assuming the default, this command will se the environment variable approprioately:
        ```
       export SPLUNK_HOME=/opt/splunk
       ```
