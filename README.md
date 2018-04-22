@@ -111,7 +111,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * Click green “Submit Changes” button.
   * Check that “Question Summary” panel at the bottom for sanity.
   * Verify the start/end times by visiting View -> Q&A and inspecting the NiceStarttime and NiceEndTime columns.
-
-
-
-        
+  
+15.	Disable access to the questions for the ctf_competitor role.
+  * Go to Boss of the SOC Admin app and load Edit->Question Access dashboard.
+  * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the deck, then enable it.
