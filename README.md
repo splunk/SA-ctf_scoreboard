@@ -89,4 +89,20 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * admin
     * ctf_admin
     * can_delete
+    
+13. Load sample data
+    * Log in as the admin user created above
+    * Navigate to Capture the Flag Admin app
+    * Click each of the following menu items in turn:
+    ** Data Management...->Load SAMPLE data (DANGER)->Load sample users/teams
+    ** Data Management...->Load SAMPLE data (DANGER)->Load sample questions
+    ** Data Management...->Load SAMPLE data (DANGER)->Load sample answers
+    ** Data Management...->Load SAMPLE data (DANGER)->Load sample hints
+    ** Data Management...->Load SAMPLE data (DANGER)->Load sample hint entitlements
+    ** Data Management...->Load SAMPLE data (DANGER)->Load sample badges
+    ** Data Management...->Load SAMPLE data (DANGER)->Load sample badge entitlements
+
+
+
+
         
