@@ -9,7 +9,7 @@ This app, along with its companion [admin app](https://github.com/splunk/SA-ctf_
   * Fully customizable question/answer management
   * Hint management
  
-The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, these apps can run with full functionality on the Enterprise Trial version of Splunk available at [https://www.spunk.com]
+The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, these apps can run with full functionality on the Enterprise Trial version of Splunk available at [https://www.spunk.com](https://www.spunk.com)
 
 ## Installation
 1.	Install Splunk Enterprise 
@@ -66,10 +66,10 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     ```
 
     * Edit scoreboard_controller.config to refelct the following 
-        * The  CTF Answers service account username (probably cabanaboy) 
-        * The  CTF Answers service account password you chose above
-        * A vkey parameter which should just be a random string, 10-20 characters in length
-        * Note scoreboard_controller.config is prevented via .gitignore from being checked into the git repository. Only the example file is included in the repository.
+    * The  CTF Answers service account username (probably cabanaboy) 
+    * The  CTF Answers service account password you chose above
+    * A vkey parameter which should just be a random string, 10-20 characters in length
+    * Note scoreboard_controller.config is prevented via .gitignore from being checked into the git repository. Only the example file is included in the repository.
 
 10. Restart Splunk to recognize the changes to the controller configuration file.
     ```
@@ -86,7 +86,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 12.	Set up an admin user 
     * It does not need to be *the* Splunk admin user, but it can be and often is
     * In Splunk Web ensure the admin user has been assigned the following roles: 
-        * admin
-        * ctf_admin
-        * can_delete
+    * admin
+    * ctf_admin
+    * can_delete
         
