@@ -47,7 +47,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     ```
     $SPLUNK_HOME/bin/splunk restart
     ```
-7.	Create Scoreboard log directory 
+7.	Create scoreboard log directory 
     ```
     mkdir $SPLUNK_HOME/var/log/scoreboard
     ```
