@@ -41,7 +41,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 4.	Install the [CTF Scoreboard Admin app](https://github.com/daveherrald/SA-ctf_scoreboard_admin)
     ```
     cd $SPLUNK_HOME/etc/apps
-    git https://github.com/splunk/SA-ctf_scoreboard_admin
+    git clone https://github.com/splunk/SA-ctf_scoreboard_admin
     ```
 5.	Restart Splunk to recognize all the pre-requisites and the scoring apps
     ```
