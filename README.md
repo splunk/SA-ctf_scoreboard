@@ -114,4 +114,4 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   
 15.	Disable access to the questions for the ctf_competitor role.
   * Go to Boss of the SOC Admin app and load Edit->Question Access dashboard.
-  * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the deck, then enable it.
+  * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the competition, then enable it.
