@@ -103,7 +103,10 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badge entitlements
   * It's not _really_ dangerous, but it will overwrite the data you currently have loded in the game.
 
-14. Set the start / end time of the questions in the competition
+14. Customize your questions/answers/hints
+  * Use the items on the Edit menu to customize the game to your liking.
+  
+15. Set the start / end time of the questions in the competition
   * Though not required, it is easiest if you set both your computer time zone, AND the Splunk time zone for the user you are logged in as to the main time zone of the event
   * In the CTF Admin app Go to Edit->Time Setup
   * Follow the instructions embedded in the dashboard. In Step 0, first ensure you have the proper question set loaded, and make sure the start and end times need adjusting. This is accomplished by visually inspecting the bottom panel.
@@ -113,6 +116,8 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * Check that “Question Summary” panel at the bottom for sanity.
   * Verify the start/end times by visiting View -> Q&A and inspecting the NiceStarttime and NiceEndTime columns.
   
-15.	Disable access to the questions for the ctf_competitor role.
+16.	Disable access to the questions for the ctf_competitor role.
   * Go to Boss of the SOC Admin app and load Edit->Question Access dashboard.
   * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the competition, then enable it.
+  
+
