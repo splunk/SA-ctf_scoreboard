@@ -3,11 +3,11 @@
 A capture the flag scoreboard app for Splunk.
 
 This app, along with its companion [admin app](https://github.com/splunk/SA-ctf_scoreboard_admin), allows anyone to run their own jeopardy-style capture the flag (CTF) events. These are the same apps that we at Splunk use to run our popular [Splunk Boss of the SOC (BOTS)](https://www.splunk.com/blog/2017/09/06/what-you-need-to-know-about-boss-of-the-soc.html) and Boss of the NOC (BOTN) competitions. The apps include the following features:
-  * User/team management
+  * User/Team management
   * Scoring management
-  * Comprehensive scooreboards, dashboards, and analytics
-  * Fully customizable question/answer management
+  * Question/Answer management
   * Hint management
+  * Comprehensive scoreboards, dashboards, and analytics
  
 The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, these apps can run with full functionality on the Enterprise Trial version of Splunk available at [www.splunk.com](https://www.splunk.com)
 
@@ -114,10 +114,10 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 15. Set the start / end time of the questions in the competition
   * Though not required, it is easiest if you set both your computer time zone, AND the Splunk time zone for the user you are logged in as to the main time zone of the event
   * In the CTF Admin app Go to Edit->Time Setup
-  * Follow the instructions embedded in the dashboard. In Step 0, first ensure you have the proper question set loaded, and make sure the start and end times need adjusting. This is accomplished by visually inspecting the bottom panel.
-  * Assuming the questions look right, and the times need adjusting
-  * Populate the start and end dates/times. If you set your computer and Splunk TZ as suggested in an earlier step, you will likely not have to worry about the TZ setting in the pull-down.
-  * Click green “Submit Changes” button.
+  * Follow the instructions embedded in the dashboard. In Step 0, first ensure you have the proper question set loaded. Review your start and end times to determine if they need to be adjusted. This is accomplished by visually inspecting the bottom panel.
+  * If the questions look right, but the times need adjusting
+    * Populate the start and end dates/times in the GUI. If you set your computer and Splunk TZ as suggested in an earlier step, you will likely not have to worry about the TZ setting in the pull-down.
+    * Click green “Submit Changes” button.
   * Check that “Question Summary” panel at the bottom for sanity.
   * Verify the start/end times by visiting View -> Q&A and inspecting the NiceStarttime and NiceEndTime columns.
   
