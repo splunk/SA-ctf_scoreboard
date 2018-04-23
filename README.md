@@ -139,6 +139,7 @@ The following files are included from the [Splunk 6.x Dashboard Examples app](ht
  * appserver/static/table_icons_inline.js
  * appserver/static/table_decorations.css 
 
+
  
  
   
