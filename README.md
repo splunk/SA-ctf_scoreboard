@@ -101,6 +101,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * Data Management...->Load SAMPLE data (DANGER)->Load sample hint entitlements
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badges
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badge entitlements
+  * It's not _really_ dangerous, but it will overwrite the data you currently have loded in the game.
 
 14. Set the start / end time of the questions in the competition
   * Though not required, it is easiest if you set both your computer time zone, AND the Splunk time zone for the user you are logged in as to the main time zone of the event
