@@ -13,7 +13,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 
 ## Related Projects
   * [Boss of the SOC Version 1 (botsv1) data set](https://github.com/daveherrald/botsv1)
-  * Boss of the SOC Version 1 (botsv1) questions, answers, hints. Please contact bots <at> splunk.com for access to these resources.
+  * Boss of the SOC Version 1 (botsv1) questions, answers, hints. Please contact bots \<at\> splunk.com for access to these resources.
 
 
 ## Installation
