@@ -120,4 +120,15 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * Go to Boss of the SOC Admin app and load Edit->Question Access dashboard.
   * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the competition, then enable it.
   
+## Authors
+Written in 2016-2018 by David Herrald and Ryan Kovar, with contributions from Brad Lindow, James Brodsky, David Veuve, John Stoner, Steve Brant, Jesse Trucks, Lily Lee, Jon Lebaugh, Bill Babillon, Luke Murphey, Filip Wijnholds, and others.
+
+## Copyright and License
+To the extent possible under law, the author(s) have dedicated
+all copyright and related and neighboring rights to this software
+to the public domain worldwide. This software is distributed
+without any warranty. You should have received a copy of the CC0
+Public Domain Dedication along with this software. If not, see
+http://creativecommons.org/publicdomain/zero/1.0/.
+  
 
