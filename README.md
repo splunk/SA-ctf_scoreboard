@@ -130,5 +130,16 @@ to the public domain worldwide. This software is distributed
 without any warranty. You should have received a copy of the CC0
 Public Domain Dedication along with this software. If not, see
 http://creativecommons.org/publicdomain/zero/1.0/.
+
+ 
+### Special Copyright/License Notes
+
+The following files are included from the [Splunk 6.x Dashboard Examples app](https://splunkbase.splunk.com/app/1603/) version 6.6.1 and are subject to the licenses included therein.
+ * appserver/static/custom_table_row_expansion.js
+ * appserver/static/table_icons_inline.js
+ * appserver/static/table_decorations.css 
+
+ 
+ 
   
 
