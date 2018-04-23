@@ -11,6 +11,11 @@ This app, along with its companion [admin app](https://github.com/splunk/SA-ctf_
  
 The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, these apps can run with full functionality on the Enterprise Trial version of Splunk available at [www.splunk.com](https://www.splunk.com)
 
+## Related Projects
+  * [Boss of the SOC Version (botsv1) data set](https://github.com/daveherrald/botsv1)
+  * Boss of the SOC Version (botsv1) questions, answers, hints. Please contact bots <at> splunk.com for access to these resources.
+
+
 ## Installation
 1.	Install Splunk Enterprise 
   * The apps are designed to run on Linux and/or Mac OSX; they have never been tested on Splunk for Windows (Note: Tested with Splunk Enterprise version 7.0.3)
