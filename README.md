@@ -22,20 +22,20 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * Download Splunk from [www.splunk.com](https://www.splunk.com/) 
   * Refer to Splunk installation instructions for [Linux](http://docs.splunk.com/Documentation/Splunk/7.0.3/Installation/InstallonLinux) and [Mac OSX](http://docs.splunk.com/Documentation/Splunk/7.0.3/Installation/InstallonMacOS) as necessary 
   * Set a strong password for the Splunk admin user
-  * Set the Splunk timezone for the admin user
+  * Set the time zone for the admin user via Splunk Web
   * [Enable HTTPS](http://docs.splunk.com/Documentation/Splunk/7.0.3/Security/TurnonbasicencryptionwithSplunkWeb) on Splunk Web
    
  2. Set the $SPLUNK_HOME environment variable
   * The default location for Splunk is "/opt/splunk" but yours *may* be different
-  * Assuming the default, this command will se the environment variable approprioately:
+  * Assuming the default, this command will set the environment variable appropriately:
        ```
       export SPLUNK_HOME=/opt/splunk
       ```
-2.	Install the following pre-requisite Splunk apps and add-ons
+2.	Install the following prerequisite Splunk apps and add-ons
   * [Lookup File Editor app](https://splunkbase.splunk.com/app/1724/) (Note: Tested with version 2.7.0)
-  * [Parallel Coordinates Custom Visualization](https://splunkbase.splunk.com/app/3137/) (Tested with version 1.10)
-  * [Simple Timeseries Custom Visualization](https://splunkbase.splunk.com/app/3436/) (Tested with version 1.0)
-  * [Timeline Custom Visualization](https://splunkbase.splunk.com/app/3120/) (Tested with version 1.2.0)
+  * [Parallel Coordinates Custom Visualization](https://splunkbase.splunk.com/app/3137/) (Note: Tested with version 1.1.0)
+  * [Simple Timeseries Custom Visualization](https://splunkbase.splunk.com/app/3436/) (Note: Tested with version 1.0)
+  * [Timeline Custom Visualization](https://splunkbase.splunk.com/app/3120/) (Note: Tested with version 1.2.0)
 
 3.	Install the [CTF Scoreboard app](https://github.com/daveherrald/SA-ctf_scoreboard)
     ```
@@ -48,7 +48,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     cd $SPLUNK_HOME/etc/apps
     git clone https://github.com/splunk/SA-ctf_scoreboard_admin
     ```
-5.	Restart Splunk to recognize all the pre-requisites and the scoring apps
+5.	Restart Splunk to recognize all the prerequisites and the scoring apps
     ```
     $SPLUNK_HOME/bin/splunk restart
     ```
@@ -62,7 +62,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * Assign the cabanaboy user to role ctf_answers_service
   * This can all be accomplished from the command line as follows:
     ```
-     $SPLUNK_HOME/bin/splunk add user cabanaboy -password <password> -role ctf_answers_service -auth admin:changeme
+     $SPLUNK_HOME/bin/splunk add user cabanaboy -password <password> -role ctf_answers_service -auth admin:<admin_password>
     ```
  9.	Configure the custom controller 
     ```
@@ -70,11 +70,11 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     cp scoreboard_controller.config.example scoreboard_controller.config
     ```
 
-  * Edit scoreboard_controller.config to refelct the following 
-  * The  CTF Answers service account username (probably cabanaboy) 
-  * The  CTF Answers service account password you chose above
+  * Edit scoreboard_controller.config to reflect the following:
+  * The CTF Answers service account username (probably cabanaboy) 
+  * The CTF Answers service account password you chose above
   * A vkey parameter which should just be a random string, 10-20 characters in length
-  * Note scoreboard_controller.config is prevented via .gitignore from being checked into the git repository. Only the example file is included in the repository.
+  * Note: scoreboard_controller.config is prevented via .gitignore from being checked into the git repository. Only the example file is included in the repository.
 
 10. Restart Splunk to recognize the changes to the controller configuration file.
     ```
@@ -106,7 +106,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * Data Management...->Load SAMPLE data (DANGER)->Load sample hint entitlements
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badges
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badge entitlements
-  * It's not _really_ dangerous, but it will overwrite the data you currently have loded in the game.
+  * It's not _really_ dangerous, but it will overwrite the data you currently have loaded in the game.
 
 14. Customize your questions/answers/hints
   * Use the items on the Edit menu to customize the game to your liking.
@@ -119,10 +119,10 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * Populate the start and end dates/times in the GUI. If you set your computer and Splunk TZ as suggested in an earlier step, you will likely not have to worry about the TZ setting in the pull-down.
     * Click green “Submit Changes” button.
   * Check that “Question Summary” panel at the bottom for sanity.
-  * Verify the start/end times by visiting View -> Q&A and inspecting the NiceStarttime and NiceEndTime columns.
+  * Verify the start/end times by visiting View -> Q&A and inspecting the NiceStartTime and NiceEndTime columns.
   
 16.	Disable access to the questions for the ctf_competitor role.
-  * Go to Boss of the SOC Admin app and load Edit->Question Access dashboard.
+  * Go to CTF Admin app and load Edit->Question Access dashboard.
   * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the competition, then enable it.
   
 ## Authors
