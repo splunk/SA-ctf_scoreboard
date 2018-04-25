@@ -33,7 +33,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
       ```
 2.	Install the following prerequisite Splunk apps and add-ons
   * [Lookup File Editor app](https://splunkbase.splunk.com/app/1724/) (Note: Tested with version 2.7.0)
-  * [Parallel Coordinates Custom Visualization](https://splunkbase.splunk.com/app/3137/) (Note: Tested with version 1.10)
+  * [Parallel Coordinates Custom Visualization](https://splunkbase.splunk.com/app/3137/) (Note: Tested with version 1.1.0)
   * [Simple Timeseries Custom Visualization](https://splunkbase.splunk.com/app/3436/) (Note: Tested with version 1.0)
   * [Timeline Custom Visualization](https://splunkbase.splunk.com/app/3120/) (Note: Tested with version 1.2.0)
 
@@ -62,7 +62,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * Assign the cabanaboy user to role ctf_answers_service
   * This can all be accomplished from the command line as follows:
     ```
-     $SPLUNK_HOME/bin/splunk add user cabanaboy -password <password> -role ctf_answers_service -auth admin:changeme
+     $SPLUNK_HOME/bin/splunk add user cabanaboy -password <password> -role ctf_answers_service -auth admin:<admin_password>
     ```
  9.	Configure the custom controller 
     ```
@@ -119,10 +119,10 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * Populate the start and end dates/times in the GUI. If you set your computer and Splunk TZ as suggested in an earlier step, you will likely not have to worry about the TZ setting in the pull-down.
     * Click green “Submit Changes” button.
   * Check that “Question Summary” panel at the bottom for sanity.
-  * Verify the start/end times by visiting View -> Q&A and inspecting the NiceStarttime and NiceEndTime columns.
+  * Verify the start/end times by visiting View -> Q&A and inspecting the NiceStartTime and NiceEndTime columns.
   
 16.	Disable access to the questions for the ctf_competitor role.
-  * Go to Boss of the SOC Admin app and load Edit->Question Access dashboard.
+  * Go to CTF Admin app and load Edit->Question Access dashboard.
   * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the competition, then enable it.
   
 ## Authors
