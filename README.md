@@ -109,9 +109,9 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * It's not _really_ dangerous, but it will overwrite the data you currently have loaded in the game.
 
 14. Customize your questions/answers/hints
-  * Use the items on the Edit menu to customize the game to your liking.
-  * Follow these instructions to load the Splunk BOTS v1 questions, qnswers, and hints
-    1. Obtain these 3 .csv files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
+Use the items on the Edit menu to customize the game to your liking.
+  * To load the Splunk BOTS v1 questions, qnswers, and hints
+    * Obtain these 3 .csv files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
     2. Navigate to Capture the Flag Admin app
     3. Edit -> Edit Questions
     4. Click the Import button in the upper right
