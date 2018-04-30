@@ -109,6 +109,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * It's not _really_ dangerous, but it will overwrite the data you currently have loaded in the game.
 
 14. Customize your questions/answers/hints
+
 Use the items on the Edit menu to customize the game to your liking.
 
 Alternatively, follow these instructions to load the Splunk BOTS v1 questions, answers, and hints
