@@ -110,27 +110,29 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 
 14. Customize your questions/answers/hints
 Use the items on the Edit menu to customize the game to your liking.
-  * To load the Splunk BOTS v1 questions, qnswers, and hints
-    * Obtain these 3 .csv files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
-    2. Navigate to Capture the Flag Admin app
-    3. Edit -> Edit Questions
-    4. Click the Import button in the upper right
-    5. Click Select file to import
-    6. Select the ctf_questions.csv file
-        
+
+Alternatively, follow these instructions to load the Splunk BOTS v1 questions, answers, and hints
+  * Obtain these 3 .csv files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
+  * Navigate to Capture the Flag Admin app
+  * Load questions
+    1. Edit -> Edit Questions
+    2. Click the Import button in the upper right
+    3. Click Select file to import
+    4. Select the ctf_questions.csv file
+  * Load answers   
     1. Edit -> Edit Answers
     2. Click the Import button in the upper right
     3. Click Select file to import
     4. Select the ctf_answers.csv file
-    
-    * Edit -> Edit Hints
-    * Click the Import button in the upper right
-    * Click Select file to import
-    * Select the ctf_hints.csv file
+  * Load hints
+    1. Edit -> Edit Hints
+    2. Click the Import button in the upper right
+    3. Click Select file to import
+    4. Select the ctf_hints.csv file
   * Check that the questions/answers were loaded properly
-    * Navigate to Capture the Flag Admin app
-    * View -> Q & A
-    * Visually inspect the Questions and Answers    
+    1. Navigate to Capture the Flag Admin app
+    2. View -> Q & A
+    3. Visually inspect the Questions and Answers    
   
 15. Set the start / end time of the questions in the competition
   * Though not required, it is easiest if you set both your computer time zone, AND the Splunk time zone for the user you are logged in as to the main time zone of the event
@@ -164,9 +166,3 @@ The following files are included from the [Splunk 6.x Dashboard Examples app](ht
  * appserver/static/custom_table_row_expansion.js
  * appserver/static/table_icons_inline.js
  * appserver/static/table_decorations.css 
-
-
- 
- 
-  
-
