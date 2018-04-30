@@ -109,10 +109,28 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * It's not _really_ dangerous, but it will overwrite the data you currently have loaded in the game.
 
 14. Customize your questions/answers/hints
- * Use the items on the Edit menu to customize the game to your liking.
- * If you would like to load Splunk's v1 Questions and Answers
-  * Obtain these 3 .csv files:
+  * Use the items on the Edit menu to customize the game to your liking.
+  * Follow these instructions to load the Splunk BOTS v1 questions, qnswers, and hints
+    * Obtain these 3 .csv files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
+    * Navigate to Capture the Flag Admin app
+    * Edit -> Edit Questions
+    * Click the Import button in the upper right
+    * Click Select file to import
+    * Select the ctf_questions.csv file
+        
+    * Edit -> Edit Answers
+    * Click the Import button in the upper right
+    * Click Select file to import
+    * Select the ctf_answers.csv file
     
+    * Edit -> Edit Hints
+    * Click the Import button in the upper right
+    * Click Select file to import
+    * Select the ctf_hints.csv file
+  * Check that the questions/answers were loaded properly
+    * Navigate to Capture the Flag Admin app
+    * View -> Q & A
+    * Visually inspect the Questions and Answers    
   
 15. Set the start / end time of the questions in the competition
   * Though not required, it is easiest if you set both your computer time zone, AND the Splunk time zone for the user you are logged in as to the main time zone of the event
