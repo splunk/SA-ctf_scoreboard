@@ -111,17 +111,17 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 14. Customize your questions/answers/hints
   * Use the items on the Edit menu to customize the game to your liking.
   * Follow these instructions to load the Splunk BOTS v1 questions, qnswers, and hints
-    * Obtain these 3 .csv files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
-    * Navigate to Capture the Flag Admin app
-    * Edit -> Edit Questions
-    * Click the Import button in the upper right
-    * Click Select file to import
-    * Select the ctf_questions.csv file
+    1. Obtain these 3 .csv files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
+    2. Navigate to Capture the Flag Admin app
+    3. Edit -> Edit Questions
+    4. Click the Import button in the upper right
+    5. Click Select file to import
+    6. Select the ctf_questions.csv file
         
-    * Edit -> Edit Answers
-    * Click the Import button in the upper right
-    * Click Select file to import
-    * Select the ctf_answers.csv file
+    1. Edit -> Edit Answers
+    2. Click the Import button in the upper right
+    3. Click Select file to import
+    4. Select the ctf_answers.csv file
     
     * Edit -> Edit Hints
     * Click the Import button in the upper right
