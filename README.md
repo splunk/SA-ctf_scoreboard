@@ -109,7 +109,10 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * It's not _really_ dangerous, but it will overwrite the data you currently have loaded in the game.
 
 14. Customize your questions/answers/hints
-  * Use the items on the Edit menu to customize the game to your liking.
+ * Use the items on the Edit menu to customize the game to your liking.
+ * If you would like to load Splunk's v1 Questions and Answers
+  * Obtain these 3 .csv files:
+    
   
 15. Set the start / end time of the questions in the competition
   * Though not required, it is easiest if you set both your computer time zone, AND the Splunk time zone for the user you are logged in as to the main time zone of the event
