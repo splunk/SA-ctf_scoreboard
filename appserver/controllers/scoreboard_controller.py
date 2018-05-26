@@ -77,6 +77,7 @@ USER = Config.get('ScoreboardController', 'USER')
 PASSWORD = Config.get('ScoreboardController', 'PASS')
 VKEY = Config.get('ScoreboardController', 'VKEY')
 PENALTY = Config.get('ScoreboardController', 'PENALTY')
+ENABLE_SPEED_BONUS = Config.get('ScoreboardController', 'ENABLE_SPEED_BONUS')
 
 class ScoreBoardController(controllers.BaseController):
     '''
@@ -712,11 +713,14 @@ class ScoreBoardController(controllers.BaseController):
                         adminoutput['BasePointsAwarded'] = unicode('%s' % (basepoints))
                         partoutput['BasePointsAwarded'] = unicode('%s' % (basepoints))
 
-                        seconds_until_end = int(question_dict['EndTime']) - submitted_time
-                        question_duration = int(question_dict['EndTime']) - int(question_dict['StartTime'])
-                        time_bonus_perc = float(seconds_until_end) / float(question_duration)
-                        time_bonus = float(basepoints) * time_bonus_perc
-                        time_bonus = int(round(time_bonus))
+                        if ENABLE_SPEED_BONUS == '1':
+                            seconds_until_end = int(question_dict['EndTime']) - submitted_time
+                            question_duration = int(question_dict['EndTime']) - int(question_dict['StartTime'])
+                            time_bonus_perc = float(seconds_until_end) / float(question_duration)
+                            time_bonus = float(basepoints) * time_bonus_perc
+                            time_bonus = int(round(time_bonus))
+                        else:
+                            time_bonus = 0
 
                         adminoutput['SpeedBonusAwarded'] = unicode('%s' % (time_bonus))
                         partoutput['SpeedBonusAwarded'] = unicode('%s' % (time_bonus))
