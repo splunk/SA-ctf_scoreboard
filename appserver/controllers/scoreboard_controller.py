@@ -76,7 +76,7 @@ if not CONF_FILE in parsed_conf_files:
 USER = Config.get('ScoreboardController', 'USER')
 PASSWORD = Config.get('ScoreboardController', 'PASS')
 VKEY = Config.get('ScoreboardController', 'VKEY')
-
+PENALTY = Config.get('ScoreboardController', 'PENALTY')
 
 class ScoreBoardController(controllers.BaseController):
     '''
@@ -747,8 +747,8 @@ class ScoreBoardController(controllers.BaseController):
                     adminoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
                     partoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
 
-                    adminoutput['Penalty'] = unicode('%s' % ('10'))
-                    partoutput['Penalty'] = unicode('%s' % ('10'))
+                    adminoutput['Penalty'] = unicode('%s' % (PENALTY))
+                    partoutput['Penalty'] = unicode('%s' % (PENALTY))
 
                 break
 
