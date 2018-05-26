@@ -74,6 +74,8 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
   * The CTF Answers service account username (probably cabanaboy) 
   * The CTF Answers service account password you chose above
   * A vkey parameter which should just be a random string, 10-20 characters in length
+  * Assign the amount of points to deduct for incorrect answers
+  * Decide if you want to enable speed bonus points (1 for yes, 0 for no)
   * Note: scoreboard_controller.config is prevented via .gitignore from being checked into the git repository. Only the example file is included in the repository.
 
 10. Restart Splunk to recognize the changes to the controller configuration file.
