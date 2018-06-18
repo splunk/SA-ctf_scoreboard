@@ -18,7 +18,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 
 ## Installation
 1.	Install Splunk Enterprise 
-  * The apps are designed to run on Linux and/or Mac OSX; they have never been tested on Splunk for Windows (Note: Tested with Splunk Enterprise version 7.0.3)
+  * The apps are designed to run on Linux and/or Mac OSX; they have never been tested on Splunk for Windows (Note: Tested with Splunk Enterprise version 7.1.1)
   * Download Splunk from [www.splunk.com](https://www.splunk.com/) 
   * Refer to Splunk installation instructions for [Linux](http://docs.splunk.com/Documentation/Splunk/7.0.3/Installation/InstallonLinux) and [Mac OSX](http://docs.splunk.com/Documentation/Splunk/7.0.3/Installation/InstallonMacOS) as necessary 
   * Set a strong password for the Splunk admin user
@@ -32,8 +32,8 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
       export SPLUNK_HOME=/opt/splunk
       ```
 2.	Install the following prerequisite Splunk apps and add-ons
-  * [Lookup File Editor app](https://splunkbase.splunk.com/app/1724/) (Note: Tested with version 2.7.0)
-  * [Parallel Coordinates Custom Visualization](https://splunkbase.splunk.com/app/3137/) (Note: Tested with version 1.1.0)
+  * [Lookup File Editor app](https://splunkbase.splunk.com/app/1724/) (Note: Tested with version 3.0.3)
+  * [Parallel Coordinates Custom Visualization](https://splunkbase.splunk.com/app/3137/) (Note: Tested with version 1.2.0)
   * [Simple Timeseries Custom Visualization](https://splunkbase.splunk.com/app/3436/) (Note: Tested with version 1.0)
   * [Timeline Custom Visualization](https://splunkbase.splunk.com/app/3120/) (Note: Tested with version 1.2.0)
 
