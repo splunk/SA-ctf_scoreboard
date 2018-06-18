@@ -6,7 +6,8 @@
         <search>
           <query>
             
-earliest=0 index=scoreboard `get_user_info` `validateevents`
+earliest=0 index=scoreboard `get_user_info` `validateevents` 
+| dedup vcode
 | search 
     [| rest /services/authentication/current-context splunk_server=local 
     | fields username 
