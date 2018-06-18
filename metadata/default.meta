@@ -121,8 +121,8 @@ modtime = 1505827543.165589000
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = system
 owner = admin
-version = 6.6.3
-modtime = 1507310917.769291000
+version = 7.1.1
+modtime = 1529356689.159708000
 
 [savedsearches/Submission%20Activity%20for%20all%20Teams%20Over%20Time]
 access = read : [ admin ], write : [ admin ]
@@ -346,16 +346,16 @@ version = 6.6.3
 modtime = 1503601737.035914000
 
 [views/event_activity]
-version = 6.6.3
-modtime = 1507314167.201912000
+version = 7.1.1
+modtime = 1529356787.023418000
 
 [macros/Teams_Scores]
 version = 6.6.3
 modtime = 1507262751.414013000
 
 [views/individual_score]
-version = 6.6.3
-modtime = 1507314463.022373000
+version = 7.1.1
+modtime = 1529356975.219946000
 
 [views/scenario_3ransomware]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -389,8 +389,8 @@ modtime = 1505827406.924881000
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.3
-modtime = 1507314524.391514000
+version = 7.1.1
+modtime = 1529357064.930851000
 
 [views/question_timeanswer_densities]
 version = 6.6.3
@@ -401,8 +401,8 @@ version = 6.6.3
 modtime = 1505950909.183812000
 
 [views/score_timeline]
-version = 6.6.3
-modtime = 1507314325.798134000
+version = 7.1.1
+modtime = 1529356584.420758000
 
 [views/podium]
 owner = admin
