@@ -149,6 +149,20 @@ Alternatively, follow these instructions to load the Splunk BOTS v1 questions, a
   * Go to CTF Admin app and load Edit->Question Access dashboard.
   * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the competition, then enable it.
   
+## Clearing Results
+To clear all activity from the scoring app, perform these steps. 
+
+WARNING: Running these commands will permanenently delete all the activity from the app and reset all scores to zero.
+
+```
+$SPLUNK_HOME/bin/splunk stop
+$SPLUNK_HOME/bin/splunk clean eventdata -f scoreboard
+$SPLUNK_HOME/bin/splunk clean eventdata -f scoreboard_admin
+rm $SPLUNK_HOME/var/log/scoreboard/scoreboard.log
+rm $SPLUNK_HOME/var/log/scoreboard/scoreboard_admin.log
+$SPLUNK_HOME/bin/splunk start
+```
+  
 ## Authors
 Written in 2016-2018 by David Herrald and Ryan Kovar, with contributions from Brad Lindow, James Brodsky, David Veuve, John Stoner, Steve Brant, Jesse Trucks, Lily Lee, Jon Lebaugh, Bill Babillon, Luke Murphey, Filip Wijnholds, and others.
 
