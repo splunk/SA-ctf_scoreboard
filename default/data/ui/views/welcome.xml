@@ -5,9 +5,9 @@
       <table>
         <search>
           <query>
-          | rest /services/authentication/current-context splunk_server=local 
-          | fields username 
-          | rename username as user `get_user_info` 
+          | makeresults 
+          | eval user="$env:user$"  `get_user_info`
+          | fields * 
           </query>
           <earliest>0</earliest>
           <finalized>
@@ -29,13 +29,14 @@
 		<table>
   <tr>
     <td>
-      <b><h1> Welcome to the Competition</h1></b>
-              <p>In this competition, you are presented with various questions about multiple scenarios. Some are easy. Some are hard. You will use <br/>
-              the resources linked below, background information and external sources to answer the questions as quickly and accurately as you can.</p>
+      <b><h1> Welcome to the Boss of the SOC (BOTS) Competition</h1></b>
+              <p>BOTS is a Capture the Flag-esque competition where you play the part of a SOC analyst. You are presented <br/>
+              with various questions about multiple security-related scenarios. Some are easy. Some are hard. You will use your <br/>
+              Splunk Search Server, background information and external sources to answer the questions as quickly and accurately as you can.</p>
               <h1>Your Event Details</h1><p/>
               <table border="1">
                 <tr>
-                  <td style="font-size: 12px; padding: 10px;">Scoring App User</td>
+                  <td style="font-size: 12px; padding: 10px;">Splunk User</td>
                   <td style="font-size: 18px; font-weight: bold; padding: 10px;">$ctf_user$</td>
                 </tr>
                 <tr>
@@ -69,7 +70,11 @@
         
         <b>* If you need assistance: </b>  
       <ul>
-        <li> Ask any on-site personnel
+        <li> Ask any on-site Splunk BOTS Personnel
+        </li>
+        <li> Email <a href="mailto:bots@splunk">bots@splunk.com</a>
+		</li>
+        <li> Access the Slack channel that was setup for your event
         </li>
       </ul>  
     </td>

@@ -95,7 +95,7 @@
         </search>
         <option name="count">50</option>
         <option name="dataOverlayMode">none</option>
-        <option name="drilldown">row</option>
+        <option name="drilldown">none</option>
         <option name="wrap">true</option>
         <drilldown>
           <link>question2?Number=$row.Number$&amp;Question=$row.Question$</link>

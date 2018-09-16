@@ -1,4 +1,4 @@
-<dashboard refresh="30" hideTitle="true">
+<dashboard hideTitle="true">
   <label>Event Activity</label>
   <row>
     <panel>

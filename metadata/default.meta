@@ -28,8 +28,8 @@ version = 6.4.0
 modtime = 1469051615.558043000
 
 [nav/default]
-version = 6.6.3
-modtime = 1505619708.205149000
+version = 7.0.3
+modtime = 1536588448.944449000
 
 [collections/ctf_questions]
 access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
@@ -65,8 +65,8 @@ modtime = 1471980362.841406000
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.2
-modtime = 1502627633.702632000
+version = 7.1.3
+modtime = 1537041910.959798000
 
 [views/standings]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -79,8 +79,8 @@ modtime = 1474035587.323872000
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.3
-modtime = 1507313917.386886000
+version = 7.1.3
+modtime = 1537039683.681620000
 
 [views/result]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -231,8 +231,8 @@ version = 6.5.1
 modtime = 1482423537.152325000
 
 [views/top_10_teams]
-version = 6.6.3
-modtime = 1505956767.727110000
+version = 7.1.3
+modtime = 1537041303.607527000
 
 [views/test]
 owner = admin
@@ -321,22 +321,22 @@ modtime = 1503460362.395271000
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = none
 owner = nobody
-version = 6.6.3
-modtime = 1505956379.922787000
+version = 7.1.3
+modtime = 1537041467.654104000
 
 [views/ebadge_recipients]
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = none
 owner = nobody
-version = 6.6.3
-modtime = 1505956434.620593000
+version = 7.1.3
+modtime = 1537041511.329942000
 
 [views/ebadges_by_team]
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = none
 owner = nobody
-version = 6.6.3
-modtime = 1505956456.447423000
+version = 7.1.3
+modtime = 1537041549.229812000
 
 [macros/get_user_info]
 access = read : [ * ], write : [ admin, ctf_admin ]
@@ -346,16 +346,16 @@ version = 6.6.3
 modtime = 1503601737.035914000
 
 [views/event_activity]
-version = 7.1.1
-modtime = 1529356787.023418000
+version = 7.1.3
+modtime = 1537041351.819059000
 
 [macros/Teams_Scores]
 version = 6.6.3
 modtime = 1507262751.414013000
 
 [views/individual_score]
-version = 7.1.1
-modtime = 1529356975.219946000
+version = 7.1.3
+modtime = 1537041439.410726000
 
 [views/scenario_3ransomware]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -389,20 +389,20 @@ modtime = 1505827406.924881000
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 7.1.1
-modtime = 1529357064.930851000
+version = 7.1.3
+modtime = 1537041590.049518000
 
 [views/question_timeanswer_densities]
-version = 6.6.3
-modtime = 1507314369.921548000
+version = 7.1.3
+modtime = 1537041413.647511000
 
 [views/AllScores]
-version = 6.6.3
-modtime = 1505950909.183812000
+version = 7.1.3
+modtime = 1537041326.766999000
 
 [views/score_timeline]
-version = 7.1.1
-modtime = 1529356584.420758000
+version = 7.1.3
+modtime = 1537041380.547866000
 
 [views/podium]
 owner = admin
@@ -415,4 +415,12 @@ export = system
 owner = admin
 version = 6.6.3
 modtime = 1507311034.641885000
+
+[app/install/install_source_checksum]
+version = 7.0.3
+modtime = 1536584973.136742000
+
+[views/botsv2_welcome]
+version = 7.1.3
+modtime = 1537041063.538615000
 

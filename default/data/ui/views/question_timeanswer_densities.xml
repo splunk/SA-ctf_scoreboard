@@ -1,4 +1,4 @@
-<dashboard hideEdit="True" refresh="30">
+<dashboard hideEdit="True" >
   <label>Question Time/Answer Densities</label>
   <row>
     <panel>

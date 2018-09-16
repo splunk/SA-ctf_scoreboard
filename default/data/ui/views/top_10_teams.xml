@@ -1,4 +1,4 @@
-<dashboard hideEdit="True" hideTitle="true" refresh="30">
+<dashboard hideEdit="True" hideTitle="true">
   <label>Top 10 Teams</label>
   <search id="base" ref="Score-Base"></search>
   <search base="base" id="secondary">
