@@ -80,7 +80,7 @@ access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin
 export = none
 owner = admin
 version = 7.1.3
-modtime = 1537039683.681620000
+modtime = 1537217339.860859000
 
 [views/result]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -347,7 +347,7 @@ modtime = 1503601737.035914000
 
 [views/event_activity]
 version = 7.1.3
-modtime = 1537041351.819059000
+modtime = 1537224657.884055000
 
 [macros/Teams_Scores]
 version = 6.6.3

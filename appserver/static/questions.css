@@ -1,0 +1,22 @@
+#clock{
+	background: #f2f4f5;
+	color: #000000;
+	text-align: center;
+	font-size: 28px;
+        height: 70px;
+        line-height: 70px;
+}
+#clock-text{
+	text-align: center;
+	font-size: 12px; 
+        line-height: 12px;
+        font-weight:bold;
+}
+
+#ctflogo{
+	width:100px;
+}
+
+#logodiv{
+        line-height: 12px;
+}

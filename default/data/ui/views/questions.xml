@@ -1,26 +1,104 @@
-<dashboard script="table_icons_inline.js, custom_table_row_expansion.js" stylesheet="table_decorations.css" hideEdit="True">
+<dashboard script="table_icons_inline.js, custom_table_row_expansion.js, instantiate_countdown.js" stylesheet="table_decorations.css, questions.css" hideEdit="True">
   <label>Questions</label>
   <row>
     <panel>
-      <single>
-        <search>
-          <query> | makeresults 
-          | eval user="$env:user$"  `get_user_info`
-          | fields Team</query>
-          <earliest>0</earliest>
-          <latest></latest>
-        </search>
-        <option name="useColors">0</option>
-         <option name="height">75</option>
-        <option name="useThousandSeparators">0</option>
-      </single>
+      <html>
+        <div id="logodiv">
+            <img id="ctflogo" src="/static/app/SA-ctf_scoreboard/ctflogo.png"/>
+        </div>
+      </html>
     </panel>
-  </row>
-  <row>
     <panel>
       <html>
-        <h2><b>Click ">" below to see your team's entire submission history for this question.</b></h2>
+        <style>
+            .panel-body{
+                 background-color:#f2f4f5 !important;
+             }
+             .dashboard-panel{
+                 background-color:#f2f4f5 !important;
+             }
+        </style>
+          <h3 class="section-heading">User and Team Information</h3>
+          <table border="0">
+            <tr>
+              <td style="font-size: 12px; padding: 5px;">User</td>
+              <td style="font-size: 18px; font-weight: bold; padding: 5px;">$ctf_DisplayUsername$ ($ctf_user$)</td>
+            </tr>
+            <tr>
+              <td style="font-size: 12px; padding: 5px;">Team Name</td>
+              <td style="font-size: 18px; font-weight: bold; padding: 5px;">$ctf_Team$ </td>
+            </tr>
+            <tr>
+              <td style="font-size: 12px; padding: 5px;">Teammates</td>
+              <td style="font-size: 12px; font-weight: bold; padding: 5px;">$ctf_teammates$</td>
+            </tr>
+          </table>
       </html>
+    </panel>
+    <panel>
+      <html>
+        <h3 class="section-heading"><center>Time Remaining</center></h3>
+        <div id="clock"/>
+        <div id="clock-text">(Days:Hours:Minutes:Seconds)</div>
+      </html>
+    </panel>
+    
+  </row>
+  <row>
+   <panel>
+     <html>
+       <div style="padding:5px;border:1px dotted black;">
+         <h4>
+           <b>Click "&gt;" in the first column of any row below to see your team's entire submission history for that question.</b>
+         </h4>
+       </div>
+     </html>
+   </panel>
+  </row>
+  <row>
+    <panel depends="$a_token_never_seen$">
+      <table>
+        <search>
+          <query>
+          | inputlookup ctf_users 
+          | search 
+            [ search 
+              | eval user="$env:user$" `get_user_info` 
+              | fields Team] 
+              | eval RealPlusSplunk=DisplayUsername . " (" . Username . ")" 
+              | stats values(RealPlusSplunk) as TeamMates 
+              | eval TeamMates=mvjoin(TeamMates, ", ")
+          </query>
+          <earliest>0</earliest>
+          <finalized>
+            <condition match=" 'job.resultCount' = 1">
+              <set token="ctf_teammates">$result.TeamMates$</set>
+            </condition>
+            <condition></condition>
+          </finalized>
+        </search>
+      </table>
+    </panel>
+    <panel depends="$a_token_never_seen$">
+      <table>
+        <search>
+          <query>
+          | makeresults
+          | eval user="$env:user$"  `get_user_info`
+          | fields *
+          </query>
+          <earliest>0</earliest>
+          <finalized>
+            <condition match=" 'job.resultCount' = 1">
+              <set token="ctf_user">$result.user$</set>
+              <set token="ctf_DisplayUsername">$result.DisplayUsername$</set>
+              <set token="ctf_Team">$result.Team$</set>
+              <set token="ctf_SearchUrl">$result.SearchUrl$</set>
+            </condition>
+            <condition></condition>
+          </finalized>
+        </search>
+      </table>
     </panel>
   </row>
   <row>
