@@ -5,14 +5,12 @@
       <html>
       
         <title>Event Activity</title>
-        
-        <img src="/static/app/SA-ctf_scoreboard/ctflogo.png" width="200" align="left" hspace="20"/>
-
-        <h1 style="font-size:40pt;text-align:center;position:absolute;top:50%;left:50%;transform:translateX(-50%)translateY(-50%);">
-		Event Activity
-        </h1>
- 
-
+        <div >
+          <img style="height: 100px;" src="/static/app/SA-ctf_scoreboard/ctflogo.png"/>
+          <h1 style="font-size:36pt;text-align:center;position:absolute;top:50%;left:50%;transform:translateX(-50%)translateY(-50%);">
+		      Event Activity
+          </h1>
+        </div>
       </html>
     </panel>
   </row>
@@ -20,7 +18,7 @@
     <panel>
       <single>
         <search>
-          <query>index=scoreboard Result=* user!=admin `get_user_info` `validateevents` | top limit=1 Team</query>
+          <query>index=scoreboard Result=* user!=admin `get_user_info`  | top limit=1 Team</query>
           <earliest>0</earliest>
           <latest></latest>
         </search>
@@ -44,7 +42,7 @@
       <single>
         <search>
           <query>
-index=scoreboard Result=* user!=admin `get_user_info` `validateevents`
+index=scoreboard Result=* user!=admin `get_user_info` 
 | append [ | stats count | fields - count | eval Team="No recent activity." ] | top limit=1 Team</query>
           <earliest>-60m</earliest>
           <latest></latest>
@@ -71,7 +69,7 @@ index=scoreboard Result=* user!=admin `get_user_info` `validateevents`
       <table>
         <title>Most Recent Activity</title>
         <search>
-          <query>index=scoreboard Result=* user!=admin `get_user_info` `validateevents` 
+          <query>index=scoreboard Result=* user!=admin `get_user_info` 
 | dedup vcode
 | rename BasePointsAwarded as Points 
 | rename SpeedBonusAwarded as Bonus 
@@ -96,9 +94,7 @@ index=scoreboard Result=* user!=admin `get_user_info` `validateevents`
 | eval Bonus = coalesce(Bonus, 0)
 | eval "Additional Bonus" = coalesce(AdditionalBonusAwarded, 0)
 | eval Penalty = coalesce(Penalty, 0)
-
-
-| table "Date/Time" User Team Type Number BadgeNumber "Question/Badge" Result Points Bonus "Additional Bonus" Penalty</query>
+| table "Date/Time" Team Type Number BadgeNumber "Question/Badge" Result Points Bonus "Additional Bonus" Penalty</query>
           <earliest>0</earliest>
         </search>
         <option name="count">15</option>
