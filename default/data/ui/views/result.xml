@@ -1,4 +1,4 @@
-<dashboard script="result.js" stylesheet="result.css" hideEdit="False" hideTitle="False">
+<dashboard script="result.js" stylesheet="result.css" hideEdit="True" hideTitle="True">
   <label>result</label>
   <row>
     <panel>
@@ -38,7 +38,7 @@
             
             <p/>
           <p/>
-          <a href="question2?Number=$Number$&amp;Question=$Question$">Attempt this question again</a><br/>
+          <a href="question?Number=$Number$&amp;Question=$Question$">Attempt this question again</a><br/>
           <a href="questions"> Return to Question List </a><br/>
           <a id="ViewDetails"> View Response Details</a>
             </html>

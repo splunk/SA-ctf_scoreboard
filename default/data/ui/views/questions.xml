@@ -141,7 +141,7 @@
         <option name="drilldown">row</option>
         <option name="wrap">true</option>
         <drilldown>
-          <link>question2?Number=$row.Number$&amp;Question=$row.Question$</link>
+          <link>question?Number=$row.Number$&amp;Question=$row.Question$</link>
         </drilldown>
       </table>
     </panel>

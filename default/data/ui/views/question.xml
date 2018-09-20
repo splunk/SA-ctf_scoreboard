@@ -1,5 +1,5 @@
 <dashboard hideEdit="False" hideTitle="True" script="table_icons_inline.js, custom_table_row_expansion.js" stylesheet="table_decorations.css">
-  <label>question2</label>
+  <label>question</label>
   <row>
     <panel>
       <html>
@@ -98,7 +98,7 @@
         <option name="drilldown">none</option>
         <option name="wrap">true</option>
         <drilldown>
-          <link>question2?Number=$row.Number$&amp;Question=$row.Question$</link>
+          <link>question?Number=$row.Number$&amp;Question=$row.Question$</link>
         </drilldown>
       </table>
     </panel>

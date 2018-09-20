@@ -306,7 +306,7 @@ class ScoreBoardController(controllers.BaseController):
         logger.info(','.join(partoutputlist))
         logger_admin.info(','.join(adminoutputlist))
 
-        raise cherrypy.HTTPRedirect(unicode('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/question2', '&'.join(partoutputlisturl))), 302)
+        raise cherrypy.HTTPRedirect(unicode('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/question', '&'.join(partoutputlisturl))), 302)
 
 
     @expose_page(must_login=True, methods=['GET'])
