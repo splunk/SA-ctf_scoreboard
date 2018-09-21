@@ -4,7 +4,7 @@
     <panel>
       <table id="badge_table">
         <search>
-          <query>| inputlookup ctf_badges | table BadgeNumber, BadgeURL,  BadgeName, BadgeDescription,  BadgeType | fields - BadgeNumber</query>
+          <query>| inputlookup ctf_badges | table BadgeNumber, BadgeURL,  BadgeName, BadgeDescription | fields - BadgeNumber</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
