@@ -27,6 +27,12 @@ def process_event(helper, *args, **kwargs):
     for user_entry in users:
         users_by_Username[user_entry['Username']] = user_entry
         if 'Team' in user_entry:
+            if not user_entry['Team']:
+                if user_entry['DisplayUsername']:
+                    user_entry['Team'] = user_entry['DisplayUsername']
+                else:
+                    user_entry['Team'] = user_entry['Username']
+            
             if user_entry['Team'] != '':
                 if user_entry['Team'] not in users_by_Team:
                     users_by_Team[user_entry['Team']] = []
