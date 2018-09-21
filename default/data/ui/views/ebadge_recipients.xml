@@ -10,10 +10,10 @@
 | mvexpand user `get_user_info` 
 | eval user=if(isnull(StealthModeTeam),user, "Member of ".StealthModeTeam) 
 | eval DisplayUsername=if(isnull(StealthModeTeam),DisplayUsername, "Member of ".StealthModeTeam) 
-| stats dc(Team) as "Team Count" values(Team) as Teams dc(DisplayUsername) as "User Count" values(DisplayUsername) as Users by BadgeNumber BadgeURL BadgeName BadgeDescription 
+| stats values(Team) as Teams values(DisplayUsername) as Users by BadgeNumber BadgeURL BadgeName BadgeDescription 
 | eval BadgeURL=mvjoin(BadgeURL, ",") 
 | sort BadgeNumber 
-| rename BadgeNumber as "No." 
+| fields - BadgeNumber 
 | eval Teams=mvindex(Teams, 0, 10) 
 | eval Users=mvindex(Users, 0, 10)</query>
                            <earliest>0</earliest>
