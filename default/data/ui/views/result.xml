@@ -27,7 +27,7 @@
             <div id="BonusInfo" class="BonusInfo">
             <form action="/en-US/custom/SA-ctf_scoreboard/scoreboard_controller/submit_bonus_info" method="get">
               <input type="hidden" id="Number" name="Number" value="$Number$"/>
-              <input type="hidden" id="Question" name="Question" value="$Question$"/>
+              <input type="hidden" id="Question" name="Question" value="$Question|u$"/>
 
               <b>$SolicitBonusInstructions$ </b>
               <input type="text" id="BonusInfo" name="BonusInfo"/> 
