@@ -135,7 +135,7 @@ def process_event(helper, *args, **kwargs):
             partoutputlist.append(unicode('%s=%s' % (k,v)))
             partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v))))
 
-        logger.info(','.join(partoutputlist))
+        #logger.info(','.join(partoutputlist))
         logger_admin.info(','.join(adminoutputlist))
 
     return 0
