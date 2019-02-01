@@ -355,8 +355,8 @@ modtime = 1537041549.229812000
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = system
 owner = admin
-version = 7.1.3
-modtime = 1537254069.909746000
+version = 7.2.3
+modtime = 1548951680.128001000
 
 [views/event_activity]
 version = 7.1.3
@@ -438,15 +438,15 @@ version = 7.1.3
 modtime = 1537041063.538615000
 
 [views/botsv3_welcome]
-version = 7.1.3
-modtime = 1537291703.600370000
+version = 7.2.3
+modtime = 1548971710.754724000
 
 [macros/get_user_info_real]
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = system
 owner = admin
-version = 7.1.3
-modtime = 1537254371.473942000
+version = 7.2.3
+modtime = 1548951662.695511000
 
 [views/botsv3_scenario_1training]
 access = read : [ * ], write : [ ctf_admin ]
@@ -468,4 +468,29 @@ export = none
 owner = admin
 version = 7.1.3
 modtime = 1537455953.027777000
+
+[collections/ctf_eulas]
+access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+owner = admin
+
+[transforms/ctf_eulas]
+access = read : [ admin, ctf_admin, ctf_answers_service, ctf_competitor ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+
+[collections/ctf_eulas_accepted]
+access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin, ctf_competitor]
+owner = admin
+
+[transforms/ctf_eulas_accepted]
+access = read : [ admin, ctf_admin, ctf_answers_service, ctf_competitor ], write : [ admin, ctf_admin, ctf_competitor ]
+export = system
+owner = admin
+
+[views/user_agreement_required]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 7.2.3
+modtime = 1548981329.899980000
 
