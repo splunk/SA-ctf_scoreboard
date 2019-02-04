@@ -106,6 +106,8 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * Data Management...->Load SAMPLE data (DANGER)->Load sample hint entitlements
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badges
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badge entitlements
+    * Data Management...->Load SAMPLE data (DANGER)->Load sample user agreements
+
   * It's not _really_ dangerous, but it will overwrite the data you currently have loaded in the game.
 
 14. Customize your questions/answers/hints
