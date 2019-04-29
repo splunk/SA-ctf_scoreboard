@@ -114,7 +114,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 
 Use the items on the Edit menu to customize the game to your liking.
 
-Alternatively, follow these instructions to load the Splunk BOTS v1 questions, answers, and hints
+Alternatively, follow these instructions to load the Splunk BOTS questions, answers, and hints
   * Obtain the following three files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
   * Navigate to Capture the Flag Admin app
   * Load questions
