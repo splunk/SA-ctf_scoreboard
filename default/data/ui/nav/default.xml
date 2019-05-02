@@ -1,12 +1,16 @@
 <nav search_view="search" color="#000000">
-  <view name="welcome" default="true"/>
+  <view name="botsv3_welcome" default="true"/>
   <view name="questions" />
   <collection label="Scoring">
     <view name="top_10_teams" />
     <view name="AllScores" />
     <view name="event_activity" />
     <view name="score_timeline" />
-    <view name="question_timeanswer_densities"/>
+    <collection label="Q &amp; A Densities"> 
+      <view name="question_timeanswer_densities_100"/>
+        <view name="question_timeanswer_densities_200"/>
+      <view name="question_timeanswer_densities_300"/>
+    </collection>
     <view name="individual_score" />
     <view name="all_ebadges" />
     <view name="ebadge_recipients" />
@@ -15,14 +19,16 @@
   </collection>
   <view name="rules" />
   <collection label="Help">
+    <view name="botsv3_scenario_1training" />
+    <view name="botsv3_scenario_2cloud" />
+    <view name="botsv3_scenario_3apt" />
+    <view name="botsv3_sourcetypes"/>
+    <view name="botsv3_networkdiagram"/>
+    <view name="botsv3_stout_diamond"/>
+    <view name="botsv3_lager_diamond"/>
     <a href="https://www.splunk.com/content/dam/splunk2/pdfs/solution-guides/splunk-quick-reference-guide.pdf" target="_blank">Splunk Quick Reference Guide</a>
-    <view name="fbi_flash_warning" />
-    <view name="scenarioday1" />
-      <view name="scenarioday2" />
-      <view name="scenario_3ransomware" />
-      <view name="scenario_4apt" />
-      <view name="scenario_5fraud_5xx" />
   </collection>
+  <a href="/app/SA-ctf_scoreboard/botsv3_welcome?tour=botsv3_welcome-tour">BOTS Tutorial</a>
   <view name="Credits" />
   <view name="dashboards" />
   <view name="search" />
