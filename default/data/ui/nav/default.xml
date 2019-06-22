@@ -1,5 +1,5 @@
 <nav search_view="search" color="#000000">
-  <view name="botsv3_welcome" default="true"/>
+  <view name="welcome" default="true"/>
   <view name="questions" />
   <collection label="Scoring">
     <view name="top_10_teams" />
