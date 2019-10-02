@@ -106,13 +106,15 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     * Data Management...->Load SAMPLE data (DANGER)->Load sample hint entitlements
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badges
     * Data Management...->Load SAMPLE data (DANGER)->Load sample badge entitlements
+    * Data Management...->Load SAMPLE data (DANGER)->Load sample user agreements
+
   * It's not _really_ dangerous, but it will overwrite the data you currently have loaded in the game.
 
 14. Customize your questions/answers/hints
 
 Use the items on the Edit menu to customize the game to your liking.
 
-Alternatively, follow these instructions to load the Splunk BOTS v1 questions, answers, and hints
+Alternatively, follow these instructions to load the Splunk BOTS questions, answers, and hints
   * Obtain the following three files: ctf_questions.csv, ctf_answers.csv, ctf_hints.csv
   * Navigate to Capture the Flag Admin app
   * Load questions
@@ -148,6 +150,20 @@ Alternatively, follow these instructions to load the Splunk BOTS v1 questions, a
 16.	Disable access to the questions for the ctf_competitor role.
   * Go to CTF Admin app and load Edit->Question Access dashboard.
   * The current status of questions will be displayed. Disable access until immediately before you are ready to begin the competition, then enable it.
+  
+## Clearing Results
+To clear all activity from the scoring app, perform these steps. 
+
+WARNING: Running these commands will permanenently delete all the activity from the app and reset all scores to zero.
+
+```
+$SPLUNK_HOME/bin/splunk stop
+$SPLUNK_HOME/bin/splunk clean eventdata -f scoreboard
+$SPLUNK_HOME/bin/splunk clean eventdata -f scoreboard_admin
+rm $SPLUNK_HOME/var/log/scoreboard/scoreboard.log
+rm $SPLUNK_HOME/var/log/scoreboard/scoreboard_admin.log
+$SPLUNK_HOME/bin/splunk start
+```
   
 ## Authors
 Written in 2016-2018 by David Herrald and Ryan Kovar, with contributions from Brad Lindow, James Brodsky, David Veuve, John Stoner, Steve Brant, Jesse Trucks, Lily Lee, Jon Lebaugh, Bill Babillon, Luke Murphey, Filip Wijnholds, and others.

@@ -1,0 +1,8 @@
+<dashboard hideEdit="true">
+  <label>User Agreement Required</label>
+  <row>
+    <html>
+      It looks like you tried to play without accepting the user agreement. Please navigate to the Welcome Page in this app to accept the agreement!
+    </html>
+  </row>
+</dashboard>

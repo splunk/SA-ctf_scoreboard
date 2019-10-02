@@ -28,8 +28,8 @@ version = 6.4.0
 modtime = 1469051615.558043000
 
 [nav/default]
-version = 6.6.3
-modtime = 1505619708.205149000
+version = 7.1.3
+modtime = 1537453924.747556000
 
 [collections/ctf_questions]
 access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
@@ -61,12 +61,12 @@ owner = admin
 version = 6.4.0
 modtime = 1471980362.841406000
 
-[views/question2]
+[views/question]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.2
-modtime = 1502627633.702632000
+version = 7.1.3
+modtime = 1537041910.959798000
 
 [views/standings]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -79,15 +79,15 @@ modtime = 1474035587.323872000
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.3
-modtime = 1507313917.386886000
+version = 7.1.3
+modtime = 1537217339.860859000
 
 [views/result]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.3
-modtime = 1504543929.904501000
+version = 7.1.3
+modtime = 1537189027.136810000
 
 [views/scoreboard_error]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -231,8 +231,8 @@ version = 6.5.1
 modtime = 1482423537.152325000
 
 [views/top_10_teams]
-version = 6.6.3
-modtime = 1505956767.727110000
+version = 7.1.3
+modtime = 1537041303.607527000
 
 [views/test]
 owner = admin
@@ -296,6 +296,19 @@ owner = admin
 version = 6.4.0
 modtime = 1469214711.818757000
 
+[collections/ctf_stealth]
+access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin, ctf_competitor, ctf_answers_service ]
+owner = admin
+version = 6.4.0
+modtime = 1469214711.818757000
+
+[transforms/ctf_stealth]
+access = read : [ * ], write : [ admin, ctf_admin, ctf_answers_service, ctf_competitor ]
+export = system
+owner = admin
+version = 6.5.2
+modtime = 1491925808.119818000
+
 [transforms/ctf_badges]
 access = read : [ * ], write : [ admin, ctf_admin, ctf_answers_service ]
 export = system
@@ -321,41 +334,41 @@ modtime = 1503460362.395271000
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = none
 owner = nobody
-version = 6.6.3
-modtime = 1505956379.922787000
+version = 7.1.3
+modtime = 1537041467.654104000
 
 [views/ebadge_recipients]
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = none
 owner = nobody
-version = 6.6.3
-modtime = 1505956434.620593000
+version = 7.1.3
+modtime = 1537041511.329942000
 
 [views/ebadges_by_team]
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = none
 owner = nobody
-version = 6.6.3
-modtime = 1505956456.447423000
+version = 7.1.3
+modtime = 1537041549.229812000
 
 [macros/get_user_info]
 access = read : [ * ], write : [ admin, ctf_admin ]
 export = system
 owner = admin
-version = 6.6.3
-modtime = 1503601737.035914000
+version = 7.2.3
+modtime = 1548951680.128001000
 
 [views/event_activity]
-version = 7.1.1
-modtime = 1529356787.023418000
+version = 7.1.3
+modtime = 1537254879.749099000
 
 [macros/Teams_Scores]
 version = 6.6.3
 modtime = 1507262751.414013000
 
 [views/individual_score]
-version = 7.1.1
-modtime = 1529356975.219946000
+version = 7.1.3
+modtime = 1537255168.957643000
 
 [views/scenario_3ransomware]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -389,20 +402,20 @@ modtime = 1505827406.924881000
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 7.1.1
-modtime = 1529357064.930851000
+version = 7.1.3
+modtime = 1537041590.049518000
 
 [views/question_timeanswer_densities]
-version = 6.6.3
-modtime = 1507314369.921548000
+version = 7.1.3
+modtime = 1537041413.647511000
 
 [views/AllScores]
-version = 6.6.3
-modtime = 1505950909.183812000
+version = 7.1.3
+modtime = 1537041326.766999000
 
 [views/score_timeline]
-version = 7.1.1
-modtime = 1529356584.420758000
+version = 7.1.3
+modtime = 1537041380.547866000
 
 [views/podium]
 owner = admin
@@ -415,4 +428,69 @@ export = system
 owner = admin
 version = 6.6.3
 modtime = 1507311034.641885000
+
+[app/install/install_source_checksum]
+version = 7.0.3
+modtime = 1536584973.136742000
+
+[views/botsv2_welcome]
+version = 7.1.3
+modtime = 1537041063.538615000
+
+[views/botsv3_welcome]
+version = 7.2.3
+modtime = 1548971710.754724000
+
+[macros/get_user_info_real]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 7.2.3
+modtime = 1548951662.695511000
+
+[views/botsv3_scenario_1training]
+access = read : [ * ], write : [ ctf_admin ]
+export = none
+owner = admin
+version = 7.1.3
+modtime = 1537453971.637351000
+
+[views/botsv3_scenario_2cloud]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 7.1.3
+modtime = 1537454061.302639000
+
+[views/botsv3_scenario_3apt]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 7.1.3
+modtime = 1537455953.027777000
+
+[collections/ctf_eulas]
+access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+owner = admin
+
+[transforms/ctf_eulas]
+access = read : [ admin, ctf_admin, ctf_answers_service, ctf_competitor ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+
+[collections/ctf_eulas_accepted]
+access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin, ctf_competitor]
+owner = admin
+
+[transforms/ctf_eulas_accepted]
+access = read : [ admin, ctf_admin, ctf_answers_service, ctf_competitor ], write : [ admin, ctf_admin, ctf_competitor ]
+export = system
+owner = admin
+
+[views/user_agreement_required]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 7.2.3
+modtime = 1548981329.899980000
 

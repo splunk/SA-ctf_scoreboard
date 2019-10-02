@@ -48,7 +48,7 @@ require([
 
         InsRow(CTFResultTable, "Penalty Points Assessed", Penalty)
 
-        AdditionalNotes.innerHTML = "To attempt this question again, just click the 'back' button in your browser.";
+        AdditionalNotes.innerHTML = "";
 
     }
 

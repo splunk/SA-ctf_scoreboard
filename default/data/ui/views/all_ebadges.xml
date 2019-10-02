@@ -1,10 +1,10 @@
-<dashboard script="all_ebadges.js" stylesheet="all_ebadges.css" hideEdit="True" refresh="30">
+<dashboard script="all_ebadges.js" stylesheet="all_ebadges.css" hideEdit="True" >
   <label>eBadge Descriptions</label>
   <row>
     <panel>
       <table id="badge_table">
         <search>
-          <query>| inputlookup ctf_badges | table BadgeNumber, BadgeURL,  BadgeName, BadgeDescription,  BadgeType | rename BadgeNumber as "No."</query>
+          <query>| inputlookup ctf_badges | table BadgeNumber, BadgeURL,  BadgeName, BadgeDescription | fields - BadgeNumber</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>

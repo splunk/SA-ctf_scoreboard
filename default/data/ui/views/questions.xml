@@ -1,37 +1,115 @@
-<dashboard script="table_icons_inline.js, custom_table_row_expansion.js" stylesheet="table_decorations.css" hideEdit="True">
+<dashboard script="table_icons_inline.js, custom_table_row_expansion.js, instantiate_countdown.js" stylesheet="table_decorations.css, questions.css" hideEdit="True">
   <label>Questions</label>
   <row>
     <panel>
-      <single>
-        <search>
-          <query>| rest /services/authentication/current-context 
-| rename username as user `get_user_info`
-| fields Team</query>
-          <earliest>0</earliest>
-          <latest></latest>
-        </search>
-        <option name="useColors">0</option>
-         <option name="height">75</option>
-        <option name="useThousandSeparators">0</option>
-      </single>
+      <html>
+        <div id="logodiv">
+            <img id="ctflogo" src="/static/app/SA-ctf_scoreboard/ctflogo.png"/>
+        </div>
+      </html>
     </panel>
-  </row>
-  <row>
     <panel>
       <html>
-        <h2><b>Click ">" below to see your team's entire submission history for this question.</b></h2>
+        <style>
+            .panel-body{
+                 background-color:#f2f4f5 !important;
+             }
+             .dashboard-panel{
+                 background-color:#f2f4f5 !important;
+             }
+        </style>
+          <h3 class="section-heading">User and Team Information</h3>
+          <table border="0">
+            <tr>
+              <td style="font-size: 12px; padding: 5px;">User</td>
+              <td style="font-size: 18px; font-weight: bold; padding: 5px;">$ctf_DisplayUsername$ ($ctf_user$)</td>
+            </tr>
+            <tr>
+              <td style="font-size: 12px; padding: 5px;">Team Name</td>
+              <td style="font-size: 18px; font-weight: bold; padding: 5px;">$ctf_Team$ </td>
+            </tr>
+            <tr>
+              <td style="font-size: 12px; padding: 5px;">Teammates</td>
+              <td style="font-size: 12px; font-weight: bold; padding: 5px;">$ctf_teammates$</td>
+            </tr>
+          </table>
       </html>
+    </panel>
+    <panel>
+      <html>
+        <h3 class="section-heading"><center>Time Remaining</center></h3>
+        <div id="clock"/>
+        <div id="clock-text">(Days:Hours:Minutes:Seconds)</div>
+      </html>
+    </panel>
+    
+  </row>
+  <row>
+   <panel>
+     <html>
+       <div style="padding:5px;border:1px dotted black;">
+         <h4>
+           <b>Click "&gt;" in the first column of any row below to see your team's entire submission history for that question.</b>
+         </h4>
+       </div>
+     </html>
+   </panel>
+  </row>
+  <row>
+    <panel depends="$a_token_never_seen$">
+      <table>
+        <search>
+          <query>
+          | inputlookup ctf_users 
+          | search 
+            [ search 
+              | eval user="$env:user$" `get_user_info` 
+              | fields Team] 
+              | eval RealPlusSplunk=DisplayUsername . " (" . Username . ")" 
+              | stats values(RealPlusSplunk) as TeamMates 
+              | eval TeamMates=mvjoin(TeamMates, ", ")
+          </query>
+          <earliest>0</earliest>
+          <finalized>
+            <condition match=" 'job.resultCount' = 1">
+              <set token="ctf_teammates">$result.TeamMates$</set>
+            </condition>
+            <condition></condition>
+          </finalized>
+        </search>
+      </table>
+    </panel>
+    <panel depends="$a_token_never_seen$">
+      <table>
+        <search>
+          <query>
+          | makeresults
+          | eval user="$env:user$"  `get_user_info`
+          | fields *
+          </query>
+          <earliest>0</earliest>
+          <finalized>
+            <condition match=" 'job.resultCount' = 1">
+              <set token="ctf_user">$result.user$</set>
+              <set token="ctf_DisplayUsername">$result.DisplayUsername$</set>
+              <set token="ctf_Team">$result.Team$</set>
+              <set token="ctf_SearchUrl">$result.SearchUrl$</set>
+            </condition>
+            <condition></condition>
+          </finalized>
+        </search>
+      </table>
     </panel>
   </row>
   <row>
     <panel>
       <table id="table1">
         <search>
-          <query>index=scoreboard AND (Result="Incorrect" OR Result="Correct" OR Result=Hint OR Result=Bonus) `get_user_info` `validateevents`
+          <query>index=scoreboard AND (Result="Incorrect" OR Result="Correct" OR Result=Hint OR Result=Bonus) `get_user_info`
 | search 
-    [ rest /services/authentication/current-context 
-    | rename username as user `get_user_info`
-    | fields + Team] 
+    [ | makeresults 
+      | eval user="$env:user$"  `get_user_info`
+      | fields Team] 
 | stats count as Attempts, max(BasePointsAwarded) as BasePointsEarned, max(SpeedBonusAwarded) as BonusPointsEarned, sum(Penalty) as PenaltyPoints, max(AdditionalBonusAwarded) as AdditionalBonus, count(eval(Result=="Incorrect")) as IncorrectAttempts, count(eval(Result=="Correct")) as CorrectAttempts by Number 
 | append 
     [ inputlookup ctf_questions 
@@ -39,8 +117,7 @@
     | eval IncorrectAttempts = 0 
     | eval CorrectAttempts = 0 
     | fields Number Question BasePoints Attempts CorrectAttempts IncorrectAttempts] 
-| gethints
-| stats last(Question) as Question, last(BasePoints) as BasePointsAvailable, last(BasePointsEarned) as BasePointsEarned, last(BonusPointsEarned) as BonusPointsEarned, max(AdditionalBonus) as AdditionalBonus, sum(PenaltyPoints) as PenaltyPoints, sum(Attempts) as Attempts, sum(IncorrectAttempts) as IncorrectAttempts, sum(CorrectAttempts) as CorrectAttempts, last(HintsAvailable) as HintsAvailable, last(HintsReceived) as HintsReceived by Number 
+| stats last(Question) as Question, last(BasePoints) as BasePointsAvailable, last(BasePointsEarned) as BasePointsEarned, last(BonusPointsEarned) as BonusPointsEarned, max(AdditionalBonus) as AdditionalBonus, sum(PenaltyPoints) as PenaltyPoints, sum(Attempts) as Attempts, sum(IncorrectAttempts) as IncorrectAttempts, sum(CorrectAttempts) as CorrectAttempts by Number 
 | eval Status = if(Attempts = 0,"Unanswered", Status) 
 | eval Status = if(IncorrectAttempts &gt; 0, "Incorrect", Status) 
 | eval Status = if(CorrectAttempts &gt; 0, "Correct", Status) 
@@ -48,13 +125,11 @@
 | fillnull value=0 BonusPointsEarned 
 | fillnull value=0 PenaltyPoints
 | fillnull value=0 AdditionalBonus
-| fields Number Question Status BasePointsAvailable BasePointsEarned BonusPointsEarned AdditionalBonus PenaltyPoints HintsAvailable HintsReceived
+| fields Number Question Status BasePointsAvailable BasePointsEarned BonusPointsEarned AdditionalBonus PenaltyPoints
 | rename BasePointsAvailable as "Base Points Avail." 
 | rename BasePointsEarned as "Base Points Earned" 
 | rename BonusPointsEarned as "Speed Bonus Earned" 
 | rename PenaltyPoints as "Penalty" 
-| rename HintsAvailable as "Hints Available"
-| rename HintsReceived as "Hints Received" 
 | rename AdditionalBonus as "Additional Bonus"
 
 | sort Number</query>
@@ -66,7 +141,7 @@
         <option name="drilldown">row</option>
         <option name="wrap">true</option>
         <drilldown>
-          <link>question2?Number=$row.Number$&amp;Question=$row.Question$</link>
+          <link>question?Number=$row.Number$&amp;Question=$row.Question$</link>
         </drilldown>
       </table>
     </panel>

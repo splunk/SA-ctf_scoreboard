@@ -36,7 +36,7 @@ require([
                return cell.field === 'Number';
             });
             //update the search with the sourcetype that we are interested in
-            this._searchManager.set({ search: 'earliest=0 index=scoreboard Result=* `get_user_info` `validateevents` \
+            this._searchManager.set({ search: 'earliest=0 index=scoreboard Result=* `get_user_info`  \
                                               | getanswer \
                                               | search [ rest /services/authentication/current-context \
                                                          | rename username as user `get_user_info` \

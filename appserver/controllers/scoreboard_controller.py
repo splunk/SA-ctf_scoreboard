@@ -27,7 +27,6 @@ from splunk.appserver.mrsparkle.lib.decorators import expose_page
 import splunklib.client as client
 import splunklib.results as results
 
-
 import urllib
 import httplib2
 from time import localtime,strftime
@@ -145,6 +144,47 @@ class ScoreBoardController(controllers.BaseController):
 
         questions_string = self.get_kv_lookup('ctf_questions', 'SA-ctf_scoreboard')
         question_list = json.loads(questions_string)
+
+        '''
+        We can also easily grab the list of users who have accepted the agreement in the same way.
+        '''
+        accepted_agreement_string = self.get_kv_lookup('ctf_eulas_accepted', 'SA-ctf_scoreboard')
+        accepted_agreement_list = json.loads(accepted_agreement_string)
+        
+        '''
+        We want to be very careful about not logging much data if the user has not accepted the agreement, so we'll 
+        check here and redirect to an informative error page if they have not agreed.
+        '''
+        agreed = False
+        for accepted_agreement in accepted_agreement_list:
+            if accepted_agreement['EulaUsername'] == user:
+                agreed = True
+                if 'EulaDateAccepted' in accepted_agreement:
+                    EulaDateAccepted = accepted_agreement['EulaDateAccepted']
+                else:
+                    EulaDateAccepted = '0'
+
+                if 'EulaId' in accepted_agreement:
+                    EulaId = accepted_agreement['EulaId']
+                else:
+                    EulaId = '0'
+
+                if 'EulaName' in accepted_agreement:
+                    EulaName = accepted_agreement['EulaName']
+                else:
+                    EulaName = ''
+
+                if 'EulaUsername' in accepted_agreement:
+                    EulaUsername = accepted_agreement['EulaUsername']
+                else:
+                    EulaUsername = ''
+                
+                break
+        
+        if not agreed:
+            logger_admin.error(unicode('User {} attempted to play without accepting the user agreement.'.format(user)))
+            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
+        
 
         question_exists = False
         for question in question_list:
@@ -279,6 +319,19 @@ class ScoreBoardController(controllers.BaseController):
         partoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
         adminoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
 
+        partoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+        adminoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+
+        partoutput['EulaId'] = unicode('%s' % (EulaId))
+        adminoutput['EulaId'] = unicode('%s' % (EulaId))
+
+        partoutput['EulaName'] = unicode('%s' % (EulaName))
+        adminoutput['EulaName'] = unicode('%s' % (EulaName))
+
+        partoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
+        adminoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
+
+
         tcode = validatectf.makeTCode(int(time.time()))
         partoutput['tcode'] = unicode('%s' % (tcode))
         adminoutput['tcode'] = unicode('%s' % (tcode))
@@ -306,7 +359,7 @@ class ScoreBoardController(controllers.BaseController):
         logger.info(','.join(partoutputlist))
         logger_admin.info(','.join(adminoutputlist))
 
-        raise cherrypy.HTTPRedirect(unicode('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/question2', '&'.join(partoutputlisturl))), 302)
+        raise cherrypy.HTTPRedirect(unicode('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/question', '&'.join(partoutputlisturl))), 302)
 
 
     @expose_page(must_login=True, methods=['GET'])
@@ -540,7 +593,7 @@ class ScoreBoardController(controllers.BaseController):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         '''
-        Important to grad the Splunk user from the CherryPy framework embedded ithin splunk.
+        Important to grab the Splunk user from the CherryPy framework embedded ithin splunk.
         '''
 
         user = cherrypy.session['user']['name']
@@ -550,7 +603,7 @@ class ScoreBoardController(controllers.BaseController):
         '''
 
         '''
-        The Splunkd port. It's a best practice to close access o this from the outside world during a competition 
+        The Splunkd port. It's a best practice to close access to this from the outside world during a competition 
         but it's always available locally.
         '''
         baseurl = 'https://localhost:8089'
@@ -595,7 +648,47 @@ class ScoreBoardController(controllers.BaseController):
         question_list = json.loads(questions_string)
 
         '''
-        Now we have the questions and the answers. 
+        We can also easily grab the list of users who have accepted the agreement in the same way.
+        '''
+        accepted_agreement_string = self.get_kv_lookup('ctf_eulas_accepted', 'SA-ctf_scoreboard')
+        accepted_agreement_list = json.loads(accepted_agreement_string)
+        
+        '''
+        We want to be very careful about not logging much data if the user has not accepted the agreement, so we'll 
+        check here and redirect to an informative error page if they have not agreed.
+        '''
+        agreed = False
+        for accepted_agreement in accepted_agreement_list:
+            if accepted_agreement['EulaUsername'] == user:
+                agreed = True
+                if 'EulaDateAccepted' in accepted_agreement:
+                    EulaDateAccepted = accepted_agreement['EulaDateAccepted']
+                else:
+                    EulaDateAccepted = '0'
+
+                if 'EulaId' in accepted_agreement:
+                    EulaId = accepted_agreement['EulaId']
+                else:
+                    EulaId = '0'
+
+                if 'EulaName' in accepted_agreement:
+                    EulaName = accepted_agreement['EulaName']
+                else:
+                    EulaName = ''
+
+                if 'EulaUsername' in accepted_agreement:
+                    EulaUsername = accepted_agreement['EulaUsername']
+                else:
+                    EulaUsername = ''
+                
+                break
+        
+        if not agreed:
+            logger_admin.error(unicode('User {} attempted to play without accepting the user agreement.'.format(user)))
+            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
+        
+        '''
+        Now we have the questions and the answers. (oh and the Agreements) 
         
         partoutput is an ordered dictionary that contains key-value pairs that will be sent back to the PARTicipant, 
         and treat it as though ALL PARTicipants can see it. No answers, submitted answers, hints, etc. partoutput will
@@ -755,6 +848,18 @@ class ScoreBoardController(controllers.BaseController):
         adminoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
         partoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
 
+        partoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+        adminoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+
+        partoutput['EulaId'] = unicode('%s' % (EulaId))
+        adminoutput['EulaId'] = unicode('%s' % (EulaId))
+
+        partoutput['EulaName'] = unicode('%s' % (EulaName))
+        adminoutput['EulaName'] = unicode('%s' % (EulaName))
+
+        partoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
+        adminoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
+
         tcode = validatectf.makeTCode(int(time.time()))
         partoutput['tcode'] = unicode('%s' % (tcode))
         adminoutput['tcode'] = unicode('%s' % (tcode))
@@ -795,6 +900,46 @@ class ScoreBoardController(controllers.BaseController):
 
         questions_string = self.get_kv_lookup('ctf_questions', 'SA-ctf_scoreboard')
         question_list = json.loads(questions_string)
+
+        '''
+        We can also easily grab the list of users who have accepted the agreement in the same way.
+        '''
+        accepted_agreement_string = self.get_kv_lookup('ctf_eulas_accepted', 'SA-ctf_scoreboard')
+        accepted_agreement_list = json.loads(accepted_agreement_string)
+        
+        '''
+        We want to be very careful about not logging much data if the user has not accepted the agreement, so we'll 
+        check here and redirect to an informative error page if they have not agreed.
+        '''
+        agreed = False
+        for accepted_agreement in accepted_agreement_list:
+            if accepted_agreement['EulaUsername'] == user:
+                agreed = True
+                if 'EulaDateAccepted' in accepted_agreement:
+                    EulaDateAccepted = accepted_agreement['EulaDateAccepted']
+                else:
+                    EulaDateAccepted = '0'
+
+                if 'EulaId' in accepted_agreement:
+                    EulaId = accepted_agreement['EulaId']
+                else:
+                    EulaId = '0'
+
+                if 'EulaName' in accepted_agreement:
+                    EulaName = accepted_agreement['EulaName']
+                else:
+                    EulaName = ''
+
+                if 'EulaUsername' in accepted_agreement:
+                    EulaUsername = accepted_agreement['EulaUsername']
+                else:
+                    EulaUsername = ''
+                
+                break
+        
+        if not agreed:
+            logger_admin.error(unicode('User {} attempted to play without accepting the user agreement.'.format(user)))
+            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
 
         partoutput = {}
         adminoutput = {}
@@ -887,6 +1032,18 @@ class ScoreBoardController(controllers.BaseController):
 
         partoutput['Penalty'] = unicode('%s' % ('0'))
         adminoutput['Penalty'] = unicode('%s' % ('0'))
+
+        partoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+        adminoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+
+        partoutput['EulaId'] = unicode('%s' % (EulaId))
+        adminoutput['EulaId'] = unicode('%s' % (EulaId))
+
+        partoutput['EulaName'] = unicode('%s' % (EulaName))
+        adminoutput['EulaName'] = unicode('%s' % (EulaName))
+
+        partoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
+        adminoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
 
         tcode = validatectf.makeTCode(int(time.time()))
         partoutput['tcode'] = unicode('%s' % (tcode))

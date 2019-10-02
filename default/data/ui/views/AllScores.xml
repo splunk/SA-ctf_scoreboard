@@ -1,4 +1,4 @@
-<dashboard hideTitle="True" refresh="30">
+<dashboard hideTitle="True">
   <label>All Teams Scores</label>
   <search id="base" ref="Score-Base"></search>
   <search base="base" id="secondary">

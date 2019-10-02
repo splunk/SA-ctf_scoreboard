@@ -1,4 +1,4 @@
-<dashboard script="result.js" stylesheet="result.css" hideEdit="False" hideTitle="True">
+<dashboard script="result.js" stylesheet="result.css" hideEdit="True" hideTitle="True">
   <label>result</label>
   <row>
     <panel>
@@ -27,7 +27,7 @@
             <div id="BonusInfo" class="BonusInfo">
             <form action="/en-US/custom/SA-ctf_scoreboard/scoreboard_controller/submit_bonus_info" method="get">
               <input type="hidden" id="Number" name="Number" value="$Number$"/>
-              <input type="hidden" id="Question" name="Question" value="$Question$"/>
+              <input type="hidden" id="Question" name="Question" value="$Question|u$"/>
 
               <b>$SolicitBonusInstructions$ </b>
               <input type="text" id="BonusInfo" name="BonusInfo"/> 
@@ -38,6 +38,7 @@
             
             <p/>
           <p/>
+          <a href="question?Number=$Number$&amp;Question=$Question|u$">Attempt this question again</a><br/>
           <a href="questions"> Return to Question List </a><br/>
           <a id="ViewDetails"> View Response Details</a>
             </html>
