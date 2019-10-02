@@ -1,4 +1,4 @@
-<dashboard hideEdit="true" hideTitle="true">
+<dashboard hideEdit="true" hideTitle="true" theme="dark">
   <label>Rules</label>
   <row>
     <panel>

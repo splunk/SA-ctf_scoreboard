@@ -1,4 +1,4 @@
-<dashboard script="result.js" stylesheet="result.css" hideEdit="True" hideTitle="True">
+<dashboard script="result.js" stylesheet="result.css" hideEdit="True" hideTitle="True" theme="dark">
   <label>result</label>
   <row>
     <panel>
@@ -17,11 +17,14 @@
       	<div style="padding:10px;border:1px dotted black;">
           <p/>
           <div id="Result" class="Result">
-            <div id="Result1"> Your answer was $Result$. </div><br/>
+            <div id="Result1"> Your answer was $Result$. </div>
+            <br/>
             <div id="Result2">
               <table id="ResultTable" class="ResultTable">
-              </table>  </div><br/>
-            <div id="AdditionalNotes" class="AdditionalNotes"></div><br/>
+              </table>  </div>
+            <br/>
+            <div id="AdditionalNotes" class="AdditionalNotes"/>
+            <br/>
           </div>
             
             <div id="BonusInfo" class="BonusInfo">
@@ -38,8 +41,10 @@
             
             <p/>
           <p/>
-          <a href="question?Number=$Number$&amp;Question=$Question|u$">Attempt this question again</a><br/>
-          <a href="questions"> Return to Question List </a><br/>
+          <a href="question?Number=$Number$&amp;Question=$Question|u$">Attempt this question again</a>
+        <br/>
+          <a href="questions"> Return to Question List </a>
+        <br/>
           <a id="ViewDetails"> View Response Details</a>
             </html>
     </panel>

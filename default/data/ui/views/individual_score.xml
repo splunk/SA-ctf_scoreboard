@@ -1,4 +1,4 @@
-<dashboard hideTitle="True">
+<dashboard hideTitle="True" theme="dark">
   <label>Top Individual Scores</label>
   <row>
     <panel>

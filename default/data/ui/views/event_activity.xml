@@ -1,4 +1,4 @@
-<dashboard hideTitle="true">
+<dashboard hideTitle="true" theme="dark">
   <label>Event Activity</label>
   <row>
     <panel>

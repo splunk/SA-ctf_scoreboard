@@ -1,4 +1,4 @@
-<dashboard hideEdit="True">
+<dashboard hideEdit="True" theme="dark">
   <label>Score Timeline</label>
   <row>
     <panel>

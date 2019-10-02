@@ -1,4 +1,4 @@
-<dashboard script="welcome.js" stylesheet="welcome.css" hideEdit="true" hideTitle="true" >
+<dashboard script="welcome.js" stylesheet="welcome.css" hideEdit="true" hideTitle="true" theme="dark" >
   <label>Welcome</label>
   <row>
     <panel depends="$a_token_never_seen$">

@@ -1,4 +1,4 @@
-<dashboard script="all_ebadges.js" stylesheet="all_ebadges.css" hideEdit="True" >
+<dashboard script="all_ebadges.js" stylesheet="all_ebadges.css" hideEdit="True" theme="dark" >
   <label>eBadges by Team</label>
   <row>
     <panel>

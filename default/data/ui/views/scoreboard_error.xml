@@ -1,8 +1,8 @@
-<dashboard hideEdit="true">
+<dashboard hideEdit="true" theme="dark">
   <label>Scoreboard Error</label>
   <row>
     <html>
-      An error has occured. The most common cause is that YOU ARE A hax0r!!
+      An error has occured. Please contact a coach!
     </html>
   </row>
 </dashboard>

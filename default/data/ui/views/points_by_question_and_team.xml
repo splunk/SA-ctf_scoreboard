@@ -1,4 +1,4 @@
-<form hideEdit="True" refresh="30">
+<form hideEdit="True" refresh="30" theme="dark">
   <label>Points by Question and Team</label>
   <fieldset submitButton="false" autoRun="true">
     <input type="multiselect" token="team" searchWhenChanged="true">

@@ -1,4 +1,4 @@
-<dashboard hideEdit="True" >
+<dashboard hideEdit="True" theme="dark" >
   <label>Question Time/Answer Densities 200</label>
   <row>
     <panel>

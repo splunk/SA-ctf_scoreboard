@@ -1,4 +1,4 @@
-<dashboard script="table_icons_inline.js, custom_table_row_expansion.js, instantiate_countdown.js" stylesheet="table_decorations.css, questions.css" hideEdit="True">
+<dashboard script="table_icons_inline.js, custom_table_row_expansion.js, instantiate_countdown.js" stylesheet="table_decorations.css, questions.css" hideEdit="True" theme="dark">
   <label>Questions</label>
   <row>
     <panel>
@@ -12,12 +12,12 @@
       <html>
         <style>
             .panel-body{
-                 background-color:#f2f4f5 !important;
+                 background-color:#31373e !important;
              }
              .dashboard-panel{
-                 background-color:#f2f4f5 !important;
+                 background-color:#31373e !important;
              }
-        </style>
+        </style>        
           <h3 class="section-heading">User and Team Information</h3>
           <table border="0">
             <tr>
@@ -37,23 +37,25 @@
     </panel>
     <panel>
       <html>
-        <h3 class="section-heading"><center>Time Remaining</center></h3>
-        <div id="clock"/>
+             
+        <h3 class="section-heading">
+          <center>Time Remaining</center>
+        </h3>
+        <div id="clock"></div>
         <div id="clock-text">(Days:Hours:Minutes:Seconds)</div>
       </html>
     </panel>
-    
   </row>
   <row>
-   <panel>
-     <html>
+    <panel>
+      <html>
        <div style="padding:5px;border:1px dotted black;">
          <h4>
            <b>Click "&gt;" in the first column of any row below to see your team's entire submission history for that question.</b>
          </h4>
        </div>
      </html>
-   </panel>
+    </panel>
   </row>
   <row>
     <panel depends="$a_token_never_seen$">

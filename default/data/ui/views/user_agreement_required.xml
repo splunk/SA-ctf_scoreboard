@@ -1,4 +1,4 @@
-<dashboard hideEdit="true">
+<dashboard hideEdit="true" theme="dark">
   <label>User Agreement Required</label>
   <row>
     <html>

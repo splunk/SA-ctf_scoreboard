@@ -1,4 +1,4 @@
-<dashboard hideEdit="False" hideTitle="True" script="table_icons_inline.js, custom_table_row_expansion.js" stylesheet="table_decorations.css">
+<dashboard hideEdit="False" hideTitle="True" script="table_icons_inline.js, custom_table_row_expansion.js" stylesheet="table_decorations.css" theme="dark">
   <label>question</label>
   <row>
     <panel>
@@ -43,7 +43,7 @@
       <html>      	
         <div style="padding:10px;border:1px dotted black;">
           <h3>Submission History</h3>
-                          <h4>Click ">" below to see your team's entire submission history for this question.</h4>
+                          <h4>Click "&gt;" below to see your team's entire submission history for this question.</h4>
 
         </div>
 
