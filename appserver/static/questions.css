@@ -20,3 +20,33 @@
 #logodiv{
         line-height: 12px;
 }
+
+th.sorts {
+	font-size: 14px;
+	color: white !important;
+}
+
+th.sorts.numeric {
+	font-size: 14px;
+	color: white !important;
+}
+
+th.numeric {
+	font-size: 18px;
+	color: white !important;
+}
+
+td.string {
+	font-size: 18px;
+	color: white !important;
+}
+
+td.numeric {
+	font-size: 18px;
+	color: white !important;
+}
+
+.table-drilldown>tbody>tr>td {
+	font-size: 18px;
+    color: white !important;
+}
