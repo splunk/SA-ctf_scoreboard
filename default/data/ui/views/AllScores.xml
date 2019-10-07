@@ -1,4 +1,4 @@
-<dashboard hideTitle="True" theme="dark">
+<dashboard hideTitle="True" theme="dark" stylesheet="AllScores.css">
   <label>All Teams Scores</label>
   <search id="base" ref="Score-Base"></search>
   <search base="base" id="secondary">
@@ -11,7 +11,7 @@
       
         <title>All Team Scores</title>
         
-        <img src="/static/app/SA-ctf_scoreboard/ctflogo.png" width="200" align="left" hspace="20"/>
+        <img src="/static/app/SA-ctf_scoreboard/ctflogo.png" width="100" align="left" hspace="20"/>
       
         <h1 style="font-size:50pt;text-align:center;position:absolute;top:50%;left:50%;transform:translateX(-50%)translateY(-50%);">
           All Team Scores
