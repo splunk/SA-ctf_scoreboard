@@ -28,8 +28,8 @@ version = 6.4.0
 modtime = 1469051615.558043000
 
 [nav/default]
-version = 7.1.3
-modtime = 1537453924.747556000
+version = 7.3.2
+modtime = 1570484347.236527000
 
 [collections/ctf_questions]
 access = read : [ admin, ctf_competitor, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
@@ -231,8 +231,8 @@ version = 6.5.1
 modtime = 1482423537.152325000
 
 [views/top_10_teams]
-version = 7.1.3
-modtime = 1537041303.607527000
+version = 7.3.2
+modtime = 1570385712.116368000
 
 [views/test]
 owner = admin
@@ -359,16 +359,16 @@ version = 7.2.3
 modtime = 1548951680.128001000
 
 [views/event_activity]
-version = 7.1.3
-modtime = 1537254879.749099000
+version = 7.3.2
+modtime = 1570388267.869004000
 
 [macros/Teams_Scores]
 version = 6.6.3
 modtime = 1507262751.414013000
 
 [views/individual_score]
-version = 7.1.3
-modtime = 1537255168.957643000
+version = 7.3.2
+modtime = 1570484249.201244000
 
 [views/scenario_3ransomware]
 access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
@@ -406,16 +406,16 @@ version = 7.1.3
 modtime = 1537041590.049518000
 
 [views/question_timeanswer_densities]
-version = 7.1.3
-modtime = 1537041413.647511000
+version = 7.3.2
+modtime = 1570483153.981923000
 
 [views/AllScores]
-version = 7.1.3
-modtime = 1537041326.766999000
+version = 7.3.2
+modtime = 1570386089.090619000
 
 [views/score_timeline]
-version = 7.1.3
-modtime = 1537041380.547866000
+version = 7.3.2
+modtime = 1570388822.974256000
 
 [views/podium]
 owner = admin
