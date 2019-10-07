@@ -5,7 +5,7 @@
       <title>Top 5 Teams</title>
       <viz type="simpletimeseries_app.simpletimeseries">
         <search>
-          <query>index=scoreboard user!=admin `get_user_info` `validateevents`  | dedup vcode | `Teams_Scores` | search [search index=scoreboard user!=admin `get_user_info` | validateevents | search Validated="1" | fields * | `Teams_Scores` |  stats sum(Score) as Score by Team | sort - Score | head 5 | fields Team] | table _time Team CumulativeScore</query>
+          <query>index=scoreboard user!=admin `get_user_info`  | dedup vcode | `Teams_Scores` | search [search index=scoreboard user!=admin `get_user_info` | fields * | `Teams_Scores` |  stats sum(Score) as Score by Team | sort - Score | head 5 | fields Team] | table _time Team CumulativeScore</query>
           <earliest>0</earliest>
           <sampleRatio>1</sampleRatio>
         </search>

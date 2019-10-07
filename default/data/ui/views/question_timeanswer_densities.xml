@@ -1,15 +1,25 @@
-<dashboard hideEdit="True" theme="dark" >
+<form hideEdit="True" theme="dark">
   <label>Question Time/Answer Densities</label>
+  <fieldset submitButton="false">
+    <input type="text" token="field1">
+      <label>Start Question</label>
+    </input>
+    <input type="text" token="field2">
+      <label>End Question</label>
+    </input>
+  </fieldset>
   <row>
     <panel>
       <viz type="timeline_app.timeline">
         <search>
-          <query>index="scoreboard" AND (Result="Correct" OR Result="Incorrect")  user!=admin `validateevents` | eval binresult=if(Result="Correct",1000,2000)| append [| inputlookup ctf_questions  | eval _time = StartTime, Result="Init", binresult=1500 | table _time Number Result binresult ] | search  Number!=1  |table _time,Number,binresult,Result</query>
-          
+          <query>index="scoreboard" AND (Result="Correct" OR Result="Incorrect")  user!=admin | eval binresult=if(Result="Correct",1000,2000)  | search Number &gt;= $field1$ Number&lt;= $field2$ | table _time,Number,binresult,Result</query>
           <earliest>0</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
         </search>
+        <option name="drilldown">none</option>
+        <option name="height">1500</option>
+        <option name="refresh.display">progressbar</option>
         <option name="timeline_app.timeline.axisTimeFormat">SECONDS</option>
         <option name="timeline_app.timeline.colorMode">sequencial</option>
         <option name="timeline_app.timeline.maxColor">#ff0000</option>
@@ -17,10 +27,7 @@
         <option name="timeline_app.timeline.numOfBins">3</option>
         <option name="timeline_app.timeline.tooltipTimeFormat">SECONDS</option>
         <option name="timeline_app.timeline.useColors">1</option>
-        <option name="height">1500</option>
-        <option name="drilldown">none</option>
-
       </viz>
     </panel>
   </row>
-</dashboard>
+</form>
