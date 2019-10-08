@@ -54,7 +54,7 @@
     <panel>
       <table id="table1">
         <search>
-          <query>index=scoreboard 
+          <query>index=scoreboard NOT Result=Hint
 | lookup ctf_users Username as user 
 | eval Team=if(Team != "", Team, DisplayUsername) 
 | eval Team=if(Team != "", Team, Username) 

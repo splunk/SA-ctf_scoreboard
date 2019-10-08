@@ -107,7 +107,7 @@
     <panel>
       <table id="table1">
         <search>
-          <query>index=scoreboard AND (Result="Incorrect" OR Result="Correct" OR Result=Hint OR Result=Bonus) `get_user_info`
+          <query>index=scoreboard AND (Result="Incorrect" OR Result="Correct" OR Result=Bonus) `get_user_info`
 | search 
     [ | makeresults 
       | eval user="$env:user$"  `get_user_info`
