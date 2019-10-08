@@ -66,3 +66,7 @@ th.sorts.numeric {
 	font-size: 12px;
 }
 
+.table-drilldown>tbody>tr>td {
+	font-size: 18px;
+    color: white !important;
+}
