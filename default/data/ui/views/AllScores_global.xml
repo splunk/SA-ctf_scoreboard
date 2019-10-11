@@ -1,0 +1,40 @@
+<dashboard hideTitle="True" theme="dark" stylesheet="AllScores.css">
+  <label>All Teams Scores (Event-Wide)</label>
+  <row>
+    <panel>
+      <html>
+      
+        <title>All Team Scores (Event-Wide)</title>
+        
+        <img src="/static/app/SA-ctf_scoreboard/ctflogo.png" width="100" align="left" hspace="20"/>
+      
+        <h1 style="font-size:40pt;text-align:center;position:absolute;top:50%;left:50%;transform:translateX(-50%)translateY(-50%);">
+          All Team Scores (Event-Wide)
+        </h1>
+        <text style="font-size:10pt;text-align:center;position:absolute;top:90%;left:50%;transform:translateX(-50%)translateY(-50%);"> Results may be delayed up to two minutes. </text>
+
+        <br/>
+
+ 
+
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+          
+| inputlookup rankings.csv 
+| table "Rank: Team" Score</query>
+        </search>
+        <option name="count">25</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

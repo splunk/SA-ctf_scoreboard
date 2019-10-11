@@ -1,34 +1,34 @@
 <nav search_view="search" color="#000000">
-  <view name="welcome" default="true"/>
+  <view name="botsv4_welcome" default="true"/>
   <view name="questions" />
   <collection label="Scoring">
+    <collection label="Event-Wide Scoring">
+      <view name="top_10_teams_global" />
+      <view name="AllScores_global" />
+    </collection>
     <view name="top_10_teams" />
     <view name="AllScores" />
     <view name="event_activity" />
     <view name="score_timeline" />
-    <collection label="Q &amp; A Densities"> 
-      <view name="question_timeanswer_densities_100"/>
-        <view name="question_timeanswer_densities_200"/>
-      <view name="question_timeanswer_densities_300"/>
+    <collection label="Question Time/Answer Densities">
+          <a href="question_timeanswer_densities?form.field1=1&amp;form.field2=199">  Scenario 1 </a>
+          <a href="question_timeanswer_densities?form.field1=200&amp;form.field2=299">Scenario 2 </a>
+          <a href="question_timeanswer_densities?form.field1=300&amp;form.field2=399">Scenario 3 </a>
+          <a href="question_timeanswer_densities?form.field1=400&amp;form.field2=499">Scenario 4 </a>
     </collection>
     <view name="individual_score" />
-    <view name="all_ebadges" />
-    <view name="ebadge_recipients" />
-    <view name="ebadges_by_team" />
     <view name="detailed_scoring_breakdown" />
   </collection>
   <view name="rules" />
   <collection label="Help">
-    <view name="botsv3_scenario_1training" />
-    <view name="botsv3_scenario_2cloud" />
-    <view name="botsv3_scenario_3apt" />
-    <view name="botsv3_sourcetypes"/>
-    <view name="botsv3_networkdiagram"/>
-    <view name="botsv3_stout_diamond"/>
-    <view name="botsv3_lager_diamond"/>
+    <view name="botsv4_scenario_1" />
+    <view name="botsv4_scenario_2" />
+    <view name="botsv4_scenario_3" />
+    <view name="botsv4_scenario_4" />
+    <view name="botsv4_sourcetypes"/>
     <a href="https://www.splunk.com/content/dam/splunk2/pdfs/solution-guides/splunk-quick-reference-guide.pdf" target="_blank">Splunk Quick Reference Guide</a>
   </collection>
-  <a href="/app/SA-ctf_scoreboard/botsv3_welcome?tour=botsv3_welcome-tour">BOTS Tutorial</a>
+  <a href="/app/SA-ctf_scoreboard/botsv4_welcome?tour=welcome-tour">BOTS Tutorial</a>
   <view name="Credits" />
   <view name="dashboards" />
   <view name="search" />
