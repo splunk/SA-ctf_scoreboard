@@ -1,5 +1,5 @@
 <nav search_view="search" color="#000000">
-  <view name="botsv4_welcome" default="true"/>
+  <view name="welcome" default="true"/>
   <view name="questions" />
   <collection label="Scoring">
     <collection label="Event-Wide Scoring">
