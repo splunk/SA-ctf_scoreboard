@@ -354,7 +354,7 @@ class ScoreBoardController(controllers.BaseController):
         for k,v in partoutput.items():
             v.replace(',', '')
             partoutputlist.append(unicode('%s=%s' % (k,v)))
-            partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v))))
+            partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v.encode('utf8')))))
 
         logger.info(','.join(partoutputlist))
         logger_admin.info(','.join(adminoutputlist))
@@ -523,7 +523,7 @@ class ScoreBoardController(controllers.BaseController):
                     for k,v in partoutput.items():
                         v.replace(',', '')
                         partoutputlist.append(unicode('%s=%s' % (k,v)))
-                        partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v))))
+                        partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v.encode('utf8')))))
 
                     logger.info(','.join(partoutputlist))
                     logger_admin.info(','.join(adminoutputlist))
@@ -569,7 +569,7 @@ class ScoreBoardController(controllers.BaseController):
                     for k,v in partoutput.items():
                         v.replace(',', '')
                         partoutputlist.append(unicode('%s=%s' % (k,v)))
-                        partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v))))
+                        partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v.encode('utf8')))))
 
                     logger.info(','.join(partoutputlist))
                     logger_admin.info(','.join(adminoutputlist))
