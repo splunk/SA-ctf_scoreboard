@@ -1,31 +1,19 @@
 <nav search_view="search" color="#000000">
-  <view name="botsv4_welcome" default="true"/>
+  <view name="welcome" default="true"/>
   <view name="questions" />
   <collection label="Scoring">
-    <collection label="Event-Wide Scoring">
-      <view name="top_10_teams_global" />
-      <view name="AllScores_global" />
-    </collection>
     <view name="top_10_teams" />
     <view name="AllScores" />
     <view name="event_activity" />
     <view name="score_timeline" />
     <collection label="Question Time/Answer Densities">
-          <a href="question_timeanswer_densities?form.field1=1&amp;form.field2=199">  Scenario 1 </a>
-          <a href="question_timeanswer_densities?form.field1=200&amp;form.field2=299">Scenario 2 </a>
-          <a href="question_timeanswer_densities?form.field1=300&amp;form.field2=399">Scenario 3 </a>
-          <a href="question_timeanswer_densities?form.field1=400&amp;form.field2=499">Scenario 4 </a>
+          <a href="question_timeanswer_densities?form.field1=1&amp;form.field2=10000">  Scenario 1 </a>
     </collection>
     <view name="individual_score" />
     <view name="detailed_scoring_breakdown" />
   </collection>
   <view name="rules" />
   <collection label="Help">
-    <view name="botsv4_scenario_1" />
-    <view name="botsv4_scenario_2" />
-    <view name="botsv4_scenario_3" />
-    <view name="botsv4_scenario_4" />
-    <view name="botsv4_sourcetypes"/>
     <a href="https://www.splunk.com/content/dam/splunk2/pdfs/solution-guides/splunk-quick-reference-guide.pdf" target="_blank">Splunk Quick Reference Guide</a>
   </collection>
   <a href="/app/SA-ctf_scoreboard/botsv4_welcome?tour=welcome-tour">BOTS Tutorial</a>
