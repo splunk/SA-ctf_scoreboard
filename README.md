@@ -2,7 +2,9 @@
 # SA-ctf_scoreboard
 A capture the flag scoreboard app for Splunk.
 
-This app, along with its companion [admin app](https://github.com/splunk/SA-ctf_scoreboard_admin), allows anyone to run their own jeopardy-style capture the flag (CTF) events. These are the same apps that we at Splunk use to run our popular [Splunk Boss of the SOC (BOTS)](https://www.splunk.com/blog/2017/09/06/what-you-need-to-know-about-boss-of-the-soc.html) and Boss of the NOC (BOTN) competitions. The apps include the following features:
+NOTE: As of January 2022, this app has been deprecated. Please visit https://bots.splunk.com for hands-on experiences using Splunk security products. Splunk will no longer provide assistance or support for this app.
+
+This app, along with its companion [admin app](https://github.com/splunk/SA-ctf_scoreboard_admin), allows anyone to run their own jeopardy-style capture the flag (CTF) events. These are the same apps that we at Splunk use to run early versions of our popular [Splunk Boss of the SOC (BOTS)](https://www.splunk.com/blog/2017/09/06/what-you-need-to-know-about-boss-of-the-soc.html) competitions. The apps include the following features:
   * User/Team management
   * Scoring management
   * Question/Answer management
@@ -18,7 +20,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
 
 ## Installation
 1.	Install Splunk Enterprise 
-  * The apps are designed to run on Linux and/or Mac OSX; they have never been tested on Splunk for Windows (Note: Tested with Splunk Enterprise version 7.1.1)
+  * The apps are designed to run on Linux and/or Mac OSX; they have never been tested on Splunk for Windows (Note: This app requires Splunk Enterprise version 8.2.x)
   * Download Splunk from [www.splunk.com](https://www.splunk.com/) 
   * Refer to Splunk installation instructions for [Linux](http://docs.splunk.com/Documentation/Splunk/7.0.3/Installation/InstallonLinux) and [Mac OSX](http://docs.splunk.com/Documentation/Splunk/7.0.3/Installation/InstallonMacOS) as necessary 
   * Set a strong password for the Splunk admin user
@@ -57,12 +59,12 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     mkdir $SPLUNK_HOME/var/log/scoreboard
     ```
 8.	Create the CTF Answers service account in Splunk
-  * By convention this user is called cabanaboy because that’s what any rational person would pick while sitting next to Ryan Kovar
+  * By convention this user is called svcaccount
   * Pick a good strong password, and record it. You will need it again soon. The good news is that it does not need to be easily memorized by a human.
-  * Assign the cabanaboy user to role ctf_answers_service
+  * Assign the svcaccount user to role ctf_answers_service
   * This can all be accomplished from the command line as follows:
     ```
-     $SPLUNK_HOME/bin/splunk add user cabanaboy -password <password> -role ctf_answers_service -auth admin:<admin_password>
+     $SPLUNK_HOME/bin/splunk add user svcaccount -password <password> -role ctf_answers_service -auth admin:<admin_password>
     ```
  9.	Configure the custom controller 
     ```
@@ -71,7 +73,7 @@ The scoring apps run on Splunk Enterprise. If you do not have a Splunk license, 
     ```
 
   * Edit scoreboard_controller.config to reflect the following:
-  * The CTF Answers service account username (probably cabanaboy) 
+  * The CTF Answers service account username (probably svcaccount) 
   * The CTF Answers service account password you chose above
   * A vkey parameter which should just be a random string, 10-20 characters in length
   * Note: scoreboard_controller.config is prevented via .gitignore from being checked into the git repository. Only the example file is included in the repository.

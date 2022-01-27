@@ -7,7 +7,6 @@
         <search>
           <query>index=scoreboard user!=admin `get_user_info` 
                 | eval DisplayUsername=if(len(StealthModeTeam)>0, StealthModeTeam, DisplayUsername)
-                | dedup vcode
                 | stats max(BasePointsAwarded) as BasePoints max(SpeedBonusAwarded) as BonusPoints max(AdditionalBonusAwarded) as AdditionalBonusPoints sum(Penalty) as Penalty by DisplayUsername, Number 
                 | eval BasePoints = coalesce(BasePoints,0)
                 | eval BonusPoints = coalesce(BonusPoints,0)

@@ -2,6 +2,7 @@
 import logging
 import os
 import sys
+import pprint
 import json
 import shutil
 import csv
@@ -11,9 +12,9 @@ import time
 import datetime
 import collections
 import time
-import ConfigParser
+import configparser
 import uuid
-import validatectf
+
 
 from splunk import AuthorizationFailed, ResourceNotFound
 import splunk.rest
@@ -27,10 +28,12 @@ from splunk.appserver.mrsparkle.lib.decorators import expose_page
 import splunklib.client as client
 import splunklib.results as results
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import httplib2
 from time import localtime,strftime
 from xml.dom import minidom
+sys.path.append(make_splunkhome_path(['etc', 'apps', 'SA-ctf_scoreboard', 'bin']))
+import validatectf
 
 bin_dir = os.path.join(util.get_apps_dir(), __file__.split('.')[-2], 'bin')
 
@@ -67,7 +70,7 @@ from splunk.models.field import BoolField, Field
 CONF_FILE = make_splunkhome_path(['etc', 'apps', 'SA-ctf_scoreboard', 'appserver', 'controllers',
                                   'scoreboard_controller.config'])
 
-Config = ConfigParser.ConfigParser()
+Config = configparser.ConfigParser()
 parsed_conf_files = Config.read(CONF_FILE)
 if not CONF_FILE in parsed_conf_files:
     logger_admin.error('Could not read config file: %s' % (CONF_FILE))
@@ -117,11 +120,11 @@ class ScoreBoardController(controllers.BaseController):
 
         if not self.represents_int(submitted_number_string):
             logger_admin.error('Submitted question number %s does not represent an integer.' % (submitted_number_string))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         if not self.represents_int(submitted_hintnumber_string):
             logger_admin.error('Submitted hint number %s does not represent an integer.' % (submitted_hintnumber_string))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         '''
         Getting the hints is tricky, we need to authenticate as a different user
@@ -130,7 +133,7 @@ class ScoreBoardController(controllers.BaseController):
 
         myhttp = httplib2.Http(disable_ssl_certificate_validation=True)
         try:
-            servercontent = myhttp.request(baseurl + '/services/auth/login', 'POST', headers={}, body=urllib.urlencode({'username':USER, 'password':PASSWORD}))[1]
+            servercontent = myhttp.request(baseurl + '/services/auth/login', 'POST', headers={}, body=urllib.parse.urlencode({'username':USER, 'password':PASSWORD}))[1]
             answersessionkey = minidom.parseString(servercontent).getElementsByTagName('sessionKey')[0].childNodes[0].nodeValue
         except:
             logger_admin.exception('Error retrieving the answers session key.')
@@ -140,7 +143,7 @@ class ScoreBoardController(controllers.BaseController):
             hint_list = json.loads(hints_string)
         except:
             logger_admin.exception('Error retrieving the ctf_hints lookup.')
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         questions_string = self.get_kv_lookup('ctf_questions', 'SA-ctf_scoreboard')
         question_list = json.loads(questions_string)
@@ -182,8 +185,8 @@ class ScoreBoardController(controllers.BaseController):
                 break
         
         if not agreed:
-            logger_admin.error(unicode('User {} attempted to play without accepting the user agreement.'.format(user)))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
+            logger_admin.error(str('User {} attempted to play without accepting the user agreement.'.format(user)))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
         
 
         question_exists = False
@@ -201,7 +204,7 @@ class ScoreBoardController(controllers.BaseController):
 
         if not question_exists:
             logger_admin.error('Submitted question number does not exists in ctf_questions: %s' % (submitted_number_string))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         hint_exists = False
         for hint in hint_list:
@@ -223,7 +226,7 @@ class ScoreBoardController(controllers.BaseController):
 
         if not hint_exists:
             logger_admin.error('Submitted question/hint number combination does not exists in ctf_hints: %s / %s' % (submitted_number_string, submitted_hintnumber_string))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         '''
         Make sure the team does not already have this entitlement.
@@ -278,88 +281,88 @@ class ScoreBoardController(controllers.BaseController):
 
             except:
                 logger_admin.exception('Error posting to ctf_hint_entitelments lookup.')
-                raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+                raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         adminoutput = collections.OrderedDict()
         partoutput = collections.OrderedDict()
 
-        partoutput['user'] = unicode('%s' % (user))
-        adminoutput['user'] = unicode('%s' % (user))
+        partoutput['user'] = str('%s' % (user))
+        adminoutput['user'] = str('%s' % (user))
 
-        partoutput['Result'] = unicode('%s' %  ('Hint'))
-        adminoutput['Result'] = unicode('%s' % ('Hint'))
+        partoutput['Result'] = str('%s' %  ('Hint'))
+        adminoutput['Result'] = str('%s' % ('Hint'))
 
-        partoutput['Number'] = unicode('%s' % (submitted_number_string))
-        adminoutput['Number'] = unicode('%s' % (submitted_number_string))
+        partoutput['Number'] = str('%s' % (submitted_number_string))
+        adminoutput['Number'] = str('%s' % (submitted_number_string))
 
-        partoutput['HintNumber'] = unicode('%s' % (submitted_hintnumber_string))
-        adminoutput['HintNumber'] = unicode('%s' % (submitted_hintnumber_string))
+        partoutput['HintNumber'] = str('%s' % (submitted_hintnumber_string))
+        adminoutput['HintNumber'] = str('%s' % (submitted_hintnumber_string))
 
         if not already_purchased:
-            partoutput['Penalty'] = unicode('%s' % (penalty_to_return))
-            adminoutput['Penalty'] = unicode('%s' % (penalty_to_return))
+            partoutput['Penalty'] = str('%s' % (penalty_to_return))
+            adminoutput['Penalty'] = str('%s' % (penalty_to_return))
         else:
-            partoutput['Penalty'] = unicode('%s' % ('0'))
-            adminoutput['Penalty'] = unicode('%s' % ('0'))
+            partoutput['Penalty'] = str('%s' % ('0'))
+            adminoutput['Penalty'] = str('%s' % ('0'))
 
-            partoutput['HintAlreadyPurchased'] = unicode('%s' % ('1'))
-            adminoutput['HintAlreadyPurchased'] = unicode('%s' % ('1'))
+            partoutput['HintAlreadyPurchased'] = str('%s' % ('1'))
+            adminoutput['HintAlreadyPurchased'] = str('%s' % ('1'))
 
-        partoutput['Question'] = unicode('"%s"' % (question_to_return).replace('"', "'"))
-        adminoutput['Question'] = unicode('"%s"' % (question_to_return).replace('"', "'"))
+        partoutput['Question'] = str('"%s"' % (question_to_return).replace('"', "'"))
+        adminoutput['Question'] = str('"%s"' % (question_to_return).replace('"', "'"))
 
-        adminoutput['Hint'] = unicode('"%s"' % (hint_to_return))
+        adminoutput['Hint'] = str('"%s"' % (hint_to_return))
 
-        partoutput['BasePointsAwarded'] = unicode('%s' % ('0'))
-        adminoutput['BasePointsAwarded'] = unicode('%s' % ('0'))
+        partoutput['BasePointsAwarded'] = str('%s' % ('0'))
+        adminoutput['BasePointsAwarded'] = str('%s' % ('0'))
 
-        partoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
-        adminoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
+        partoutput['SpeedBonusAwarded'] = str('%s' % ('0'))
+        adminoutput['SpeedBonusAwarded'] = str('%s' % ('0'))
 
-        partoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
-        adminoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
+        partoutput['AdditionalBonusAwarded'] = str('%s' % ('0'))
+        adminoutput['AdditionalBonusAwarded'] = str('%s' % ('0'))
 
-        partoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
-        adminoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+        partoutput['EulaDateAccepted'] = str('%s' % (EulaDateAccepted))
+        adminoutput['EulaDateAccepted'] = str('%s' % (EulaDateAccepted))
 
-        partoutput['EulaId'] = unicode('%s' % (EulaId))
-        adminoutput['EulaId'] = unicode('%s' % (EulaId))
+        partoutput['EulaId'] = str('%s' % (EulaId))
+        adminoutput['EulaId'] = str('%s' % (EulaId))
 
-        partoutput['EulaName'] = unicode('%s' % (EulaName))
-        adminoutput['EulaName'] = unicode('%s' % (EulaName))
+        partoutput['EulaName'] = str('%s' % (EulaName))
+        adminoutput['EulaName'] = str('%s' % (EulaName))
 
-        partoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
-        adminoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
+        partoutput['EulaUsername'] = str('%s' % (EulaUsername))
+        adminoutput['EulaUsername'] = str('%s' % (EulaUsername))
 
 
         tcode = validatectf.makeTCode(int(time.time()))
-        partoutput['tcode'] = unicode('%s' % (tcode))
-        adminoutput['tcode'] = unicode('%s' % (tcode))
+        partoutput['tcode'] = str('%s' % (tcode))
+        adminoutput['tcode'] = str('%s' % (tcode))
 
         try:
             vcode = validatectf.makeVCode(VKEY, tcode, partoutput['user'], partoutput['Number'], partoutput['Result'], partoutput['BasePointsAwarded'], partoutput['SpeedBonusAwarded'],partoutput['AdditionalBonusAwarded'],partoutput['Penalty'])
-            partoutput['vcode'] = unicode('%s' % (vcode))
-            adminoutput['vcode'] = unicode('%s' % (vcode))
+            partoutput['vcode'] = str('%s' % (vcode))
+            adminoutput['vcode'] = str('%s' % (vcode))
         except:
-            logger_admin.exception(unicode('Exception raised in makeVCode'))
+            logger_admin.exception(str('Exception raised in makeVCode'))
 
         adminoutputlist = []
         partoutputlist = []
         partoutputlisturl = []
 
-        for k,v in adminoutput.items():
+        for k,v in list(adminoutput.items()):
             v.replace(',', '')
-            adminoutputlist.append(unicode('%s=%s' % (k,v)))
+            adminoutputlist.append(str('%s=%s' % (k,v)))
 
-        for k,v in partoutput.items():
+        for k,v in list(partoutput.items()):
             v.replace(',', '')
-            partoutputlist.append(unicode('%s=%s' % (k,v)))
-            partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v.encode('utf8')))))
+            partoutputlist.append(str('%s=%s' % (k,v)))
+            partoutputlisturl.append(str('%s=%s' % (k,urllib.parse.quote(v.encode('utf8')))))
 
         logger.info(','.join(partoutputlist))
         logger_admin.info(','.join(adminoutputlist))
 
-        raise cherrypy.HTTPRedirect(unicode('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/question', '&'.join(partoutputlisturl))), 302)
+        raise cherrypy.HTTPRedirect(str('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/question', '&'.join(partoutputlisturl))), 302)
 
 
     @expose_page(must_login=True, methods=['GET'])
@@ -384,82 +387,82 @@ class ScoreBoardController(controllers.BaseController):
 
         if 'ctf_admin' not in user_details['entry'][0]['content']['roles']:
             logger_admin.error('Unauthorized attempt to adjust a score. %s is not assigned the ctf_admin role.' % (user))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if not kwargs.get('Adjust') == 'True':
             logger_admin.error('Request to adjust scores did not include Adjust = True kv pair.')
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if not submitted_team_string or submitted_team_string=='$Teams$':
             logger_admin.error('Attempted to adjust score but no teams were submitted as part of form request.')
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if not submitted_bonus and not submitted_penalty:
             logger_admin.error('Attempted to adjust score but no bonus or penalty was submitted as part of request.')
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if submitted_base and not self.represents_int(submitted_base):
             logger_admin.error('Submitted base score %s does not represent an integer.' % (submitted_base))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if submitted_bonus and not self.represents_int(submitted_bonus):
             logger_admin.error('Submitted bonus score %s does not represent an integer.' % (submitted_bonus))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if submitted_penalty and not self.represents_int(submitted_penalty):
             logger_admin.error('Submitted penalty score %s does not represent an integer.' % (submitted_penalty))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if not submitted_note:
             logger_admin.error('Attempted to adjust score but no note was submitted as part of request.')
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if not self.represents_int(submitted_number):
-            logger_admin.error(unicode('Value submitted for "Number" (%s) does not represent a number.' % submitted_number))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            logger_admin.error(str('Value submitted for "Number" (%s) does not represent a number.' % submitted_number))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         if int(submitted_number) < 1 or int(submitted_number) > 1024:
-            logger_admin.error(unicode('That number is not cool, bro. (%s). Must be between 1 and 1024 inclusive.' % submitted_number))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            logger_admin.error(str('That number is not cool, bro. (%s). Must be between 1 and 1024 inclusive.' % submitted_number))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         partoutput = {}
         adminoutput = {}
 
-        partoutput['admin_user'] = unicode('%s' % (user))
-        adminoutput['admin_user'] = unicode('%s' % (user))
+        partoutput['admin_user'] = str('%s' % (user))
+        adminoutput['admin_user'] = str('%s' % (user))
 
-        partoutput['Adjustment'] = unicode('%s' % ('True'))
-        adminoutput['Adjustment'] = unicode('%s' % ('True'))
+        partoutput['Adjustment'] = str('%s' % ('True'))
+        adminoutput['Adjustment'] = str('%s' % ('True'))
 
-        partoutput['Note'] = unicode('"%s"' % (submitted_note))
-        adminoutput['Note'] = unicode('"%s"' % (submitted_note))
+        partoutput['Note'] = str('"%s"' % (submitted_note))
+        adminoutput['Note'] = str('"%s"' % (submitted_note))
 
         questions_string = self.get_kv_lookup('ctf_questions', 'SA-ctf_scoreboard')
         question_list = json.loads(questions_string)
 
         for question_dict in question_list:
             if question_dict['Number'] == submitted_number:
-                adminoutput['QuestionOfficial'] = unicode('"%s"' % (question_dict['Question'].replace('"', "'")))
-                partoutput['QuestionOfficial'] = unicode('"%s"' % (question_dict['Question'].replace('"', "'")))
+                adminoutput['QuestionOfficial'] = str('"%s"' % (question_dict['Question'].replace('"', "'")))
+                partoutput['QuestionOfficial'] = str('"%s"' % (question_dict['Question'].replace('"', "'")))
 
-                adminoutput['BasePointsAvailable'] = unicode('%s' % (question_dict['BasePoints']))
-                partoutput['BasePointsAvailable'] = unicode('%s' % (question_dict['BasePoints']))
+                adminoutput['BasePointsAvailable'] = str('%s' % (question_dict['BasePoints']))
+                partoutput['BasePointsAvailable'] = str('%s' % (question_dict['BasePoints']))
 
                 basepoints = question_dict['BasePoints']
 
-                adminoutput['StartTime'] = unicode('%s' % (question_dict['StartTime']))
-                partoutput['StartTime'] = unicode('%s' % (question_dict['StartTime']))
+                adminoutput['StartTime'] = str('%s' % (question_dict['StartTime']))
+                partoutput['StartTime'] = str('%s' % (question_dict['StartTime']))
 
-                adminoutput['EndTime'] = unicode('%s' % (question_dict['EndTime']))
-                partoutput['EndTime'] = unicode('%s' % (question_dict['EndTime']))
+                adminoutput['EndTime'] = str('%s' % (question_dict['EndTime']))
+                partoutput['EndTime'] = str('%s' % (question_dict['EndTime']))
 
                 found_question = True
 
                 break
 
         if not found_question:
-            logger_admin.error(unicode('Could not find question with number (%s)' % submitted_number))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+            logger_admin.error(str('Could not find question with number (%s)' % submitted_number))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
         submitted_team_list = submitted_team_string.split()
 
@@ -472,104 +475,104 @@ class ScoreBoardController(controllers.BaseController):
                 user_details = json.loads(content)
                 if 'ctf_competitor' not in user_details['entry'][0]['content']['roles']:
                     logger_admin.error('Submitted user %s is not assigned the ctf_competitor role.')
-                    raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+                    raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
-                adminoutput['BasePointsAwarded'] = unicode('0')
-                adminoutput['user'] = unicode(team)
-                adminoutput['Number'] = unicode(submitted_number)
+                adminoutput['BasePointsAwarded'] = str('0')
+                adminoutput['user'] = str(team)
+                adminoutput['Number'] = str(submitted_number)
 
-                partoutput['BasePointsAwarded'] = unicode('0')
-                partoutput['user'] = unicode(team)
-                partoutput['Number'] = unicode(submitted_number)
+                partoutput['BasePointsAwarded'] = str('0')
+                partoutput['user'] = str(team)
+                partoutput['Number'] = str(submitted_number)
 
                 if submitted_base or submitted_bonus:
-                    adminoutput['Result'] = unicode('Correct')
-                    partoutput['Result'] = unicode('Correct')
+                    adminoutput['Result'] = str('Correct')
+                    partoutput['Result'] = str('Correct')
 
-                    adminoutput['SpeedBonusAwarded'] = unicode(submitted_bonus)
-                    partoutput['SpeedBonusAwarded'] = unicode(submitted_bonus)
+                    adminoutput['SpeedBonusAwarded'] = str(submitted_bonus)
+                    partoutput['SpeedBonusAwarded'] = str(submitted_bonus)
 
-                    adminoutput['BasePointsAwarded'] = unicode(submitted_base)
-                    partoutput['BasePointsAwarded'] = unicode(submitted_base)
+                    adminoutput['BasePointsAwarded'] = str(submitted_base)
+                    partoutput['BasePointsAwarded'] = str(submitted_base)
 
-                    adminoutput['AdditionalBonusAwarded'] = unicode('0')
-                    partoutput['AdditionalBonusAwarded'] = unicode('0')
+                    adminoutput['AdditionalBonusAwarded'] = str('0')
+                    partoutput['AdditionalBonusAwarded'] = str('0')
 
-                    adminoutput['Penalty'] = unicode('0')
-                    partoutput['Penalty'] = unicode('0')
+                    adminoutput['Penalty'] = str('0')
+                    partoutput['Penalty'] = str('0')
 
                     tcode = validatectf.makeTCode(int(time.time()))
-                    partoutput['tcode'] = unicode('%s' % (tcode))
-                    adminoutput['tcode'] = unicode('%s' % (tcode))
+                    partoutput['tcode'] = str('%s' % (tcode))
+                    adminoutput['tcode'] = str('%s' % (tcode))
 
                     try:
                         vcode = validatectf.makeVCode(VKEY, tcode, partoutput['user'], partoutput['Number'],
                                                       partoutput['Result'], partoutput['BasePointsAwarded'],
                                                       partoutput['SpeedBonusAwarded'],
                                                       partoutput['AdditionalBonusAwarded'], partoutput['Penalty'])
-                        partoutput['vcode'] = unicode('%s' % (vcode))
-                        adminoutput['vcode'] = unicode('%s' % (vcode))
+                        partoutput['vcode'] = str('%s' % (vcode))
+                        adminoutput['vcode'] = str('%s' % (vcode))
                     except:
-                        logger_admin.exception(unicode('Exception raised in makeVCode'))
+                        logger_admin.exception(str('Exception raised in makeVCode'))
 
                     adminoutputlist = []
                     partoutputlist = []
                     partoutputlisturl = []
 
-                    for k,v in adminoutput.items():
+                    for k,v in list(adminoutput.items()):
                         v.replace(',', '')
-                        adminoutputlist.append(unicode('%s=%s' % (k,v)))
+                        adminoutputlist.append(str('%s=%s' % (k,v)))
 
-                    for k,v in partoutput.items():
+                    for k,v in list(partoutput.items()):
                         v.replace(',', '')
-                        partoutputlist.append(unicode('%s=%s' % (k,v)))
-                        partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v.encode('utf8')))))
+                        partoutputlist.append(str('%s=%s' % (k,v)))
+                        partoutputlisturl.append(str('%s=%s' % (k,urllib.parse.quote(v.encode('utf8')))))
 
                     logger.info(','.join(partoutputlist))
                     logger_admin.info(','.join(adminoutputlist))
 
                 if submitted_penalty:
-                    adminoutput['Result'] = unicode('Incorrect')
-                    partoutput['Result'] = unicode('Incorrect')
+                    adminoutput['Result'] = str('Incorrect')
+                    partoutput['Result'] = str('Incorrect')
 
-                    adminoutput['Penalty'] = unicode(submitted_penalty)
-                    partoutput['Penalty'] = unicode(submitted_penalty)
+                    adminoutput['Penalty'] = str(submitted_penalty)
+                    partoutput['Penalty'] = str(submitted_penalty)
 
-                    adminoutput['SpeedBonusAwarded'] = unicode('0')
-                    partoutput['SpeedBonusAwarded'] = unicode('0')
+                    adminoutput['SpeedBonusAwarded'] = str('0')
+                    partoutput['SpeedBonusAwarded'] = str('0')
 
-                    adminoutput['BasePointsAwarded'] = unicode('0')
-                    partoutput['BasePointsAwarded'] = unicode('0')
+                    adminoutput['BasePointsAwarded'] = str('0')
+                    partoutput['BasePointsAwarded'] = str('0')
 
-                    adminoutput['AdditionalBonusAwarded'] = unicode('0')
-                    partoutput['AdditionalBonusAwarded'] = unicode('0')
+                    adminoutput['AdditionalBonusAwarded'] = str('0')
+                    partoutput['AdditionalBonusAwarded'] = str('0')
 
                     tcode = validatectf.makeTCode(int(time.time()))
-                    partoutput['tcode'] = unicode('%s' % (tcode))
-                    adminoutput['tcode'] = unicode('%s' % (tcode))
+                    partoutput['tcode'] = str('%s' % (tcode))
+                    adminoutput['tcode'] = str('%s' % (tcode))
 
                     try:
                         vcode = validatectf.makeVCode(VKEY, tcode, partoutput['user'], partoutput['Number'],
                                                       partoutput['Result'], partoutput['BasePointsAwarded'],
                                                       partoutput['SpeedBonusAwarded'],
                                                       partoutput['AdditionalBonusAwarded'], partoutput['Penalty'])
-                        partoutput['vcode'] = unicode('%s' % (vcode))
-                        adminoutput['vcode'] = unicode('%s' % (vcode))
+                        partoutput['vcode'] = str('%s' % (vcode))
+                        adminoutput['vcode'] = str('%s' % (vcode))
                     except:
-                        logger_admin.exception(unicode('Exception raised in makeVCode'))
+                        logger_admin.exception(str('Exception raised in makeVCode'))
 
                     adminoutputlist = []
                     partoutputlist = []
                     partoutputlisturl = []
 
-                    for k,v in adminoutput.items():
+                    for k,v in list(adminoutput.items()):
                         v.replace(',', '')
-                        adminoutputlist.append(unicode('%s=%s' % (k,v)))
+                        adminoutputlist.append(str('%s=%s' % (k,v)))
 
-                    for k,v in partoutput.items():
+                    for k,v in list(partoutput.items()):
                         v.replace(',', '')
-                        partoutputlist.append(unicode('%s=%s' % (k,v)))
-                        partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v.encode('utf8')))))
+                        partoutputlist.append(str('%s=%s' % (k,v)))
+                        partoutputlisturl.append(str('%s=%s' % (k,urllib.parse.quote(v.encode('utf8')))))
 
                     logger.info(','.join(partoutputlist))
                     logger_admin.info(','.join(adminoutputlist))
@@ -577,9 +580,9 @@ class ScoreBoardController(controllers.BaseController):
 
             except:
                 logger_admin.exception('An exception occurred.')
-                raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
+                raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard_admin/scoreboard_admin_error')), 302)
 
-        raise cherrypy.HTTPRedirect(unicode('%s?%s' % ('/en-US/app/SA-ctf_scoreboard_admin/adjust_score_result', '&'.join(partoutputlisturl))), 302)
+        raise cherrypy.HTTPRedirect(str('%s?%s' % ('/en-US/app/SA-ctf_scoreboard_admin/adjust_score_result', '&'.join(partoutputlisturl))), 302)
 
 
     @expose_page(must_login=True, methods=['GET'])
@@ -619,7 +622,7 @@ class ScoreBoardController(controllers.BaseController):
         '''
         try:
             servercontent = myhttp.request(baseurl + '/services/auth/login', 'POST', headers={},
-                                           body=urllib.urlencode({'username':USER, 'password':PASSWORD}))[1]
+                                           body=urllib.parse.urlencode({'username':USER, 'password':PASSWORD}))[1]
             answersessionkey = minidom.parseString(servercontent).getElementsByTagName('sessionKey')[0].childNodes[0].nodeValue
         except:
             logger_admin.exception('Error retrieving the privileged session key.')
@@ -638,7 +641,7 @@ class ScoreBoardController(controllers.BaseController):
             answer_list = json.loads(answers_string)
         except:
             logger_admin.exception('Error retrieving the answers lookup. Check the controller config file credentials and that ctf_answers exists, and has proper permissions.')
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         '''
         It's far easier to grab the questions becasue we can just use the competitors session_key.
@@ -684,8 +687,8 @@ class ScoreBoardController(controllers.BaseController):
                 break
         
         if not agreed:
-            logger_admin.error(unicode('User {} attempted to play without accepting the user agreement.'.format(user)))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
+            logger_admin.error(str('User {} attempted to play without accepting the user agreement.'.format(user)))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
         
         '''
         Now we have the questions and the answers. (oh and the Agreements) 
@@ -707,15 +710,15 @@ class ScoreBoardController(controllers.BaseController):
         First we capture user. This is the Splunk user. It is enriched throughout these apps from the ctf_users
         KVstore collection to derive DsiplayUsername and Team. In this code we only care about the Splunk user.
         '''
-        partoutput['user'] = unicode('%s' % (user))
-        adminoutput['user'] = unicode('%s' % (user))
+        partoutput['user'] = str('%s' % (user))
+        adminoutput['user'] = str('%s' % (user))
 
         '''
         kwargs contains the HTML form element names and their values as submitted by the competitor. Here we iterate
         through them and add to partoutput and adminoutput for ultimate inclusion. We take care to not include the 
         submitted answer in partoutput. 
         '''
-        for k,v in kwargs.iteritems():
+        for k,v in kwargs.items():
             if k == 'Answer' or k == 'Question':
                 adminoutput[k] = ('"%s"' % (v.replace('"', "'")))
             else:
@@ -739,8 +742,8 @@ class ScoreBoardController(controllers.BaseController):
         '''
 
         if not self.represents_int(submitted_number):
-            logger_admin.error(unicode('Value submitted for "Number" (%s) does not represent a number.' % submitted_number))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            logger_admin.error(str('Value submitted for "Number" (%s) does not represent a number.' % submitted_number))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         '''
         Now try to find the question that corresponds to the Number submitted by the competitor.
@@ -753,19 +756,19 @@ class ScoreBoardController(controllers.BaseController):
 
         for question_dict in question_list:
             if question_dict['Number'] == submitted_number:
-                adminoutput['QuestionOfficial'] = unicode('"%s"' % (question_dict['Question'].replace('"', "'")))
-                partoutput['QuestionOfficial'] = unicode('"%s"' % (question_dict['Question'].replace('"', "'")))
+                adminoutput['QuestionOfficial'] = str('"%s"' % (question_dict['Question'].replace('"', "'")))
+                partoutput['QuestionOfficial'] = str('"%s"' % (question_dict['Question'].replace('"', "'")))
 
-                adminoutput['BasePointsAvailable'] = unicode('%s' % (question_dict['BasePoints']))
-                partoutput['BasePointsAvailable'] = unicode('%s' % (question_dict['BasePoints']))
+                adminoutput['BasePointsAvailable'] = str('%s' % (question_dict['BasePoints']))
+                partoutput['BasePointsAvailable'] = str('%s' % (question_dict['BasePoints']))
 
                 basepoints = question_dict['BasePoints']
 
-                adminoutput['StartTime'] = unicode('%s' % (question_dict['StartTime']))
-                partoutput['StartTime'] = unicode('%s' % (question_dict['StartTime']))
+                adminoutput['StartTime'] = str('%s' % (question_dict['StartTime']))
+                partoutput['StartTime'] = str('%s' % (question_dict['StartTime']))
 
-                adminoutput['EndTime'] = unicode('%s' % (question_dict['EndTime']))
-                partoutput['EndTime'] = unicode('%s' % (question_dict['EndTime']))
+                adminoutput['EndTime'] = str('%s' % (question_dict['EndTime']))
+                partoutput['EndTime'] = str('%s' % (question_dict['EndTime']))
 
                 if 'AdditionalBonusPoints' not in question_dict:
                     question_dict['AdditionalBonusPoints'] = '0'
@@ -785,25 +788,25 @@ class ScoreBoardController(controllers.BaseController):
                 break
 
         if not found_question:
-            logger_admin.error(unicode('Could not find question with number (%s)' % submitted_number))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            logger_admin.error(str('Could not find question with number (%s)' % submitted_number))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         for answer_dict in answer_list:
             if answer_dict['Number'] == submitted_number:
-                adminoutput['AnswerOfficial'] = unicode('"%s"' % (answer_dict['Answer'].replace('"', "'")))
+                adminoutput['AnswerOfficial'] = str('"%s"' % (answer_dict['Answer'].replace('"', "'")))
 
                 if submitted_answer.lower().strip() == answer_dict['Answer'].lower().strip():
 
-                    adminoutput['Result'] = unicode('%s' % ('Correct'))
-                    partoutput['Result'] = unicode('%s' % ('Correct'))
+                    adminoutput['Result'] = str('%s' % ('Correct'))
+                    partoutput['Result'] = str('%s' % ('Correct'))
 
-                    adminoutput['Penalty'] = unicode('%s' % ('0'))
-                    partoutput['Penalty'] = unicode('%s' % ('0'))
+                    adminoutput['Penalty'] = str('%s' % ('0'))
+                    partoutput['Penalty'] = str('%s' % ('0'))
 
                     if submitted_time >= int(question_dict['StartTime']) and submitted_time <= int(question_dict['EndTime']):
 
-                        adminoutput['BasePointsAwarded'] = unicode('%s' % (basepoints))
-                        partoutput['BasePointsAwarded'] = unicode('%s' % (basepoints))
+                        adminoutput['BasePointsAwarded'] = str('%s' % (basepoints))
+                        partoutput['BasePointsAwarded'] = str('%s' % (basepoints))
 
                         seconds_until_end = int(question_dict['EndTime']) - submitted_time
                         question_duration = int(question_dict['EndTime']) - int(question_dict['StartTime'])
@@ -811,83 +814,83 @@ class ScoreBoardController(controllers.BaseController):
                         time_bonus = float(basepoints) * time_bonus_perc
                         time_bonus = int(round(time_bonus))
 
-                        adminoutput['SpeedBonusAwarded'] = unicode('%s' % (time_bonus))
-                        partoutput['SpeedBonusAwarded'] = unicode('%s' % (time_bonus))
+                        adminoutput['SpeedBonusAwarded'] = str('%s' % (time_bonus))
+                        partoutput['SpeedBonusAwarded'] = str('%s' % (time_bonus))
 
                         if additionalbonus != '0':
-                            adminoutput['SolicitBonusInfo'] = unicode('1')
-                            partoutput['SolicitBonusInfo'] = unicode('1')
+                            adminoutput['SolicitBonusInfo'] = str('1')
+                            partoutput['SolicitBonusInfo'] = str('1')
 
-                            adminoutput['SolicitBonusInstructions'] = unicode('"%s"' % (additionalbonusinstructions.replace('"', "'")))
-                            partoutput['SolicitBonusInstructions'] = unicode('"%s"' % (additionalbonusinstructions.replace('"', "'"))) 
+                            adminoutput['SolicitBonusInstructions'] = str('"%s"' % (additionalbonusinstructions.replace('"', "'")))
+                            partoutput['SolicitBonusInstructions'] = str('"%s"' % (additionalbonusinstructions.replace('"', "'"))) 
 
                     else:
-                        adminoutput['BasePointsAwarded'] = unicode('%s' % ('0'))
-                        partoutput['BasePointsAwarded'] = unicode('%s' % ('0'))
+                        adminoutput['BasePointsAwarded'] = str('%s' % ('0'))
+                        partoutput['BasePointsAwarded'] = str('%s' % ('0'))
 
-                        adminoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
-                        partoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
+                        adminoutput['SpeedBonusAwarded'] = str('%s' % ('0'))
+                        partoutput['SpeedBonusAwarded'] = str('%s' % ('0'))
 
-                        logger_admin.error(unicode('Question submitted at {}, but earliest is {} and latest is {}.'.format(submitted_time, question_dict['StartTime'], question_dict['EndTime'])))
+                        logger_admin.error(str('Question submitted at {}, but earliest is {} and latest is {}.'.format(submitted_time, question_dict['StartTime'], question_dict['EndTime'])))
 
                 else:
-                    adminoutput['Result'] = unicode('%s' % ('Incorrect'))
-                    partoutput['Result'] = unicode('%s' % ('Incorrect'))
+                    adminoutput['Result'] = str('%s' % ('Incorrect'))
+                    partoutput['Result'] = str('%s' % ('Incorrect'))
 
-                    adminoutput['BasePointsAwarded'] = unicode('%s' % ('0'))
-                    partoutput['BasePointsAwarded'] = unicode('%s' % ('0'))
+                    adminoutput['BasePointsAwarded'] = str('%s' % ('0'))
+                    partoutput['BasePointsAwarded'] = str('%s' % ('0'))
 
-                    adminoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
-                    partoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
+                    adminoutput['SpeedBonusAwarded'] = str('%s' % ('0'))
+                    partoutput['SpeedBonusAwarded'] = str('%s' % ('0'))
 
-                    adminoutput['Penalty'] = unicode('%s' % ('10'))
-                    partoutput['Penalty'] = unicode('%s' % ('10'))
+                    adminoutput['Penalty'] = str('%s' % ('10'))
+                    partoutput['Penalty'] = str('%s' % ('10'))
 
                 break
 
-        adminoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
-        partoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
+        adminoutput['AdditionalBonusAwarded'] = str('%s' % ('0'))
+        partoutput['AdditionalBonusAwarded'] = str('%s' % ('0'))
 
-        partoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
-        adminoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+        partoutput['EulaDateAccepted'] = str('%s' % (EulaDateAccepted))
+        adminoutput['EulaDateAccepted'] = str('%s' % (EulaDateAccepted))
 
-        partoutput['EulaId'] = unicode('%s' % (EulaId))
-        adminoutput['EulaId'] = unicode('%s' % (EulaId))
+        partoutput['EulaId'] = str('%s' % (EulaId))
+        adminoutput['EulaId'] = str('%s' % (EulaId))
 
-        partoutput['EulaName'] = unicode('%s' % (EulaName))
-        adminoutput['EulaName'] = unicode('%s' % (EulaName))
+        partoutput['EulaName'] = str('%s' % (EulaName))
+        adminoutput['EulaName'] = str('%s' % (EulaName))
 
-        partoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
-        adminoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
+        partoutput['EulaUsername'] = str('%s' % (EulaUsername))
+        adminoutput['EulaUsername'] = str('%s' % (EulaUsername))
 
         tcode = validatectf.makeTCode(int(time.time()))
-        partoutput['tcode'] = unicode('%s' % (tcode))
-        adminoutput['tcode'] = unicode('%s' % (tcode))
+        partoutput['tcode'] = str('%s' % (tcode))
+        adminoutput['tcode'] = str('%s' % (tcode))
 
         try:
             vcode = validatectf.makeVCode(VKEY, tcode, partoutput['user'], partoutput['Number'], partoutput['Result'], partoutput['BasePointsAwarded'], partoutput['SpeedBonusAwarded'],partoutput['AdditionalBonusAwarded'],partoutput['Penalty'])
-            partoutput['vcode'] = unicode('%s' % (vcode))
-            adminoutput['vcode'] = unicode('%s' % (vcode))
+            partoutput['vcode'] = str('%s' % (vcode))
+            adminoutput['vcode'] = str('%s' % (vcode))
         except:
-            logger_admin.exception(unicode('Exception raised in makeVCode'))
+            logger_admin.exception(str('Exception raised in makeVCode'))
 
         adminoutputlist = []
         partoutputlist = []
         partoutputlisturl = []
 
-        for k,v in adminoutput.items():
+        for k,v in list(adminoutput.items()):
             v.replace(',', '')
-            adminoutputlist.append(unicode('%s=%s' % (k,v)))
+            adminoutputlist.append(str('%s=%s' % (k,v)))
 
-        for k,v in partoutput.items():
+        for k,v in list(partoutput.items()):
             v.replace(',', '')
-            partoutputlist.append(unicode('%s=%s' % (k,v)))
-            partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v.encode('utf8')))))
+            partoutputlist.append(str('%s=%s' % (k,v)))
+            partoutputlisturl.append(str('%s=%s' % (k,urllib.parse.quote(v.encode('utf8')))))
 
         logger.info(','.join(partoutputlist))
         logger_admin.info(','.join(adminoutputlist))
 
-        raise cherrypy.HTTPRedirect(unicode('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/result', '&'.join(partoutputlisturl))), 302)
+        raise cherrypy.HTTPRedirect(str('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/result', '&'.join(partoutputlisturl))), 302)
 
 
     @expose_page(must_login=True, methods=['GET'])
@@ -938,16 +941,16 @@ class ScoreBoardController(controllers.BaseController):
                 break
         
         if not agreed:
-            logger_admin.error(unicode('User {} attempted to play without accepting the user agreement.'.format(user)))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
+            logger_admin.error(str('User {} attempted to play without accepting the user agreement.'.format(user)))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/user_agreement_required')), 302)
 
         partoutput = {}
         adminoutput = {}
 
-        partoutput['user'] = unicode('%s' % (user))
-        adminoutput['user'] = unicode('%s' % (user))
+        partoutput['user'] = str('%s' % (user))
+        adminoutput['user'] = str('%s' % (user))
 
-        for k,v in kwargs.iteritems():
+        for k,v in kwargs.items():
 
             if k == 'Answer' or k == 'Question':
                 adminoutput[k] = ('"%s"' % (v.replace('"', "'")))
@@ -963,38 +966,38 @@ class ScoreBoardController(controllers.BaseController):
         submitted_time = int(time.time())
 
         if not self.represents_int(submitted_number):
-            logger_admin.error(unicode('Value submitted for "Number" (%s) does not represent a number.' % submitted_number))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            logger_admin.error(str('Value submitted for "Number" (%s) does not represent a number.' % submitted_number))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         if int(submitted_number) < 1 or int(submitted_number) > 1024:
-            logger_admin.error(unicode('That number is not cool, bro. (%s). Must be between 1 and 1024 inclusive.' % submitted_number))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            logger_admin.error(str('That number is not cool, bro. (%s). Must be between 1 and 1024 inclusive.' % submitted_number))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         if len(str(submitted_bonus_info)) == 0:
-            logger_admin.error(unicode('Empty bonus string submitted.'))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            logger_admin.error(str('Empty bonus string submitted.'))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         if len(str(submitted_bonus_info)) > 2048:
-            logger_admin.error(unicode('Bonus string submitted longer than 1024 characters.'))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            logger_admin.error(str('Bonus string submitted longer than 1024 characters.'))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
         found_question = False
 
         for question_dict in question_list:
             if question_dict['Number'] == submitted_number:
-                adminoutput['QuestionOfficial'] = unicode('"%s"' % (question_dict['Question'].replace('"', "'")))
-                partoutput['QuestionOfficial'] = unicode('"%s"' % (question_dict['Question'].replace('"', "'")))
+                adminoutput['QuestionOfficial'] = str('"%s"' % (question_dict['Question'].replace('"', "'")))
+                partoutput['QuestionOfficial'] = str('"%s"' % (question_dict['Question'].replace('"', "'")))
 
-                adminoutput['BasePointsAvailable'] = unicode('%s' % (question_dict['BasePoints']))
-                partoutput['BasePointsAvailable'] = unicode('%s' % (question_dict['BasePoints']))
+                adminoutput['BasePointsAvailable'] = str('%s' % (question_dict['BasePoints']))
+                partoutput['BasePointsAvailable'] = str('%s' % (question_dict['BasePoints']))
 
                 basepoints = question_dict['BasePoints']
 
-                adminoutput['StartTime'] = unicode('%s' % (question_dict['StartTime']))
-                partoutput['StartTime'] = unicode('%s' % (question_dict['StartTime']))
+                adminoutput['StartTime'] = str('%s' % (question_dict['StartTime']))
+                partoutput['StartTime'] = str('%s' % (question_dict['StartTime']))
 
-                adminoutput['EndTime'] = unicode('%s' % (question_dict['EndTime']))
-                partoutput['EndTime'] = unicode('%s' % (question_dict['EndTime']))
+                adminoutput['EndTime'] = str('%s' % (question_dict['EndTime']))
+                partoutput['EndTime'] = str('%s' % (question_dict['EndTime']))
 
                 if 'AdditionalBonusPoints' not in question_dict:
                     question_dict['AdditionalBonusPoints'] = '0'
@@ -1009,70 +1012,70 @@ class ScoreBoardController(controllers.BaseController):
                 break
 
         if not found_question:
-            logger_admin.error(unicode('Could not find question with number (%s)' % submitted_number))
-            raise cherrypy.HTTPRedirect(unicode('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
+            logger_admin.error(str('Could not find question with number (%s)' % submitted_number))
+            raise cherrypy.HTTPRedirect(str('%s' % ('/en-US/app/SA-ctf_scoreboard/scoreboard_error')), 302)
 
-        adminoutput['Result'] = unicode('Bonus')
-        partoutput['Result'] = unicode('Bonus')
+        adminoutput['Result'] = str('Bonus')
+        partoutput['Result'] = str('Bonus')
 
         if submitted_time >= int(question_dict['StartTime']) and submitted_time <= int(question_dict['EndTime']):
-            adminoutput['AdditionalBonusAwarded'] = unicode('%s' % (additionalbonus))
-            partoutput['AdditionalBonusAwarded'] = unicode('%s' % (additionalbonus))
+            adminoutput['AdditionalBonusAwarded'] = str('%s' % (additionalbonus))
+            partoutput['AdditionalBonusAwarded'] = str('%s' % (additionalbonus))
 
         else:
-            adminoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
-            partoutput['AdditionalBonusAwarded'] = unicode('%s' % ('0'))
-            logger_admin.error(unicode('Question submitted at {}, but earliest is {} and latest is {}.'.format(submitted_time, question_dict['StartTime'], question_dict['EndTime'])))
+            adminoutput['AdditionalBonusAwarded'] = str('%s' % ('0'))
+            partoutput['AdditionalBonusAwarded'] = str('%s' % ('0'))
+            logger_admin.error(str('Question submitted at {}, but earliest is {} and latest is {}.'.format(submitted_time, question_dict['StartTime'], question_dict['EndTime'])))
 
-        partoutput['BasePointsAwarded'] = unicode('%s' % ('0'))
-        adminoutput['BasePointsAwarded'] = unicode('%s' % ('0'))
+        partoutput['BasePointsAwarded'] = str('%s' % ('0'))
+        adminoutput['BasePointsAwarded'] = str('%s' % ('0'))
 
-        partoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
-        adminoutput['SpeedBonusAwarded'] = unicode('%s' % ('0'))
+        partoutput['SpeedBonusAwarded'] = str('%s' % ('0'))
+        adminoutput['SpeedBonusAwarded'] = str('%s' % ('0'))
 
-        partoutput['Penalty'] = unicode('%s' % ('0'))
-        adminoutput['Penalty'] = unicode('%s' % ('0'))
+        partoutput['Penalty'] = str('%s' % ('0'))
+        adminoutput['Penalty'] = str('%s' % ('0'))
 
-        partoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
-        adminoutput['EulaDateAccepted'] = unicode('%s' % (EulaDateAccepted))
+        partoutput['EulaDateAccepted'] = str('%s' % (EulaDateAccepted))
+        adminoutput['EulaDateAccepted'] = str('%s' % (EulaDateAccepted))
 
-        partoutput['EulaId'] = unicode('%s' % (EulaId))
-        adminoutput['EulaId'] = unicode('%s' % (EulaId))
+        partoutput['EulaId'] = str('%s' % (EulaId))
+        adminoutput['EulaId'] = str('%s' % (EulaId))
 
-        partoutput['EulaName'] = unicode('%s' % (EulaName))
-        adminoutput['EulaName'] = unicode('%s' % (EulaName))
+        partoutput['EulaName'] = str('%s' % (EulaName))
+        adminoutput['EulaName'] = str('%s' % (EulaName))
 
-        partoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
-        adminoutput['EulaUsername'] = unicode('%s' % (EulaUsername))
+        partoutput['EulaUsername'] = str('%s' % (EulaUsername))
+        adminoutput['EulaUsername'] = str('%s' % (EulaUsername))
 
         tcode = validatectf.makeTCode(int(time.time()))
-        partoutput['tcode'] = unicode('%s' % (tcode))
-        adminoutput['tcode'] = unicode('%s' % (tcode))
+        partoutput['tcode'] = str('%s' % (tcode))
+        adminoutput['tcode'] = str('%s' % (tcode))
 
         try:
             vcode = validatectf.makeVCode(VKEY, tcode, partoutput['user'], partoutput['Number'], partoutput['Result'], partoutput['BasePointsAwarded'], partoutput['SpeedBonusAwarded'],partoutput['AdditionalBonusAwarded'],partoutput['Penalty'])
-            partoutput['vcode'] = unicode('%s' % (vcode))
-            adminoutput['vcode'] = unicode('%s' % (vcode))
+            partoutput['vcode'] = str('%s' % (vcode))
+            adminoutput['vcode'] = str('%s' % (vcode))
         except:
-            logger_admin.exception(unicode('Exception raised in makeVCode'))
+            logger_admin.exception(str('Exception raised in makeVCode'))
 
         adminoutputlist = []
         partoutputlist = []
         partoutputlisturl = []
 
-        for k,v in adminoutput.items():
+        for k,v in list(adminoutput.items()):
             v.replace(',', '')
-            adminoutputlist.append(unicode('%s=%s' % (k,v)))
+            adminoutputlist.append(str('%s=%s' % (k,v)))
 
-        for k,v in partoutput.items():
+        for k,v in list(partoutput.items()):
             v.replace(',', '')
-            partoutputlist.append(unicode('%s=%s' % (k,v)))
-            partoutputlisturl.append(unicode('%s=%s' % (k,urllib.quote(v.encode('utf8')))))
+            partoutputlist.append(str('%s=%s' % (k,v)))
+            partoutputlisturl.append(str('%s=%s' % (k,urllib.parse.quote(v.encode('utf8')))))
 
         logger.info(','.join(partoutputlist))
         logger_admin.info(','.join(adminoutputlist))
 
-        raise cherrypy.HTTPRedirect(unicode('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/result', '&'.join(partoutputlisturl))), 302)
+        raise cherrypy.HTTPRedirect(str('%s?%s' % ('/en-US/app/SA-ctf_scoreboard/result', '&'.join(partoutputlisturl))), 302)
 
     def get_kv_lookup(self, lookup_file, namespace='lookup_editor', owner=None):
         '''

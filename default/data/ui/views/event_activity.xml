@@ -86,7 +86,6 @@ index=scoreboard Result=* user!=admin `get_user_info`
         <title>Most Recent Activity</title>
         <search>
           <query>index=scoreboard Result=* user!=admin `get_user_info` 
-| dedup vcode 
 | rename BasePointsAwarded as Points 
 | rename SpeedBonusAwarded as Bonus 
 | eval "Additional Bonus" = AdditionalBonusAwarded 

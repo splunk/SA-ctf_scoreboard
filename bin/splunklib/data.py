@@ -16,7 +16,10 @@
 format, which is the format used by most of the REST API.
 """
 
+from __future__ import absolute_import
+import sys
 from xml.etree.ElementTree import XML
+from splunklib import six
 
 __all__ = ["load"]
 
@@ -74,6 +77,11 @@ def load(text, match=None):
         'namespaces': [],
         'names': {}
     }
+
+    # Convert to unicode encoding in only python 2 for xml parser
+    if(sys.version_info < (3, 0, 0) and isinstance(text, unicode)):
+        text = text.encode('utf-8')
+
     root = XML(text)
     items = [root] if match is None else root.findall(match)
     count = len(items)
@@ -88,7 +96,7 @@ def load(text, match=None):
 def load_attrs(element):
     if not hasattrs(element): return None
     attrs = record()
-    for key, value in element.attrib.iteritems(): 
+    for key, value in six.iteritems(element.attrib): 
         attrs[key] = value
     return attrs
 
@@ -110,12 +118,12 @@ def load_elem(element, nametable=None):
     if attrs is None: return name, value
     if value is None: return name, attrs
     # If value is simple, merge into attrs dict using special key
-    if isinstance(value, str):
+    if isinstance(value, six.string_types):
         attrs["$text"] = value
         return name, attrs
     # Both attrs & value are complex, so merge the two dicts, resolving collisions.
     collision_keys = []
-    for key, val in attrs.iteritems():
+    for key, val in six.iteritems(attrs):
         if key in value and key in collision_keys:
             value[key].append(val)
         elif key in value and key not in collision_keys:
@@ -169,7 +177,7 @@ def load_value(element, nametable=None):
     for child in children:
         name, item = load_elem(child, nametable)
         # If we have seen this name before, promote the value to a list
-        if value.has_key(name):
+        if name in value:
             current = value[name]
             if not isinstance(current, list): 
                 value[name] = [current]
@@ -227,7 +235,7 @@ class Record(dict):
             return dict.__getitem__(self, key)
         key += self.sep
         result = record()
-        for k,v in self.iteritems():
+        for k,v in six.iteritems(self):
             if not k.startswith(key):
                 continue
             suffix = k[len(key):]

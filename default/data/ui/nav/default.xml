@@ -10,13 +10,11 @@
           <a href="question_timeanswer_densities?form.field1=1&amp;form.field2=10000">  Scenario 1 </a>
     </collection>
     <view name="individual_score" />
-    <view name="detailed_scoring_breakdown" />
   </collection>
   <view name="rules" />
   <collection label="Help">
     <a href="https://www.splunk.com/content/dam/splunk2/pdfs/solution-guides/splunk-quick-reference-guide.pdf" target="_blank">Splunk Quick Reference Guide</a>
   </collection>
-  <a href="/app/SA-ctf_scoreboard/botsv4_welcome?tour=welcome-tour">BOTS Tutorial</a>
   <view name="Credits" />
   <view name="dashboards" />
   <view name="search" />

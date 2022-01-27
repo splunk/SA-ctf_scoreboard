@@ -4,11 +4,11 @@ from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, 
 import splunklib.results as results
 import splunklib.client as client
 import sys
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import httplib2
 from xml.dom import minidom
 import logging
-import ConfigParser
+import configparser
 import splunk.rest
 import json
 import random
@@ -58,7 +58,7 @@ class getanswerCommand(StreamingCommand):
         allows us to retrieve a second session key below.
         '''
         CONF_FILE = make_splunkhome_path(['etc', 'apps', 'SA-ctf_scoreboard', 'appserver', 'controllers', 'scoreboard_controller.config'])
-        Config = ConfigParser.ConfigParser()
+        Config = configparser.ConfigParser()
         parsed_conf_files = Config.read(CONF_FILE)
         if not CONF_FILE in parsed_conf_files:
             logger_admin.error('Could not read config file: %s' % (CONF_FILE))

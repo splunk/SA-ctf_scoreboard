@@ -7,14 +7,14 @@ import hmac
 def makeTCode(epochTime):
     if not RepresentsEpoch(epochTime):
         raise ValueError('Invalid epoch time value.')
-    uEpochTime = unicode(epochTime)
-    return uEpochTime.encode('hex')
+    uEpochTime = str(epochTime)
+    return uEpochTime.encode("utf-8").hex()
 
 
 def decodeTCode(tcode):
-    if not isinstance(tcode, str) or isinstance(tcode, unicode):
+    if not isinstance(tcode, str) or isinstance(tcode, str):
         raise ValueError('Supplied value is not ASCII or Unicode.')
-    return unicode(tcode.decode('hex'))
+    return str(tcode.encode("utf-8").hex())
 
 
 def RepresentsInt(s):
@@ -35,7 +35,7 @@ def RepresentsEpoch(s):
 
 
 def IsSomeKindaString(obj):
-    return isinstance(obj, str) or isinstance(obj, unicode)
+    return isinstance(obj, str) or isinstance(obj, str)
 
 
 def makeVCode(hkey,tcode,user,Number,Result,BasePointsAwarded,SpeedBonusAwarded,AdditionalBonusAwarded,Penalty):
@@ -72,7 +72,7 @@ def makeVCode(hkey,tcode,user,Number,Result,BasePointsAwarded,SpeedBonusAwarded,
 
     bhkey = bytes(hkey)
 
-    return unicode(hmac.new(bhkey,bvCodeString,hashlib.sha256).hexdigest())
+    return str(hmac.new(bhkey,bvCodeString,hashlib.sha256).hexdigest())
 
 
 
